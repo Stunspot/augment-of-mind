@@ -1,0 +1,42 @@
+name: Make temporary MIND inspection preview
+
+on:
+  push:
+    paths:
+      - .github/workflows/make-mind-preview.yml
+
+permissions:
+  contents: write
+
+jobs:
+  preview:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Create compact visual-inspection copy
+        run: |
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from PIL import Image
+          source = Image.open('docs/assets/mind-hero.png').convert('RGB')
+          source.resize((192, 108), Image.Resampling.LANCZOS).save(
+              'docs/assets/mind-hero-inspection.jpg',
+              format='JPEG',
+              quality=28,
+              optimize=True,
+              progressive=False,
+          )
+          PY
+      - name: Commit preview and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/assets/mind-hero-inspection.jpg
+          git rm .github/workflows/make-mind-preview.yml
+          git commit -m "chore: add temporary MIND artwork inspection preview"
+          git push
