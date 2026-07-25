@@ -1,0 +1,52 @@
+name: Verify deployed Pages site
+
+on:
+  push:
+    paths:
+      - .github/workflows/verify-pages.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for and inspect the live site
+        shell: bash
+        run: |
+          set +e
+          url="https://stunspot.github.io/augment-of-mind/"
+          body="$(mktemp)"
+          status="000"
+          for attempt in $(seq 1 30); do
+            status="$(curl -L -sS -A 'Pages verification' -o "$body" -w '%{http_code}' "$url")"
+            if [ "$status" = "200" ] && grep -q '<title>MIND by Collaborative Dynamics</title>' "$body"; then
+              break
+            fi
+            sleep 10
+          done
+          css_status="$(curl -L -sS -o /dev/null -w '%{http_code}' "${url}style.css")"
+          hero_status="$(curl -L -sS -o /dev/null -w '%{http_code}' "${url}assets/mind-hero.png")"
+          {
+            echo "url=$url"
+            echo "http_status=$status"
+            echo "title_present=$(grep -q '<title>MIND by Collaborative Dynamics</title>' "$body" && echo yes || echo no)"
+            echo "hero_reference_present=$(grep -q 'assets/mind-hero.png' "$body" && echo yes || echo no)"
+            echo "css_http_status=$css_status"
+            echo "hero_http_status=$hero_status"
+            echo "checked_at=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          } > .github/pages-verification.txt
+
+      - name: Commit verification and remove this one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/pages-verification.txt
+          git rm .github/workflows/verify-pages.yml
+          git commit -m "chore: record MIND Pages verification"
+          git push
