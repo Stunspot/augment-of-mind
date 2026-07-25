@@ -1,7 +1,0 @@
-get_http_status=404
-create_http_status=403
-get_response={   "message": "Not Found",   "documentation_url": "https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site",   "status": "404" } 
-
-create_response={   "message": "Resource not accessible by integration",   "documentation_url": "https://docs.github.com/rest/pages/pages#create-a-apiname-pages-site",   "status": "403" } 
-
-checked_at=2026-07-25T15:47:43Z
