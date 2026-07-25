@@ -1,7 +1,0 @@
-url=https://stunspot.github.io/augment-of-mind/
-http_status=404
-title_present=no
-hero_reference_present=no
-css_http_status=404
-hero_http_status=404
-checked_at=2026-07-25T15:45:08Z
