@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cd-mind-core"
+version = "0.1.0"
+description = "Persona-neutral local metadata runtime for MIND."
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Collaborative Dynamics" }]
+
+[project.scripts]
+mind-core = "mind_core.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mind_core*"]
+
+[tool.setuptools.package-data]
+mind_core = ["migrations/*.sql"]

@@ -1,0 +1,223 @@
+{
+  "format": "mind-core-bootstrap/v1",
+  "sources": [
+    {
+      "source_id": "source:egdod:0.1.0",
+      "locator": "urn:collaborative-dynamics:egdod:0.1.0",
+      "digest": null,
+      "custody_state": "canonical-constructed",
+      "authority_ref": "accepted Phase 1 architecture evidence index",
+      "observed_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "source_id": "source:augment-of-mind:main",
+      "locator": "https://github.com/Stunspot/augment-of-mind",
+      "digest": null,
+      "custody_state": "canonical-constructed",
+      "authority_ref": "public repository custody",
+      "observed_at": "2026-07-31T12:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "product_id": "product:egdod",
+      "name": "EGDOD",
+      "owner": "Collaborative Dynamics",
+      "canonical_uri": "urn:collaborative-dynamics:egdod",
+      "created_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "product_id": "product:mind",
+      "name": "MIND",
+      "owner": "Collaborative Dynamics",
+      "canonical_uri": "https://github.com/Stunspot/augment-of-mind",
+      "created_at": "2026-07-31T12:00:00Z"
+    }
+  ],
+  "providers": [
+    {
+      "provider_id": "provider:personal",
+      "name": "personal",
+      "owner": "Collaborative Dynamics",
+      "provider_kind": "codex_plugin_cache",
+      "canonical_uri": null,
+      "created_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "provider_id": "provider:build-week",
+      "name": "collaborative-dynamics-build-week",
+      "owner": "Collaborative Dynamics",
+      "provider_kind": "codex_plugin_cache",
+      "canonical_uri": "https://github.com/Stunspot/augment-of-mind",
+      "created_at": "2026-07-31T12:00:00Z"
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "capability:egdod",
+      "handle": "egdod",
+      "name": "EGDOD Software Architecture Orchestration",
+      "product_id": "product:egdod",
+      "canonical_source_id": "source:egdod:0.1.0",
+      "promise": "Architect and orchestrate complex software systems from explicit requirements and evidence.",
+      "negative_space": "No distribution, installation, invocation, qualification, or health state is implied by canonical source custody.",
+      "created_at": "2026-07-31T12:00:00Z",
+      "superseded_by": null,
+      "aliases": [
+        {
+          "namespace": "global",
+          "alias": "software architecture orchestration",
+          "display_alias": "Software Architecture Orchestration"
+        }
+      ],
+      "entrypoints": []
+    },
+    {
+      "capability_id": "capability:augment-of-mind",
+      "handle": "augment-of-mind",
+      "name": "MIND",
+      "product_id": "product:mind",
+      "canonical_source_id": "source:augment-of-mind:main",
+      "promise": "Provide persona-neutral cognitive governance and capability composition.",
+      "negative_space": "A capability or distribution record does not establish selection, activation, invocation, qualification, or health.",
+      "created_at": "2026-07-31T12:00:00Z",
+      "superseded_by": null,
+      "aliases": [
+        {
+          "namespace": "global",
+          "alias": "mind",
+          "display_alias": "MIND"
+        }
+      ],
+      "entrypoints": []
+    }
+  ],
+  "distributions": [
+    {
+      "distribution_id": "distribution:mind:personal:0.2.0",
+      "capability_id": "capability:augment-of-mind",
+      "product_id": "product:mind",
+      "provider_id": "provider:personal",
+      "version": "0.2.0",
+      "package_form": "codex_plugin",
+      "artifact_digest": null,
+      "source_id": "source:augment-of-mind:main",
+      "created_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "distribution_id": "distribution:mind:build-week:1.0.0",
+      "capability_id": "capability:augment-of-mind",
+      "product_id": "product:mind",
+      "provider_id": "provider:build-week",
+      "version": "1.0.0",
+      "package_form": "codex_plugin",
+      "artifact_digest": null,
+      "source_id": "source:augment-of-mind:main",
+      "created_at": "2026-07-31T12:00:00Z"
+    }
+  ],
+  "receipts": [
+    {
+      "receipt_id": "receipt:egdod-custody",
+      "idempotency_key": "lifecycle:egdod:custody",
+      "receipt_type": "lifecycle.observation",
+      "subject_kind": "lifecycle_observation",
+      "subject_id": "lifecycle:egdod:custody",
+      "evidence_state": "reported",
+      "claimed_boundary": "The accepted architecture case reports EGDOD custody as canonical-constructed; no host or runtime state is claimed.",
+      "observed_at": "2026-07-31T12:00:00Z",
+      "redaction_class": "public_metadata",
+      "payload_hash": "acf9e58fe736d9e79f4adc43d76e158e2de9b5e4af884cbdc99c29b528c383b2"
+    },
+    {
+      "receipt_id": "receipt:egdod-distribution",
+      "idempotency_key": "lifecycle:egdod:distribution",
+      "receipt_type": "lifecycle.observation",
+      "subject_kind": "lifecycle_observation",
+      "subject_id": "lifecycle:egdod:distribution",
+      "evidence_state": "reported",
+      "claimed_boundary": "The accepted architecture case reports that no EGDOD distribution has been generated; no installation or runtime state is claimed.",
+      "observed_at": "2026-07-31T12:00:00Z",
+      "redaction_class": "public_metadata",
+      "payload_hash": "801b4f42ae0920af3c3bfd0a67dd93abde93dc2e0887c1a41513a064a5faefc0"
+    }
+  ],
+  "lifecycle_observations": [
+    {
+      "observation_id": "lifecycle:egdod:custody",
+      "capability_id": "capability:egdod",
+      "distribution_id": null,
+      "axis": "custody",
+      "state": "canonical-constructed",
+      "agent_instance_id": null,
+      "host_session_id": null,
+      "observed_at": "2026-07-31T12:00:00Z",
+      "expires_at": null,
+      "evidence_receipt_id": "receipt:egdod-custody",
+      "source_reference": "accepted Phase 1 architecture evidence index"
+    },
+    {
+      "observation_id": "lifecycle:egdod:distribution",
+      "capability_id": "capability:egdod",
+      "distribution_id": null,
+      "axis": "distribution",
+      "state": "not-generated",
+      "agent_instance_id": null,
+      "host_session_id": null,
+      "observed_at": "2026-07-31T12:00:00Z",
+      "expires_at": null,
+      "evidence_receipt_id": "receipt:egdod-distribution",
+      "source_reference": "accepted Phase 1 architecture evidence index"
+    }
+  ],
+  "mounts": [
+    {
+      "mount_id": "mount:cd-data-registry",
+      "handle": "cd-data-registry",
+      "owner_id": "owner:cd-data-substrate",
+      "mount_class": "registry",
+      "purpose": "List registered Collaborative Dynamics data stores.",
+      "front_door": "owner registry query",
+      "registration_state": "registered",
+      "registration_provenance": "registered in the CD Data Substrate",
+      "canonical_role": "catalog_only",
+      "sensitivity_ceiling": "metadata",
+      "portability": "profile_selected",
+      "indexing_eligibility": "metadata_only",
+      "export_eligibility": "owner_contract_required",
+      "created_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "mount_id": "mount:dunbar",
+      "handle": "dunbar",
+      "owner_id": "owner:dunbar",
+      "mount_class": "people_memory",
+      "purpose": "User-governed people memory.",
+      "front_door": "Dunbar owner runtime",
+      "registration_state": "known_unregistered",
+      "registration_provenance": "known owner store outside the CD Data registry",
+      "canonical_role": "canonical",
+      "sensitivity_ceiling": "private_people",
+      "portability": "portable_people",
+      "indexing_eligibility": "purpose_scoped",
+      "export_eligibility": "explicit_owner_grant",
+      "created_at": "2026-07-31T12:00:00Z"
+    },
+    {
+      "mount_id": "mount:obsidian",
+      "handle": "obsidian",
+      "owner_id": "owner:obsidian",
+      "mount_class": "knowledge_adapter",
+      "purpose": "Optional external knowledge and memory adapter.",
+      "front_door": "provider contract not installed in Phase 1",
+      "registration_state": "known_unregistered",
+      "registration_provenance": "recognized future mount seam",
+      "canonical_role": "catalog_only",
+      "sensitivity_ceiling": "owner_defined",
+      "portability": "optional_provider",
+      "indexing_eligibility": "owner_contract_required",
+      "export_eligibility": "owner_contract_required",
+      "created_at": "2026-07-31T12:00:00Z"
+    }
+  ]
+}

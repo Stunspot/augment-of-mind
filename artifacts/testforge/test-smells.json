@@ -1,0 +1,29 @@
+{
+  "format_version": "1.0",
+  "heuristic_only": true,
+  "files_scanned": 8,
+  "finding_count": 3,
+  "findings": [
+    {
+      "file": "E:\\Github\\augment-of-mind\\tests\\helpers.py",
+      "line": 46,
+      "smell": "snapshot_assertion",
+      "severity": "low",
+      "evidence": "snapshot"
+    },
+    {
+      "file": "E:\\Github\\augment-of-mind\\tests\\helpers.py",
+      "line": 47,
+      "smell": "snapshot_assertion",
+      "severity": "low",
+      "evidence": "snapshot"
+    },
+    {
+      "file": "E:\\Github\\augment-of-mind\\tests\\test_handshake_isolation.py",
+      "line": 214,
+      "smell": "snapshot_assertion",
+      "severity": "low",
+      "evidence": "snapshot"
+    }
+  ]
+}

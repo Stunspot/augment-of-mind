@@ -16,6 +16,14 @@ This is the clean standalone public edition shipped in the **Nova + MIND OpenAI 
 - Integrator: [`skills/augment-of-mind/SKILL.md`](skills/augment-of-mind/SKILL.md)
 - Faculty registry: [`faculty-registry.json`](skills/augment-of-mind/references/faculty-runtime/faculty-registry.json)
 
+## MIND Core Phase 1 development
+
+The repository now contains a development implementation of MIND's persona-neutral local metadata spine. It records capability and provider identity, independent lifecycle evidence, exact agent/session scope, federated data-store descriptors, and append-only receipts without importing owner data or inferring an `active` state.
+
+Its current service boundary is deliberately **H0/query-only**. It does not automatically inject MIND, recruit capabilities, intercept results, gate actions, run vectors, migrate legacy stores, or require Nova, TestForge, Obsidian, Dunbar, continuity, or a future Mnemosyne provider.
+
+See the [Phase 1 work packet](docs/architecture/PHASE-1-WORK-PACKET.md) for the accepted scope, invariants, exclusions, protocol, and local evidence. The Core package has its own `0.1.0` runtime version; that does not replace or renumber the standalone MIND plugin edition described below.
+
 ## Start with the mission
 
 In a Codex environment that recognizes the package, invoke the integrator when two or more distinct Faculty transformations must contribute to one outcome, or when consequences, uncertainty, durable state, action custody, or recovery make coordination material.
