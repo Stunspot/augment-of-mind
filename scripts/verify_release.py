@@ -248,6 +248,25 @@ def verify_component_sums(root: Path, wheel_path: str) -> None:
         raise ReleaseError("component checksum set does not match the optional Core wheel")
 
 
+def verify_marketplace(marketplace: dict[str, object]) -> None:
+    interface = marketplace.get("interface")
+    entries = marketplace.get("plugins")
+    if (
+        marketplace.get("name") != MARKETPLACE_NAME
+        or not isinstance(interface, dict)
+        or interface.get("displayName") != MARKETPLACE_DISPLAY_NAME
+        or not isinstance(entries, list)
+        or len(entries) != 1
+    ):
+        raise ReleaseError("marketplace identity, display metadata, or membership is wrong")
+    entry = entries[0]
+    if not isinstance(entry, dict) or entry.get("name") != PRODUCT:
+        raise ReleaseError("marketplace plugin identity is wrong")
+    source = entry.get("source")
+    if not isinstance(source, dict) or source.get("source") != "local" or source.get("path") != "./":
+        raise ReleaseError("marketplace must resolve the plugin at its own root")
+
+
 def verify(root: Path) -> dict[str, object]:
     root = root.resolve()
     if not root.is_dir():
@@ -337,22 +356,7 @@ def verify(root: Path) -> dict[str, object]:
             raise ReleaseError(f"plugin screenshot is missing: {relative}")
 
     marketplace = load_json(root / ".agents" / "plugins" / "marketplace.json")
-    interface = marketplace.get("interface")
-    entries = marketplace.get("plugins")
-    if (
-        marketplace.get("name") != MARKETPLACE_NAME
-        or not isinstance(interface, dict)
-        or interface.get("displayName") != MARKETPLACE_DISPLAY_NAME
-        or not isinstance(entries, list)
-        or len(entries) != 1
-    ):
-        raise ReleaseError("marketplace identity, display metadata, or membership is wrong")
-    entry = entries[0]
-    if not isinstance(entry, dict) or entry.get("name") != PRODUCT:
-        raise ReleaseError("marketplace plugin identity is wrong")
-    source = entry.get("source")
-    if not isinstance(source, dict) or source.get("source") != "local" or source.get("path") != "./":
-        raise ReleaseError("marketplace must resolve the plugin at its own root")
+    verify_marketplace(marketplace)
 
     wheel_paths = [path for path in actual_by_path if path.startswith("optional-core/") and path.endswith(".whl")]
     if len(wheel_paths) != 1:
