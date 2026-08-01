@@ -6,7 +6,8 @@
     "name": "Collaborative Dynamics",
     "url": "https://collaborative-dynamics.com"
   },
-  "homepage": "https://collaborative-dynamics.com",
+  "homepage": "https://stunspot.github.io/augment-of-mind/",
+  "repository": "https://github.com/Stunspot/augment-of-mind",
   "license": "MIT",
   "keywords": ["mind", "faculties", "cognition", "decision-making", "human-ai collaboration"],
   "skills": "./skills/",
@@ -17,11 +18,17 @@
     "developerName": "Collaborative Dynamics",
     "category": "Productivity",
     "capabilities": ["Interactive", "Read", "Write"],
-    "websiteURL": "https://collaborative-dynamics.com",
+    "websiteURL": "https://stunspot.github.io/augment-of-mind/",
+    "privacyPolicyURL": "https://stunspot.github.io/augment-of-mind/#privacy",
+    "termsOfServiceURL": "https://stunspot.github.io/augment-of-mind/#terms",
     "brandColor": "#48CBE8",
-    "composerIcon": "./skills/augment-of-mind/assets/collaborative-dynamics-logo.png",
-    "logo": "./skills/augment-of-mind/assets/collaborative-dynamics-logo.png",
-    "logoDark": "./skills/augment-of-mind/assets/collaborative-dynamics-logo.png",
+    "composerIcon": "./assets/mind-icon-1024.png",
+    "logo": "./assets/mind-icon-1024.png",
+    "logoDark": "./assets/mind-icon-1024.png",
+    "screenshots": [
+      "./assets/mind-hero-1600x900.png",
+      "./assets/mind-capability-card-1080x1350.png"
+    ],
     "defaultPrompt": [
       "Use $augment-of-mind to compose the smallest useful Faculty coalition for this mission.",
       "Use $sensemaking to turn this tangled situation into a working map.",

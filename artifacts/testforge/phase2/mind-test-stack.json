@@ -1,0 +1,21 @@
+{
+  "format_version": "1.0",
+  "root": "E:\\Github\\augment-of-mind",
+  "package_managers": [],
+  "candidates": [
+    {
+      "framework": "unittest",
+      "language": "Python",
+      "confidence": "medium",
+      "command": "python -m unittest discover",
+      "evidence": [
+        "tests\\test_associative_disclosure.py",
+        "tests\\test_core_truth.py",
+        "tests\\test_delivery_protocol.py",
+        "tests\\test_handshake_isolation.py",
+        "tests\\test_mount_semantics.py"
+      ]
+    }
+  ],
+  "warnings": []
+}

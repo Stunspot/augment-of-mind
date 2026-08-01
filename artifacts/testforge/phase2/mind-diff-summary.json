@@ -1,0 +1,59 @@
+{
+  "format_version": "1.0",
+  "source": "git:HEAD~1..HEAD",
+  "changed_file_count": 41,
+  "groups": {
+    "configuration": [
+      "artifacts/testforge/build-backend-probe.json",
+      "artifacts/testforge/manifest-validation.json",
+      "artifacts/testforge/repo-inventory.json",
+      "artifacts/testforge/target-snapshot.json",
+      "artifacts/testforge/test-smells.json",
+      "artifacts/testforge/test-stack.json",
+      "artifacts/testforge/traceability-validation.json",
+      "artifacts/testforge/unittest-execution.json",
+      "assets/templates/verification-manifest.json"
+    ],
+    "dependencies": [
+      "pyproject.toml"
+    ],
+    "production_code": [
+      ".gitignore",
+      "README.md",
+      "artifacts/testforge/reviewer-disposition.md",
+      "artifacts/testforge/verification-report.md",
+      "docs/architecture/PHASE-1-WORK-PACKET.md",
+      "mind_core/__init__.py",
+      "mind_core/__main__.py",
+      "mind_core/cli.py",
+      "mind_core/constants.py",
+      "mind_core/core.py",
+      "mind_core/errors.py",
+      "mind_core/estate.py",
+      "mind_core/handshake.py",
+      "mind_core/mounts.py",
+      "mind_core/protocol.py",
+      "mind_core/receipts.py",
+      "mind_core/service.py",
+      "mind_core/store.py",
+      "mind_core/util.py"
+    ],
+    "schema": [
+      "mind_core/migration_runner.py",
+      "mind_core/migrations/0001_core_metadata.sql",
+      "mind_core/migrations/__init__.py"
+    ],
+    "tests": [
+      "tests/__init__.py",
+      "tests/fixtures/phase1_bootstrap.json",
+      "tests/helpers.py",
+      "tests/test_core_truth.py",
+      "tests/test_handshake_isolation.py",
+      "tests/test_mount_semantics.py",
+      "tests/test_protocol_service.py",
+      "tests/test_receipts.py",
+      "tests/test_store_migrations.py"
+    ]
+  },
+  "warnings": []
+}

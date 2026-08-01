@@ -1,0 +1,39 @@
+{
+  "format": "cd-mind-pages-audit/v1",
+  "ok": true,
+  "html": "docs/index.html",
+  "heading_count": 22,
+  "link_count": 29,
+  "image_element_count": 4,
+  "visuals": [
+    {
+      "role": "icon",
+      "path": "docs/assets/mind-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "rendered": true,
+      "visual_inspection": "PASS; final corrected icon contains exactly fifteen outer Faculty nodes."
+    },
+    {
+      "role": "hero",
+      "path": "docs/assets/mind-hero.png",
+      "width": 1600,
+      "height": 900,
+      "aspect_ratio": "16:9",
+      "rendered": true,
+      "visual_inspection": "PASS; coherent MIND coordinator and Faculty constellation."
+    },
+    {
+      "role": "capability_card",
+      "path": "docs/assets/mind-capability-card-1080x1350.png",
+      "width": 1080,
+      "height": 1350,
+      "aspect_ratio": "4:5",
+      "rendered": true,
+      "visual_inspection": "PASS; semantic neighborhoods and distinct false-friend boundary are legible without embedded text."
+    }
+  ],
+  "issues": [],
+  "boundary": "Direct source-image inspection and static HTML audit only; live rendered Pages review remains pending."
+}

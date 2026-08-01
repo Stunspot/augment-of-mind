@@ -1,0 +1,45 @@
+{
+  "format_version": "1.0",
+  "root": "E:\\Github\\augment-of-mind",
+  "file_count": 216,
+  "languages": [
+    {
+      "name": "Python",
+      "files": 37
+    },
+    {
+      "name": "SQL",
+      "files": 2
+    }
+  ],
+  "manifests": [
+    "pyproject.toml"
+  ],
+  "test_directories": [
+    "skills/agent-striving/scripts/tests",
+    "skills/cognitive-continuity/scripts/tests",
+    "tests"
+  ],
+  "test_files": [
+    "skills/agent-striving/scripts/tests/test_validate_pursuit_state.py",
+    "skills/cognitive-continuity/scripts/tests/test_continuity.py",
+    "tests/__init__.py",
+    "tests/fixtures/phase1_bootstrap.json",
+    "tests/helpers.py",
+    "tests/phase2_helpers.py",
+    "tests/test_associative_disclosure.py",
+    "tests/test_core_truth.py",
+    "tests/test_delivery_protocol.py",
+    "tests/test_handshake_isolation.py",
+    "tests/test_mount_semantics.py",
+    "tests/test_protocol_service.py",
+    "tests/test_receipts.py",
+    "tests/test_store_migrations.py"
+  ],
+  "test_file_count": 14,
+  "config_files": [],
+  "ci_files": [
+    ".github/workflows/pages.yml"
+  ],
+  "warnings": []
+}

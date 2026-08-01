@@ -1,0 +1,31 @@
+{
+  "format_version": "1.0",
+  "source": {
+    "format": "command_record",
+    "path": "E:\\Github\\augment-of-mind\\artifacts\\testforge\\phase2\\E-001-mind-full-unittest.json",
+    "command": [
+      "python",
+      "-B",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ]
+  },
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "status": "passed"
+  },
+  "cases": [],
+  "parse_warnings": [
+    "command record contains no per-test case counts"
+  ]
+}

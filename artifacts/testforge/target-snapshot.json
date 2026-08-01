@@ -1,0 +1,161 @@
+{
+  "format": "mind-core-target-snapshot/v1",
+  "aggregate_algorithm": "sha256(uint64be(path_utf8_length) || path_utf8 || uint64be(git_blob_length) || git_blob_bytes), repeated in lexicographic path order",
+  "content_source": "canonical Git index blob bytes for each path at review time; after commit these are the corresponding commit blob bytes, independent of working-tree line-ending conversion",
+  "path_order": "lexicographic by repository-relative POSIX path encoded as UTF-8",
+  "included_path_policy": "exactly the files enumerated in files; generated evidence and unrelated release artifacts are excluded",
+  "file_count": 30,
+  "aggregate_sha256": "41d0d9550b2cd1d5dbcfb6c9b4336fba51df6f7d15019dcc13fadb2bf26a0116",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 100,
+      "sha256": "af6ac91ce066dc8e64bc280db357465961e27f7e5a8e4f750a9887141a4d9101"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6719,
+      "sha256": "bafb4116328d14580c1fc601d5795d9d4ef88f0c1dc90fe6898f224434de05fc"
+    },
+    {
+      "path": "docs/architecture/PHASE-1-WORK-PACKET.md",
+      "bytes": 6632,
+      "sha256": "447de579defba8c6336459fb050aab760f3e90b690da3e836d8ef3c00dea9a17"
+    },
+    {
+      "path": "mind_core/__init__.py",
+      "bytes": 110,
+      "sha256": "4af3e5c06d634ebca4882735d1140ca0049b05666c4fbb12d3528f408eee551a"
+    },
+    {
+      "path": "mind_core/__main__.py",
+      "bytes": 97,
+      "sha256": "132852db7a7b582905a3f19e210e4fed265d3d31683623e29d6a9a88fbe2589f"
+    },
+    {
+      "path": "mind_core/cli.py",
+      "bytes": 2035,
+      "sha256": "07e0085b26ffe0bb8676747712f4a9dbaf120f1270ec302ea4bbc7bc83a18890"
+    },
+    {
+      "path": "mind_core/constants.py",
+      "bytes": 2406,
+      "sha256": "3248ed02178fd0285c8565ddf82648b3d91e209ccc882e0e807f0303fe911527"
+    },
+    {
+      "path": "mind_core/core.py",
+      "bytes": 5343,
+      "sha256": "3ccdfba2253c3d13040cc020ab8d2f79c79d906b32ac9538bf76c4b5ad22fc2b"
+    },
+    {
+      "path": "mind_core/errors.py",
+      "bytes": 829,
+      "sha256": "6cafc83a995de9118af22183299d82b0dad70d53ce7f5397df4523fa8af977d7"
+    },
+    {
+      "path": "mind_core/estate.py",
+      "bytes": 16714,
+      "sha256": "b0228a9c1e4221c162686051213e499475351630baa774fa172656d5bb5845c2"
+    },
+    {
+      "path": "mind_core/handshake.py",
+      "bytes": 13547,
+      "sha256": "1ac19a7216af4d1587b7a2c75acdf321c12a8369de5f3a45f1027bac48587a9e"
+    },
+    {
+      "path": "mind_core/migration_runner.py",
+      "bytes": 3064,
+      "sha256": "83fe5c61bc9e693e0ea54dea3936d52b9c486aec25e85fa3c8ed880587b16513"
+    },
+    {
+      "path": "mind_core/migrations/0001_core_metadata.sql",
+      "bytes": 16370,
+      "sha256": "f94f2d271b9163b242d26d5119aa37867281513626d161ee15cba796f96adb60"
+    },
+    {
+      "path": "mind_core/migrations/__init__.py",
+      "bytes": 44,
+      "sha256": "d1e77abd80497db6538b828a6a3dba6d95bc3ff75c1481233b7f00bb55772a6d"
+    },
+    {
+      "path": "mind_core/mounts.py",
+      "bytes": 14176,
+      "sha256": "20e7bb9b4256330543bdbd4e3bfda55aaf1bca8c3c5145dbd70cb985b93d2a3c"
+    },
+    {
+      "path": "mind_core/protocol.py",
+      "bytes": 3457,
+      "sha256": "77216e82b0ada2d004a760ba6522a3ee376edf4103cb7b2eac172f51423cd344"
+    },
+    {
+      "path": "mind_core/receipts.py",
+      "bytes": 13299,
+      "sha256": "6440931899067ef47c3d5cf62120433dfab69899b8da405e0ab15849620b69aa"
+    },
+    {
+      "path": "mind_core/service.py",
+      "bytes": 6713,
+      "sha256": "c7c953853ac4aa483749e26c69f4ed60b355f2f411883fdddc8a68b58d9023f3"
+    },
+    {
+      "path": "mind_core/store.py",
+      "bytes": 5377,
+      "sha256": "a2113909c568a517d565e2d2423d7f956a2ebecd121488885c7bf01421a27e81"
+    },
+    {
+      "path": "mind_core/util.py",
+      "bytes": 4041,
+      "sha256": "4da4f9284b1846e9c11f60c43ab11a99fb5a9a85a8aa8b3d9f8cb173b008c245"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 467,
+      "sha256": "9d5e8b3680cecfa182b0ec4f8344c58a726b4ca8bf43394815479d082c0f32f4"
+    },
+    {
+      "path": "tests/__init__.py",
+      "bytes": 42,
+      "sha256": "b00e8e821b549a681a5fa52b869c42867b1e794f118cd037db467f9bd04a8891"
+    },
+    {
+      "path": "tests/fixtures/phase1_bootstrap.json",
+      "bytes": 8246,
+      "sha256": "d0c2783d43be97c7fa9e4367ff94498186bf29fc8bfccf5fb12fff377e413daa"
+    },
+    {
+      "path": "tests/helpers.py",
+      "bytes": 4533,
+      "sha256": "270a4090936d10ba9d4d4247ad4064620ff8cbb3d0b64875f2e72703f70fae70"
+    },
+    {
+      "path": "tests/test_core_truth.py",
+      "bytes": 3866,
+      "sha256": "6d538e32885509ce43ecc3d38158f3d866423b1a9c42d5e52b40047e817b6123"
+    },
+    {
+      "path": "tests/test_handshake_isolation.py",
+      "bytes": 8434,
+      "sha256": "c5c8a86f6a19fc27c5db9f4b0e40a23a561899142260063a2210319e4f059940"
+    },
+    {
+      "path": "tests/test_mount_semantics.py",
+      "bytes": 11282,
+      "sha256": "0cd167b0f2ac8794909555c1daa4330a59b34cf6e2a69655fe0e5bce8d9a9bb9"
+    },
+    {
+      "path": "tests/test_protocol_service.py",
+      "bytes": 4069,
+      "sha256": "293f62dc2f78577df53be5bd443ffa9b17fe857c5a83e51bc225921b7a0f9263"
+    },
+    {
+      "path": "tests/test_receipts.py",
+      "bytes": 7299,
+      "sha256": "20c86afb8dc27478be626b2d6236798bc130ed7beb79b4e8e24ab7d624281690"
+    },
+    {
+      "path": "tests/test_store_migrations.py",
+      "bytes": 3153,
+      "sha256": "2d17d8405e24aee6c0ff9147d3cf43ca7f8cd8a604b972acb2deb855011ef2bb"
+    }
+  ]
+}

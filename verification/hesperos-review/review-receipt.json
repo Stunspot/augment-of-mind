@@ -1,0 +1,38 @@
+{
+  "format": "cd-hesperos-documentation-review/v1",
+  "product": {
+    "slug": "augment-of-mind",
+    "plugin_version": "1.0.0",
+    "core_version": "0.2.0"
+  },
+  "review": {
+    "capability": "documentation-accessibility-reviewer",
+    "capability_entrypoint_sha256": "279717e733e3aebcb195ea7a520fb0463dc6dac06e41def23910c5ffe1977d34",
+    "mode": "independent-subagent-read-only",
+    "disposition": "REVIEW_PASS",
+    "reviewed_head": "0129c9bdf0052e1fb742edc6daaac86cd501712d",
+    "reviewed_documentation_fingerprint": "e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19",
+    "declared_file_count": 18,
+    "declared_markdown_count": 16,
+    "finding_count": 0,
+    "prior_findings_closed": 3
+  },
+  "static_audit": {
+    "headings": 22,
+    "links": 29,
+    "image_elements": 4,
+    "required_image_roles": 3,
+    "issues": 0
+  },
+  "evidence": {
+    "documentation_manifest": "documentation-manifest.json",
+    "authorship_receipt": "verification/hesperos-authoring/documentation-authorship.json",
+    "image_inspection": "verification/hesperos-authoring/image-inspection.json",
+    "review_report": "verification/hesperos-review/review-report.md"
+  },
+  "limitations": [
+    "The reviewer's native image viewer failed before rendering because the Codex sandbox helper could not launch; retained original-detail inspection was treated as prior evidence.",
+    "Live Pages, browser behavior, release assets, and fresh-host behavior remain separate gates."
+  ],
+  "claim_boundary": "Independent source-level documentation and accessibility review only."
+}

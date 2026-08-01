@@ -1,0 +1,30 @@
+{
+  "format": "cd-customer-documentation/v1",
+  "product": "augment-of-mind",
+  "plugin_version": "1.0.0",
+  "core_version": "0.2.0",
+  "scope": "Hesperos-authored customer guidance and Pages source; separately governed legal text is listed in related_legal_files.",
+  "related_legal_files": [
+    "LICENSE.md"
+  ],
+  "customer_docs": [
+    "README.md",
+    "START-HERE.md",
+    "INSTALL-CODEX.md",
+    "QUICK-START.md",
+    "USER-GUIDE.md",
+    "OPTIONAL-CORE.md",
+    "HOST-COMPATIBILITY.md",
+    "CAPABILITIES-AND-LIMITS.md",
+    "DATA-AND-PRIVACY.md",
+    "SECURITY.md",
+    "TROUBLESHOOTING.md",
+    "SUPPORT.md",
+    "TERMS-OF-USE.md",
+    "NOTICE.md",
+    "RELEASE-NOTES.md",
+    "PACKAGE-REFERENCE.md",
+    "docs/index.html",
+    "docs/style.css"
+  ]
+}
