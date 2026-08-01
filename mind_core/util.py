@@ -82,6 +82,8 @@ def require_bounded_interval(
     expires = parse_timestamp(expires_at, f"{field}.expires_at")
     parent_observed = parse_timestamp(parent_observed_at, "session.observed_at")
     parent_expires = parse_timestamp(parent_expires_at, "session.expires_at")
+    if expires <= observed:
+        raise ValidationError(f"{field} expiry must be later than its observation")
     if observed < parent_observed or expires > parent_expires:
         raise ValidationError(f"{field} interval must be within the host session")
 

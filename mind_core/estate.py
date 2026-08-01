@@ -6,6 +6,7 @@ import sqlite3
 from typing import Any, Iterable
 
 from .constants import (
+    CAPABILITY_EXPOSURE_POLICIES,
     GLOBAL_LIFECYCLE_AXES,
     LIFECYCLE_STATES,
     SESSION_LIFECYCLE_AXES,
@@ -104,6 +105,22 @@ class CapabilityEstate:
         self, records: Iterable[dict[str, Any]], connection: sqlite3.Connection
     ) -> None:
         for item in records:
+            exposure_policy = require_identifier(
+                item.get("exposure_policy", "public_safe"), "exposure_policy"
+            )
+            if exposure_policy not in CAPABILITY_EXPOSURE_POLICIES:
+                raise ValidationError(
+                    f"unsupported capability exposure_policy: {exposure_policy}"
+                )
+            owner_agent_instance_id = _nullable_identifier(
+                item.get("owner_agent_instance_id"), "owner_agent_instance_id"
+            )
+            if (exposure_policy == "public_safe") != (
+                owner_agent_instance_id is None
+            ):
+                raise ValidationError(
+                    "public capabilities require no owner; private capabilities require one"
+                )
             record = {
                 "capability_id": require_identifier(
                     item.get("capability_id"), "capability_id"
@@ -124,6 +141,8 @@ class CapabilityEstate:
                 "superseded_by": _nullable_identifier(
                     item.get("superseded_by"), "superseded_by"
                 ),
+                "exposure_policy": exposure_policy,
+                "owner_agent_instance_id": owner_agent_instance_id,
             }
             insert_exact(connection, "capabilities", record, ("capability_id",))
             for alias in item.get("aliases", []):
@@ -288,8 +307,13 @@ class CapabilityEstate:
         *,
         agent_instance_id: str | None = None,
         host_session_id: str | None = None,
+        _private_agent_instance_id: str | None = None,
     ) -> dict[str, Any]:
         capability_id = require_identifier(capability_id, "capability_id")
+        if _private_agent_instance_id is not None:
+            _private_agent_instance_id = require_identifier(
+                _private_agent_instance_id, "private_agent_instance_id"
+            )
         if (agent_instance_id is None) != (host_session_id is None):
             raise ValidationError("capability scope requires both agent and host session")
         session_fresh = True
@@ -302,6 +326,11 @@ class CapabilityEstate:
             "SELECT * FROM capabilities WHERE capability_id=?", (capability_id,)
         ).fetchone()
         if row is None:
+            raise NotFoundError(f"capability not found: {capability_id}")
+        if (
+            row["exposure_policy"] == "agent_private"
+            and row["owner_agent_instance_id"] != _private_agent_instance_id
+        ):
             raise NotFoundError(f"capability not found: {capability_id}")
         result = dict(row)
         result["aliases"] = [
@@ -364,22 +393,41 @@ class CapabilityEstate:
         *,
         agent_instance_id: str | None = None,
         host_session_id: str | None = None,
+        _private_agent_instance_id: str | None = None,
     ) -> list[dict[str, Any]]:
         query = require_text(handle_or_alias, "handle_or_alias", maximum=512).casefold()
+        private_agent = (
+            require_identifier(
+                _private_agent_instance_id, "private_agent_instance_id"
+            )
+            if _private_agent_instance_id is not None
+            else ""
+        )
         rows = self.store.connection.execute(
             """
-            SELECT capability_id FROM capabilities WHERE handle=?
+            SELECT capability_id FROM capabilities
+            WHERE handle=?
+              AND (exposure_policy='public_safe' OR owner_agent_instance_id=?)
             UNION
-            SELECT capability_id FROM capability_aliases WHERE normalized_alias=?
+            SELECT alias.capability_id
+            FROM capability_aliases AS alias
+            JOIN capabilities AS capability
+              ON capability.capability_id=alias.capability_id
+            WHERE alias.normalized_alias=?
+              AND (capability.exposure_policy='public_safe'
+                   OR capability.owner_agent_instance_id=?)
             ORDER BY capability_id
             """,
-            (query, query),
+            (query, private_agent, query, private_agent),
         ).fetchall()
         return [
             self.capability(
                 row["capability_id"],
                 agent_instance_id=agent_instance_id,
                 host_session_id=host_session_id,
+                _private_agent_instance_id=(
+                    private_agent if _private_agent_instance_id is not None else None
+                ),
             )
             for row in rows
         ]

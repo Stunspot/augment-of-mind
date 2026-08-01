@@ -1,4 +1,4 @@
-"""Persona-neutral Phase 1 MIND Core façade."""
+"""Persona-neutral MIND Core façade."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ from .estate import CapabilityEstate
 from .handshake import HostRegistry
 from .mounts import MountCatalog
 from .receipts import ReceiptLedger
+from .reminders import AssociativeReminders
 from .store import CoreStore
 from .util import new_id, require_identifier, timestamp
 
@@ -39,6 +40,9 @@ class MindCore:
                     "INSERT INTO core_meta(key,value,updated_at) VALUES (?,?,?)",
                     ("core_instance_id", new_id("core"), timestamp()),
                 )
+        self.reminders = AssociativeReminders(
+            self.store, self.receipts, self.hosts, self.estate
+        )
 
     def close(self) -> None:
         self.store.close()
@@ -61,6 +65,13 @@ class MindCore:
                 "lifecycle_observations",
                 "mounts",
                 "mount_observations",
+                "capability_cards",
+                "capability_card_views",
+                "capability_relations",
+                "associative_index_snapshots",
+                "associative_view_vectors",
+                "associative_snapshot_activations",
+                "session_query_capabilities",
                 "receipts",
             )
         }
@@ -75,7 +86,7 @@ class MindCore:
             "maximum_host_conformance": MAX_CONFORMANCE_LEVEL,
             "persona_required": False,
             "persona_inference": False,
-            "mode": "phase1_read_only_truth_substrate",
+            "mode": "phase2_associative_disclosure_h0",
             "implemented": [
                 "agent_instance_isolation",
                 "host_handshake_metadata",
@@ -84,12 +95,19 @@ class MindCore:
                 "mount_catalog_metadata",
                 "append_only_receipts",
                 "stdio_protocol_skeleton",
+                "versioned_capability_cards",
+                "exact_vector_radius_neighborhoods",
+                "exhaustive_lexical_membership",
+                "typed_associative_relations",
+                "field_bound_card_expansion",
+                "canonical_and_compact_reminder_fields",
             ],
             "not_implemented": [
                 "event_delivery",
                 "automatic_activation",
-                "associative_recruitment",
-                "embeddings_or_vectors",
+                "automatic_pre_sampling_reminder_delivery",
+                "embedding_generation_or_model_installation",
+                "vector_acceleration_extension",
                 "owner_store_reads_or_writes",
                 "legacy_data_migration",
                 "action_admission_or_dispatch_gate",
@@ -98,6 +116,20 @@ class MindCore:
             "counts": counts,
             "sqlite": self.store.integrity(),
         }
+
+    def query_status(self) -> dict[str, Any]:
+        """Return H0 runtime identity without unscoped private-sensitive counts."""
+
+        result = self.status()
+        result.pop("counts", None)
+        sqlite_status = result["sqlite"]
+        result["sqlite"] = {
+            "integrity_ok": sqlite_status["integrity_check"] == "ok",
+            "foreign_key_ok": not sqlite_status["foreign_key_failures"],
+            "foreign_keys_enabled": sqlite_status["foreign_keys_enabled"],
+            "journal_mode": sqlite_status["journal_mode"],
+        }
+        return result
 
     def bootstrap(self, manifest: dict[str, Any]) -> dict[str, Any]:
         if manifest.get("format") != "mind-core-bootstrap/v1":

@@ -1,0 +1,30 @@
+{
+  "format_version": "1.0",
+  "source": {
+    "format": "junit_xml",
+    "path": "E:\\Github\\augment-of-mind\\artifacts\\testforge\\phase2\\E-003-exoframe-windows-vault-host.xml"
+  },
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "status": "passed"
+  },
+  "cases": [
+    {
+      "name": "test_control_vault_never_returns_or_stores_plaintext",
+      "suite": "tests.security.test_credential_vault",
+      "status": "passed",
+      "duration_seconds": 0.23
+    },
+    {
+      "name": "test_windows_credential_manager_round_trip",
+      "suite": "tests.security.test_windows_platform_security",
+      "status": "passed",
+      "duration_seconds": 0.015
+    }
+  ],
+  "parse_warnings": []
+}

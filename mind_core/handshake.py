@@ -179,7 +179,7 @@ class HostRegistry:
                     "claimed_boundary": (
                         "Adapter-supplied host metadata was durably recorded by Core. "
                         "Authentication, permission, and catalog claims remain reported. "
-                        "Phase 1 evidence remains H0; "
+                        "MIND Core evidence remains H0; "
                         "automatic delivery, activation, result interception, and dispatch gating are unproved."
                     ),
                     "observed_at": observed_at,
@@ -288,7 +288,7 @@ class HostRegistry:
                     "host_session_id": coverage["host_session_id"],
                     "evidence_state": "reported",
                     "claimed_boundary": (
-                        f"Adapter declared {declared}; Phase 1 records effective coverage as {effective} "
+                        f"Adapter declared {declared}; MIND Core records effective coverage as {effective} "
                         "and cannot establish H1, H2, or H3."
                     ),
                     "observed_at": observed_at,

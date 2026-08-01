@@ -1,12 +1,14 @@
-"""Normative identifiers and bounded Phase 1 state vocabularies."""
+"""Normative identifiers and bounded MIND Core state vocabularies."""
 
 from __future__ import annotations
 
 APPLICATION_ID = 0x4D494E44  # MIND
-SCHEMA_VERSION = 1
-PROTOCOL_VERSION = "mind-core/0.1"
-RUNTIME_VERSION = "0.1.0"
+SCHEMA_VERSION = 2
+PROTOCOL_VERSION = "mind-core/0.2"
+RUNTIME_VERSION = "0.2.0"
 MAX_CONFORMANCE_LEVEL = "H0"
+
+CAPABILITY_EXPOSURE_POLICIES = frozenset({"public_safe", "agent_private"})
 
 CONFORMANCE_LEVELS = frozenset({"H0", "H1", "H2", "H3"})
 COVERAGE_STATES = frozenset(

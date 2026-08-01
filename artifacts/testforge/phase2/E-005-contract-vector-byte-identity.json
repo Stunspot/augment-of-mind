@@ -1,0 +1,19 @@
+{
+  "format_version": "1.0",
+  "command": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$left = Get-FileHash -Algorithm SHA256 -LiteralPath E:\\Github\\augment-of-mind\\tests\\fixtures\\mind_associative_field_delivery_v1.json\n$right = Get-FileHash -Algorithm SHA256 -LiteralPath E:\\Github\\exoframe\\tests\\fixtures\\mind_associative_field_delivery_v1.json\n$leftLength = (Get-Item -LiteralPath E:\\Github\\augment-of-mind\\tests\\fixtures\\mind_associative_field_delivery_v1.json).Length\n$rightLength = (Get-Item -LiteralPath E:\\Github\\exoframe\\tests\\fixtures\\mind_associative_field_delivery_v1.json).Length\nif ($left.Hash -ne $right.Hash -or $leftLength -ne $rightLength) { exit 1 }\nWrite-Output ($left.Hash.ToLowerInvariant())\nWrite-Output $leftLength"
+  ],
+  "working_directory": ".",
+  "started_at": "2026-08-01T07:17:46.731991+00:00",
+  "finished_at": "2026-08-01T07:17:47.066452+00:00",
+  "duration_seconds": 0.334461,
+  "exit_code": 0,
+  "timed_out": false,
+  "stdout": "3dd8a9f117f0223201128989473c52720fc53f3cef03464b24e04c5fcc888db0\n923\n",
+  "stderr": "",
+  "status": "passed"
+}

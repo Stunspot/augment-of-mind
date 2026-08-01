@@ -1,4 +1,4 @@
-"""Query-only JSON-RPC-like service for Phase 1 MIND Core."""
+"""Query-only JSON-RPC-like service for MIND Core."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ class QueryService:
     def __init__(self, core: MindCore):
         self.core = core
         self.methods: dict[str, _Method] = {
-            "core.status": _Method(core.status, frozenset()),
+            "core.status": _Method(core.query_status, frozenset()),
             "core.schema": _Method(
                 lambda: {"tables": core.schema_tables()}, frozenset()
             ),
@@ -45,14 +45,14 @@ class QueryService:
                 frozenset({"host_session_id", "agent_instance_id"}),
             ),
             "estate.resolve": _Method(
-                core.estate.resolve,
+                core.reminders.estate_resolve,
                 frozenset({"handle_or_alias"}),
-                frozenset({"agent_instance_id", "host_session_id"}),
+                frozenset({"session_capability"}),
             ),
             "estate.capability": _Method(
-                core.estate.capability,
+                core.reminders.estate_capability,
                 frozenset({"capability_id"}),
-                frozenset({"agent_instance_id", "host_session_id"}),
+                frozenset({"session_capability"}),
             ),
             "mount.catalog": _Method(
                 core.mounts.catalog,
@@ -68,6 +68,21 @@ class QueryService:
                 core.receipts.get,
                 frozenset({"receipt_id"}),
                 frozenset({"agent_instance_id", "host_session_id"}),
+            ),
+            "reminder.neighborhood": _Method(
+                core.reminders.neighborhood,
+                frozenset({"session_capability", "snapshot_id", "anchors"}),
+            ),
+            "reminder.card": _Method(
+                core.reminders.card,
+                frozenset(
+                    {
+                        "session_capability",
+                        "field_id",
+                        "membership_manifest_digest",
+                        "visibility_token",
+                    }
+                ),
             ),
         }
 
@@ -89,8 +104,8 @@ class QueryService:
                 "host_session_id": values.get("host_session_id"),
             },
             "claim_boundary": (
-                "H0 query result only; no automatic event delivery, capability "
-                "activation, result interception, or dispatch gating is claimed."
+                "H0 query result only; no automatic event or reminder-field delivery, "
+                "capability activation, result interception, or dispatch gating is claimed."
             ),
         }
 

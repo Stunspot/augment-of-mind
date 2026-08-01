@@ -30,4 +30,4 @@ class WriterLeaseError(MindCoreError):
 
 
 class ProtocolError(MindCoreError):
-    """A framed IPC request does not satisfy the Phase 1 protocol."""
+    """A framed IPC request does not satisfy the MIND Core protocol."""

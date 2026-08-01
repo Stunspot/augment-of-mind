@@ -16,13 +16,15 @@ This is the clean standalone public edition shipped in the **Nova + MIND OpenAI 
 - Integrator: [`skills/augment-of-mind/SKILL.md`](skills/augment-of-mind/SKILL.md)
 - Faculty registry: [`faculty-registry.json`](skills/augment-of-mind/references/faculty-runtime/faculty-registry.json)
 
-## MIND Core Phase 1 development
+## MIND Core Phase 2 development
 
-The repository now contains a development implementation of MIND's persona-neutral local metadata spine. It records capability and provider identity, independent lifecycle evidence, exact agent/session scope, federated data-store descriptors, and append-only receipts without importing owner data or inferring an `active` state.
+The repository now contains a development implementation of MIND's persona-neutral local metadata spine and associative reminder field. It records capability and provider identity, independent lifecycle evidence, exact agent/session scope, federated data-store descriptors, append-only receipts, immutable capability-card generations, exact cosine-radius neighborhoods, exhaustive lexical associations, typed bridges, and field-bound card expansion without importing owner data or inferring an `active` state.
 
-Its current service boundary is deliberately **H0/query-only**. It does not automatically inject MIND, recruit capabilities, intercept results, gate actions, run vectors, migrate legacy stores, or require Nova, TestForge, Obsidian, Dunbar, continuity, or a future Mnemosyne provider.
+Its current service boundary remains deliberately **H0/query-only**. It can construct a scoped Arm's Reach field when a cooperating host supplies ephemeral anchors, but it does not automatically observe turns, generate embeddings, inject the field before sampling, activate a capability, intercept results, gate actions, migrate legacy stores, or require Nova, TestForge, Obsidian, Dunbar, continuity, or a future Mnemosyne provider.
 
-See the [Phase 1 work packet](docs/architecture/PHASE-1-WORK-PACKET.md) for the accepted scope, invariants, exclusions, protocol, and local evidence. The Core package has its own `0.1.0` runtime version; that does not replace or renumber the standalone MIND plugin edition described below.
+The portable delivery envelope has a producer-generated contract vector consumed unchanged by Exoframe, where repository-local capture verifies exact transient construction before adapter dispatch. That establishes the cooperative pre-sampling seam only; it is not evidence of live H1 event ingestion, same-turn compilation, authenticated provider delivery, Codex Desktop interception, or a correlated receipt.
+
+See the [Phase 1 work packet](docs/architecture/PHASE-1-WORK-PACKET.md) for the metadata foundation and the [Phase 2 work packet](docs/architecture/PHASE-2-ASSOCIATIVE-DISCLOSURE-WORK-PACKET.md) for associative disclosure, privacy, degradation, and host-boundary invariants. The Core package has its own `0.2.0` runtime version; that does not replace or renumber the standalone MIND plugin edition described below.
 
 ## Start with the mission
 

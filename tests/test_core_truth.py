@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 
 from mind_core import MindCore
-from mind_core.constants import FORBIDDEN_PHASE1_TABLE_TERMS
+from mind_core.constants import FORBIDDEN_PHASE1_TABLE_TERMS, RUNTIME_VERSION
 
 from tests.helpers import bootstrap_fixture, handshake_record
 
@@ -29,6 +30,12 @@ class CoreTruthTests(unittest.TestCase):
         self.assertNotIn("testforge", str(status).casefold())
         self.assertNotIn("obsidian", str(status).casefold())
         self.assertNotIn("mnemosyne", str(status).casefold())
+
+    def test_package_metadata_matches_runtime_version(self) -> None:
+        pyproject = tomllib.loads(
+            (Path(__file__).parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+        )
+        self.assertEqual(pyproject["project"]["version"], RUNTIME_VERSION)
 
     def test_bootstrap_is_idempotent_and_preserves_lifecycle_truth(self) -> None:
         manifest = bootstrap_fixture()
@@ -84,13 +91,13 @@ class CoreTruthTests(unittest.TestCase):
         self.assertEqual(states["mount:obsidian"], "known_unregistered")
         self.assertTrue(all(item["observation"] is None for item in catalog))
 
-    def test_schema_has_no_phase1_forbidden_storage_or_action_tables(self) -> None:
-        schema_rows = self.core.store.connection.execute(
-            "SELECT name,sql FROM sqlite_schema WHERE type='table' ORDER BY name"
-        ).fetchall()
-        rendered = "\n".join(
-            f"{row['name']} {row['sql'] or ''}" for row in schema_rows
-        ).casefold()
+    def test_phase1_migration_has_no_forbidden_storage_or_action_tables(self) -> None:
+        rendered = (
+            Path(__file__).parents[1]
+            / "mind_core"
+            / "migrations"
+            / "0001_core_metadata.sql"
+        ).read_text(encoding="utf-8").casefold()
         for term in FORBIDDEN_PHASE1_TABLE_TERMS:
             self.assertNotIn(term, rendered)
 
