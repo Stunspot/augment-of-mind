@@ -1,7 +1,7 @@
 # Hesperos authoring validation evidence
 
 Candidate documentation fingerprint:
-`e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19`
+`b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9`
 
 ## Observed checks
 
@@ -9,7 +9,8 @@ Candidate documentation fingerprint:
 |---|---|
 | Hesperos accessible-Markdown linter over all 16 declared Markdown documents | PASS for every file |
 | `python -X utf8 scripts/audit_pages.py` | PASS; 22 headings, 29 links, 4 image elements, required visual roles rendered, zero issues |
-| Full `unittest` discovery under Python 3.14 and qualified Python 3.12 | PASS; 82 tests on each runtime |
+| True 390 CSS-pixel Chrome CDP regression plus focused original-detail visual review | PASS; 390px document width, three 342px installation cards, 295px scrollable code block, no container clipping; screenshot SHA-256 `34ff8908e590487b1f1a4658db286d064da91829c33c1a9639ae19fbb3325b7a` |
+| Full `unittest` discovery under qualified Python 3.12 after the responsive repair | PASS; 83 tests |
 | `git diff --check` | PASS; line-ending conversion warnings only |
 | UTF-8 mojibake-codepoint scan of customer Markdown and Pages source | PASS; no suspect codepoints found |
 | `python -X utf8 -m mind_core init` followed by `status` against a new temporary database | PASS on Windows; same Core instance, schema 2, runtime 0.2.0, H0 mode, SQLite integrity `ok` |
@@ -75,9 +76,25 @@ display label. The narrow release-tooling suite passes 6 tests, and full
 discovery passes 83 tests on both Python 3.14 and Python 3.12. This closes the
 recurrence path at the release-package boundary.
 
+The prepublication live-visual cycle then found a mobile clipping report in a
+390-pixel PNG. Root-cause isolation showed that the first Windows headless
+Chrome invocation had silently laid out the page at its 500-CSS-pixel minimum
+and cropped the PNG to 390 pixels, so that image could not diagnose the site.
+A direct DevTools emulation at a true 390 CSS pixels then exposed a separate
+real defect: the mobile `.steps > li { grid-template-columns: 1fr; }` rule let
+the long marketplace command impose a roughly 661-pixel min-content width,
+while `main { overflow: hidden; }` concealed document overflow. The repair
+uses zero-minimum grid tracks and zero-minimum step children. The corrected
+browser receipt observes a 390-pixel document, three 342-pixel step cards, a
+295-pixel `pre` with `overflow-x: auto` and a 613-pixel scroll width, and no
+container clipping. Independent original-detail visual rereview passed the
+focused 390-pixel installation capture. Public Pages deployment remains a
+separate post-merge gate.
+
 ## Evidence ceiling
 
-These checks establish source-level documentation readiness and exact authored
-bytes. They do not establish independent review, release-archive behavior,
-fresh-host plugin behavior, GitHub publication, Pages deployment, or live
-browser accessibility. Those are separate gates.
+These checks establish source-level documentation readiness, exact authored
+bytes, and a local true-390px responsive regression closure. They do not
+establish independent review of this fingerprint, the rebuilt release archive,
+fresh-public plugin behavior, corrected GitHub Pages deployment, assistive-
+technology behavior, or production outcomes. Those are separate gates.
