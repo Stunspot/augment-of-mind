@@ -2,7 +2,7 @@
   "project_id": "MIND-DOCS-1.0.0",
   "title": "MIND 1.0.0 customer documentation and Pages",
   "product_version": "plugin 1.0.0; optional Core 0.2.0",
-  "status": "review-needed",
+  "status": "accessibility-reviewed",
   "audiences": [
     {
       "name": "Codex user",
@@ -52,15 +52,15 @@
   "topics": [
     {
       "topic": "orientation, installation, first value, normal use, recovery",
-      "status": "draft"
+      "status": "reviewed"
     },
     {
       "topic": "component boundaries, compatibility, capability limits, data, privacy, security, support, terms",
-      "status": "draft"
+      "status": "reviewed"
     },
     {
       "topic": "Pages journey and square icon, 16:9 hero, 4:5 capability-card roles",
-      "status": "draft"
+      "status": "reviewed"
     }
   ],
   "accessibility_reviews": [
@@ -74,7 +74,7 @@
     },
     {
       "check": "Independent documentation-accessibility review",
-      "result": "Current fingerprint e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19 pending rereview after marketplace collision and display-label repair"
+      "result": "PASS at fingerprint e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19"
     },
     {
       "check": "Live Pages browser, responsive, keyboard, and link review",
@@ -96,5 +96,5 @@
     }
   ],
   "owner": "Collaborative Dynamics",
-  "next_move": "Rereview the marketplace-name repair, then validate the deployed Pages surface with browser, responsive, keyboard, image, and live-link readback."
+  "next_move": "Freeze the reviewed source, publish the release and Pages, then validate the live browser, responsive, keyboard, image, link, and asset surfaces."
 }
