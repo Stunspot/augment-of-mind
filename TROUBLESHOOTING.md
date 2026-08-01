@@ -12,7 +12,7 @@ failure occurs in a new task. Fix the cause before decorating the workaround.
    codex plugin marketplace list
    ```
 
-2. Confirm that `collaborative-dynamics` resolves to the GitHub release or the
+2. Confirm that `collaborative-dynamics-mind` resolves to the GitHub release or the
    exact extracted release root you intended.
 3. If it is absent, rerun the applicable `codex plugin marketplace add`
    command from [Installation](INSTALL-CODEX.md).

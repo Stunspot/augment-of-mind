@@ -1,7 +1,7 @@
 {
-  "name": "collaborative-dynamics",
+  "name": "collaborative-dynamics-mind",
   "interface": {
-    "displayName": "Collaborative Dynamics"
+    "displayName": "Collaborative Dynamics: MIND"
   },
   "plugins": [
     {

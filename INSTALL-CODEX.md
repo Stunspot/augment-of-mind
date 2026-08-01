@@ -24,14 +24,14 @@ After release `v1.0.0` is published, add its pinned marketplace source:
 codex plugin marketplace add Stunspot/augment-of-mind --ref v1.0.0
 ```
 
-Expected result: Codex records the `collaborative-dynamics` marketplace without
+Expected result: Codex records the `collaborative-dynamics-mind` marketplace without
 an error.
 
 Then:
 
 1. Open Codex CLI and enter `/plugins`, or open **Plugins** in the ChatGPT
    desktop app while using Codex.
-2. Select the **Collaborative Dynamics** marketplace.
+2. Select the **Collaborative Dynamics: MIND** marketplace.
 3. Open **MIND by Collaborative Dynamics** and install it.
 4. Confirm that it appears in the installed list and is enabled.
 5. Start a new task. Installed skills are loaded at the new-task boundary.
@@ -70,7 +70,7 @@ skills, and the [quick-start request](QUICK-START.md) produces a response.
    codex plugin marketplace add C:\path\to\augment-of-mind-v1.0.0
    ```
 
-6. Install MIND from the **Collaborative Dynamics** marketplace using the same
+6. Install MIND from the **Collaborative Dynamics: MIND** marketplace using the same
    plugin-browser steps, then start a new task.
 
 ## Update or remove
@@ -78,14 +78,14 @@ skills, and the [quick-start request](QUICK-START.md) produces a response.
 To refresh configured Git-backed marketplaces:
 
 ```powershell
-codex plugin marketplace upgrade collaborative-dynamics
+codex plugin marketplace upgrade collaborative-dynamics-mind
 ```
 
 Use the plugin browser to uninstall or disable MIND. To stop tracking its
 marketplace as well:
 
 ```powershell
-codex plugin marketplace remove collaborative-dynamics
+codex plugin marketplace remove collaborative-dynamics-mind
 ```
 
 Removing the plugin does not delete an optional MIND Core database or Python

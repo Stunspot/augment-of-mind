@@ -1,7 +1,7 @@
 # Hesperos authoring validation evidence
 
 Candidate documentation fingerprint:
-`9e1ecd5d0c1b051f5632ca98adfc5b395260088c0ce0fc92115fc8514ad33efa`
+`f15d85efff1c5b66d6772f5627113bd458ea324e4156c9480e145e4f70b85437`
 
 ## Observed checks
 
@@ -56,6 +56,18 @@ customer documents. Removing only those blank lines produced the final
 fingerprint recorded here. The independent reviewer observed each diff as zero
 additions and one blank-line deletion, repeated the static checks, and returned
 REVIEW_PASS for this exact fingerprint.
+
+Host-state inspection then found that CanopyOps already owned marketplace ID
+`collaborative-dynamics`. Codex identifies and caches marketplaces by name, so
+publishing another standalone repository under that ID would create a sibling
+product collision. MIND now uses the portable unique marketplace ID
+`collaborative-dynamics-mind`, with the display title `Collaborative Dynamics:
+MIND`. Installation, upgrade, removal, troubleshooting, and customer-visible
+marketplace-selection instructions were updated together. The first rereview
+caught two installer references and one Pages reference that still displayed
+the parent brand instead of the exact marketplace title; those three references
+were corrected before this fingerprint was issued. This semantic repair
+produced the current fingerprint and requires exact independent rereview.
 
 ## Evidence ceiling
 

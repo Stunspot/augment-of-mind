@@ -2,7 +2,7 @@
   "project_id": "MIND-DOCS-1.0.0",
   "title": "MIND 1.0.0 customer documentation and Pages",
   "product_version": "plugin 1.0.0; optional Core 0.2.0",
-  "status": "accessibility-reviewed",
+  "status": "review-needed",
   "audiences": [
     {
       "name": "Codex user",
@@ -74,7 +74,7 @@
     },
     {
       "check": "Independent documentation-accessibility review",
-      "result": "PASS at documentation fingerprint 9e1ecd5d0c1b051f5632ca98adfc5b395260088c0ce0fc92115fc8514ad33efa"
+      "result": "Current fingerprint f15d85efff1c5b66d6772f5627113bd458ea324e4156c9480e145e4f70b85437 pending rereview after marketplace collision and display-label repair"
     },
     {
       "check": "Live Pages browser, responsive, keyboard, and link review",
@@ -96,5 +96,5 @@
     }
   ],
   "owner": "Collaborative Dynamics",
-  "next_move": "Validate the deployed Pages surface with browser, responsive, keyboard, image, and live-link readback before publication is called complete."
+  "next_move": "Rereview the marketplace-name repair, then validate the deployed Pages surface with browser, responsive, keyboard, image, and live-link readback."
 }
