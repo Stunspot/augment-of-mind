@@ -74,11 +74,11 @@
     },
     {
       "check": "Independent documentation-accessibility review",
-      "result": "PASS at fingerprint e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19"
+      "result": "PASS at fingerprint b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9, reviewed HEAD 79e7b74599e47d2a231f1099734a578e39600a80"
     },
     {
       "check": "Live Pages browser, responsive, keyboard, and link review",
-      "result": "pending publication"
+      "result": "local true-390px responsive regression PASS; corrected public Pages deployment pending"
     }
   ],
   "verification": [
@@ -96,5 +96,5 @@
     }
   ],
   "owner": "Collaborative Dynamics",
-  "next_move": "Freeze the reviewed source, publish the release and Pages, then validate the live browser, responsive, keyboard, image, link, and asset surfaces."
+  "next_move": "Merge the reviewed responsive repair, validate the corrected public Pages surface, then rebuild and publish the exact release archive and verify a fresh public install."
 }

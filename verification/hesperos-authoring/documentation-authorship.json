@@ -86,9 +86,9 @@
       "sha256": "93b4a9cded546d356c608682d6512afab7d94aec00c1187854a44719c8a9550e"
     },
     {
-      "bytes": 10465,
+      "bytes": 10933,
       "path": "docs/style.css",
-      "sha256": "5e69d718b291d987ea0b2c71eccc7cf8640459372abd7e36a5ebeeb65eb998fc"
+      "sha256": "bc7cd8d9782c933add2f99fa8466337399a87a9024a415c0d4faeb3fef3bbba3"
     }
   ],
   "authoring": {
@@ -96,16 +96,17 @@
     "capability": "hesperos-documentation",
     "capability_entrypoint_sha256": "f9284a8b14ca20a4661b15db542e3d8f52d3cf1ef42c1c56f4ed540a1036a3b3",
     "mode": "in-process",
-    "run_id": "hesperos-augment-of-mind-v1.0.0-20260731"
+    "run_id": "hesperos-augment-of-mind-v1.0.0-mobile-remediation-20260801",
+    "source_revision": "4ce7215b2156dd06f79ae156535400deebedc9b6"
   },
   "authoring_response": {
-    "bytes": 975,
+    "bytes": 1392,
     "path": "verification/hesperos-authoring/authoring-response.md",
-    "sha256": "0babad3181e7d11b783c87c7c4327777eb8e1f8c1df30d09c2a6a6fcc1b5573d"
+    "sha256": "85ace3fde40b8a3da42483073fe2e837388fa12d232d5eb72f0ae67d5fffe3a2"
   },
   "claim_boundary": "Binds retained evidence for one Hesperos authoring or material-revision run. It does not prove independent review, host activation, publication, accessibility conformance, or customer outcomes.",
-  "created_at": "2026-08-01T16:03:10+00:00",
-  "documentation_fingerprint": "e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19",
+  "created_at": "2026-08-01T17:55:20+00:00",
+  "documentation_fingerprint": "b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9",
   "documentation_manifest": {
     "bytes": 761,
     "path": "documentation-manifest.json",
@@ -118,9 +119,9 @@
   },
   "execution_evidence": [
     {
-      "bytes": 4952,
+      "bytes": 6372,
       "path": "verification/hesperos-authoring/validation-evidence.md",
-      "sha256": "94e2417581c0261be13c92e7c865be7683864f6b9be1a52495f454709d224a7e"
+      "sha256": "34ef25a4a70e21e8b03ab2ef9f6d119184e33e4d2013dbdce99c6c26f1a52ade"
     },
     {
       "bytes": 1187,
@@ -128,14 +129,20 @@
       "sha256": "b3baf3e20a6b4ac08c553f1b63b033f44589a607f2774dd59454302e1135acd3"
     },
     {
-      "bytes": 975,
+      "bytes": 1392,
       "path": "verification/hesperos-authoring/authoring-response.md",
-      "sha256": "0babad3181e7d11b783c87c7c4327777eb8e1f8c1df30d09c2a6a6fcc1b5573d"
+      "sha256": "85ace3fde40b8a3da42483073fe2e837388fa12d232d5eb72f0ae67d5fffe3a2"
     }
   ],
   "format": "cd-hesperos-documentation-authorship/v1",
   "product": {
     "slug": "augment-of-mind",
     "version": "1.0.0"
+  },
+  "responsive_remediation": {
+    "status": "local-regression-pass",
+    "viewport_css_px": 390,
+    "focused_screenshot_sha256": "34ff8908e590487b1f1a4658db286d064da91829c33c1a9639ae19fbb3325b7a",
+    "public_deployment_review": "pending"
   }
 }

@@ -10,12 +10,12 @@
     "capability_entrypoint_sha256": "279717e733e3aebcb195ea7a520fb0463dc6dac06e41def23910c5ffe1977d34",
     "mode": "independent-subagent-read-only",
     "disposition": "REVIEW_PASS",
-    "reviewed_head": "0129c9bdf0052e1fb742edc6daaac86cd501712d",
-    "reviewed_documentation_fingerprint": "e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19",
+    "reviewed_head": "79e7b74599e47d2a231f1099734a578e39600a80",
+    "reviewed_documentation_fingerprint": "b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9",
     "declared_file_count": 18,
     "declared_markdown_count": 16,
     "finding_count": 0,
-    "prior_findings_closed": 3
+    "prior_findings_closed": 4
   },
   "static_audit": {
     "headings": 22,
@@ -31,8 +31,23 @@
     "review_report": "verification/hesperos-review/review-report.md"
   },
   "limitations": [
-    "The reviewer's native image viewer failed before rendering because the Codex sandbox helper could not launch; retained original-detail inspection was treated as prior evidence.",
-    "Live Pages, browser behavior, release assets, and fresh-host behavior remain separate gates."
+    "The independent reviewer's native image viewer was unavailable because the Codex sandbox helper could not launch; visual appearance and local layout measurements were treated as retained evidence.",
+    "The corrected public Pages deployment, assistive-technology behavior, release assets, and fresh-public host behavior remain separate gates."
   ],
-  "claim_boundary": "Independent source-level documentation and accessibility review only."
+  "claim_boundary": "Independent corrected source-level documentation and accessibility review, including retained local true-390px remediation evidence.",
+  "responsive_regression": {
+    "status": "PASS",
+    "mode": "local-prepublication-retained-evidence",
+    "viewport_css_px": 390,
+    "document_width_px": 390,
+    "installation_card_width_px": 342,
+    "code_block_width_px": 295,
+    "code_scroll_width_px": 613,
+    "code_overflow_x": "auto",
+    "focused_screenshot": {
+      "width": 390,
+      "height": 1301,
+      "sha256": "34ff8908e590487b1f1a4658db286d064da91829c33c1a9639ae19fbb3325b7a"
+    }
+  }
 }

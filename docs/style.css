@@ -177,9 +177,11 @@ figcaption { padding: 0.8rem 1rem; color: var(--muted); font-size: 0.9rem; }
   margin: 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 }
 .steps > li {
+  min-width: 0;
   display: grid;
   grid-template-columns: 3.2rem minmax(0, 1fr);
   gap: 1.1rem;
@@ -187,6 +189,7 @@ figcaption { padding: 0.8rem 1rem; color: var(--muted); font-size: 0.9rem; }
   border: 1px solid var(--line);
   background: linear-gradient(145deg, rgba(16, 45, 64, 0.9), rgba(9, 27, 39, 0.76));
 }
+.steps > li > div { min-width: 0; }
 .steps > li > span {
   display: grid;
   place-items: center;
@@ -338,7 +341,7 @@ footer strong { color: var(--pale); }
   .nav-links { gap: 0.45rem 0.9rem; }
   .hero, .section { padding-top: 4.5rem; padding-bottom: 4.5rem; }
   .hero { grid-template-columns: minmax(0, 1fr); }
-  .steps > li { grid-template-columns: 1fr; }
+  .steps > li { grid-template-columns: minmax(0, 1fr); }
   .faculty-group { grid-template-columns: 1fr; gap: 1rem; }
   .faculty-group li { grid-template-columns: 1fr; gap: 0.35rem; }
   .component-grid,
