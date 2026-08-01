@@ -18,6 +18,7 @@ MANIFEST_NAME = "RELEASE-MANIFEST.json"
 MANIFEST_FORMAT = "cd-mind-release-manifest/v1"
 PRODUCT = "augment-of-mind"
 MARKETPLACE_NAME = "collaborative-dynamics-mind"
+MARKETPLACE_DISPLAY_NAME = "Collaborative Dynamics: MIND"
 PLUGIN_VERSION = "1.0.0"
 CORE_NAME = "cd-mind-core"
 CORE_VERSION = "0.2.0"
@@ -336,9 +337,16 @@ def verify(root: Path) -> dict[str, object]:
             raise ReleaseError(f"plugin screenshot is missing: {relative}")
 
     marketplace = load_json(root / ".agents" / "plugins" / "marketplace.json")
+    interface = marketplace.get("interface")
     entries = marketplace.get("plugins")
-    if marketplace.get("name") != MARKETPLACE_NAME or not isinstance(entries, list) or len(entries) != 1:
-        raise ReleaseError("marketplace identity or membership is wrong")
+    if (
+        marketplace.get("name") != MARKETPLACE_NAME
+        or not isinstance(interface, dict)
+        or interface.get("displayName") != MARKETPLACE_DISPLAY_NAME
+        or not isinstance(entries, list)
+        or len(entries) != 1
+    ):
+        raise ReleaseError("marketplace identity, display metadata, or membership is wrong")
     entry = entries[0]
     if not isinstance(entry, dict) or entry.get("name") != PRODUCT:
         raise ReleaseError("marketplace plugin identity is wrong")
