@@ -1,7 +1,7 @@
 # Hesperos authoring validation evidence
 
 Candidate documentation fingerprint:
-`f15d85efff1c5b66d6772f5627113bd458ea324e4156c9480e145e4f70b85437`
+`e124625deb152e1db0bd8a0d6ae494a9606d155e5541b59e59f0704c4054ba19`
 
 ## Observed checks
 
@@ -68,6 +68,12 @@ caught two installer references and one Pages reference that still displayed
 the parent brand instead of the exact marketplace title; those three references
 were corrected before this fingerprint was issued. This semantic repair
 produced the current fingerprint and requires exact independent rereview.
+
+The release verifier now binds both the machine ID and the exact display title.
+A focused regression test rejects the former shared ID and the parent-brand-only
+display label. The narrow release-tooling suite passes 6 tests, and full
+discovery passes 83 tests on both Python 3.14 and Python 3.12. This closes the
+recurrence path at the release-package boundary.
 
 ## Evidence ceiling
 
