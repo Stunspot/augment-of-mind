@@ -19,7 +19,13 @@ from build_release import (  # noqa: E402
     safe_extract,
     skill_release_files,
 )
-from verify_release import ReleaseError, validate_payload_path  # noqa: E402
+from verify_release import (  # noqa: E402
+    MARKETPLACE_DISPLAY_NAME,
+    MARKETPLACE_NAME,
+    ReleaseError,
+    validate_payload_path,
+    verify_marketplace,
+)
 
 
 class ReleaseToolingTests(unittest.TestCase):
@@ -50,6 +56,29 @@ class ReleaseToolingTests(unittest.TestCase):
             validate_payload_path("skills/sensemaking/unclassified/file.txt")
         with self.assertRaises(ReleaseError):
             validate_payload_path(".")
+
+    def test_marketplace_identity_binds_machine_and_display_names(self) -> None:
+        marketplace = {
+            "name": MARKETPLACE_NAME,
+            "interface": {"displayName": MARKETPLACE_DISPLAY_NAME},
+            "plugins": [
+                {
+                    "name": "augment-of-mind",
+                    "source": {"source": "local", "path": "./"},
+                }
+            ],
+        }
+        verify_marketplace(marketplace)
+
+        wrong_name = dict(marketplace)
+        wrong_name["name"] = "collaborative-dynamics"
+        with self.assertRaisesRegex(ReleaseError, "identity, display metadata"):
+            verify_marketplace(wrong_name)
+
+        wrong_display = dict(marketplace)
+        wrong_display["interface"] = {"displayName": "Collaborative Dynamics"}
+        with self.assertRaisesRegex(ReleaseError, "identity, display metadata"):
+            verify_marketplace(wrong_display)
 
     def test_two_zip_builds_are_byte_identical_with_fixed_metadata(self) -> None:
         with tempfile.TemporaryDirectory(prefix="mind-zip-test-") as temporary:
