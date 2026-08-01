@@ -1,9 +1,6 @@
-__pycache__/
-*.py[cod]
-*.egg-info/
-build/
 dist/
-*.sqlite3
-*.sqlite3-shm
-*.sqlite3-wal
-*.writer.lock
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/

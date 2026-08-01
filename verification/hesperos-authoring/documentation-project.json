@@ -1,0 +1,100 @@
+{
+  "project_id": "MIND-DOCS-1.0.0",
+  "title": "MIND 1.0.0 customer documentation and Pages",
+  "product_version": "plugin 1.0.0; optional Core 0.2.0",
+  "status": "accessibility-reviewed",
+  "audiences": [
+    {
+      "name": "Codex user",
+      "starting_state": "Can configure a Codex plugin marketplace but may not know MIND's component or authority boundaries."
+    },
+    {
+      "name": "Portable-harness integrator",
+      "starting_state": "Can read plugin source and optionally integrate the Core delivery envelope, but has no implied host conformance."
+    },
+    {
+      "name": "Security or release reviewer",
+      "starting_state": "Needs exact package, data, privacy, security, verification, and evidence-ceiling claims."
+    }
+  ],
+  "top_tasks": [
+    {
+      "task": "Install MIND in Codex and verify discovery in a new task",
+      "entry": "INSTALL-CODEX.md"
+    },
+    {
+      "task": "Get first value and understand normal use",
+      "entry": "QUICK-START.md"
+    },
+    {
+      "task": "Diagnose and recover from an installation, discovery, or Core failure",
+      "entry": "TROUBLESHOOTING.md"
+    },
+    {
+      "task": "Inspect optional Core, host support, privacy, security, and limits",
+      "entry": "START-HERE.md"
+    }
+  ],
+  "sources": [
+    {
+      "source": "Repository plugin manifest, skills, Faculty registry, Core source, tests, and release contract",
+      "state": "source-verified"
+    },
+    {
+      "source": "Official OpenAI plugin packaging and marketplace documentation",
+      "state": "source-verified"
+    },
+    {
+      "source": "Current release brief for one ZIP, GitHub Pages, and three visual roles",
+      "state": "reported"
+    }
+  ],
+  "topics": [
+    {
+      "topic": "orientation, installation, first value, normal use, recovery",
+      "status": "draft"
+    },
+    {
+      "topic": "component boundaries, compatibility, capability limits, data, privacy, security, support, terms",
+      "status": "draft"
+    },
+    {
+      "topic": "Pages journey and square icon, 16:9 hero, 4:5 capability-card roles",
+      "status": "draft"
+    }
+  ],
+  "accessibility_reviews": [
+    {
+      "check": "Hesperos accessible-Markdown lint over every declared Markdown document",
+      "result": "PASS"
+    },
+    {
+      "check": "Static Pages structure, target, image-dimension, and alt-text audit",
+      "result": "PASS"
+    },
+    {
+      "check": "Independent documentation-accessibility review",
+      "result": "PASS at documentation fingerprint 9e1ecd5d0c1b051f5632ca98adfc5b395260088c0ce0fc92115fc8514ad33efa"
+    },
+    {
+      "check": "Live Pages browser, responsive, keyboard, and link review",
+      "result": "pending publication"
+    }
+  ],
+  "verification": [
+    {
+      "evidence": "verification/hesperos-authoring/validation-evidence.md",
+      "state": "observed"
+    },
+    {
+      "evidence": "verification/hesperos-authoring/image-inspection.json",
+      "state": "observed"
+    },
+    {
+      "evidence": "verification/hesperos-review/review-report.md",
+      "state": "independent-review-pass"
+    }
+  ],
+  "owner": "Collaborative Dynamics",
+  "next_move": "Validate the deployed Pages surface with browser, responsive, keyboard, image, and live-link readback before publication is called complete."
+}

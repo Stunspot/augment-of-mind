@@ -1,0 +1,24 @@
+{
+  "format": "cd-hesperos-documentation-review/v1",
+  "product": {
+    "slug": "augment-of-mind",
+    "plugin_version": "1.0.0",
+    "core_version": "0.2.0"
+  },
+  "review": {
+    "capability": "documentation-accessibility-reviewer",
+    "capability_entrypoint_sha256": "279717e733e3aebcb195ea7a520fb0463dc6dac06e41def23910c5ffe1977d34",
+    "mode": "independent-subagent-read-only",
+    "disposition": "REVIEW_PASS",
+    "reviewed_documentation_fingerprint": "9e1ecd5d0c1b051f5632ca98adfc5b395260088c0ce0fc92115fc8514ad33efa",
+    "declared_file_count": 18,
+    "finding_count": 0,
+    "prior_findings_closed": 3
+  },
+  "evidence": {
+    "documentation_manifest": "documentation-manifest.json",
+    "authorship_receipt": "verification/hesperos-authoring/documentation-authorship.json",
+    "review_report": "verification/hesperos-review/review-report.md"
+  },
+  "claim_boundary": "Independent source-level documentation and accessibility review only. Live Pages, release assets, and fresh-host behavior remain unverified until their later gates."
+}

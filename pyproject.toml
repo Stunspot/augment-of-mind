@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=77"]
+requires = ["setuptools>=69.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,7 @@ name = "cd-mind-core"
 version = "0.2.0"
 description = "Persona-neutral local metadata runtime for MIND."
 requires-python = ">=3.11"
-license = "MIT"
+license = { file = "LICENSE.md" }
 authors = [{ name = "Collaborative Dynamics" }]
 
 [project.scripts]
