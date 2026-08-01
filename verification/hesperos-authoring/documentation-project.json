@@ -2,7 +2,7 @@
   "project_id": "MIND-DOCS-1.0.0",
   "title": "MIND 1.0.0 customer documentation and Pages",
   "product_version": "plugin 1.0.0; optional Core 0.2.0",
-  "status": "review-needed",
+  "status": "accessibility-reviewed",
   "audiences": [
     {
       "name": "Codex user",
@@ -74,7 +74,7 @@
     },
     {
       "check": "Independent documentation-accessibility review",
-      "result": "pending for fingerprint b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9"
+      "result": "PASS at fingerprint b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9, reviewed HEAD 79e7b74599e47d2a231f1099734a578e39600a80"
     },
     {
       "check": "Live Pages browser, responsive, keyboard, and link review",
@@ -92,9 +92,9 @@
     },
     {
       "evidence": "verification/hesperos-review/review-report.md",
-      "state": "independent-rereview-required"
+      "state": "independent-review-pass"
     }
   ],
   "owner": "Collaborative Dynamics",
-  "next_move": "Complete independent review of the corrected fingerprint, merge the fix, validate the deployed Pages surface, then rebuild and publish the exact release archive."
+  "next_move": "Merge the reviewed responsive repair, validate the corrected public Pages surface, then rebuild and publish the exact release archive and verify a fresh public install."
 }
