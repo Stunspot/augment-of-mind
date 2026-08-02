@@ -64,6 +64,7 @@ class ReleaseToolingTests(unittest.TestCase):
 
     def test_verifier_enforces_the_same_skill_boundary(self) -> None:
         validate_payload_path("skills/sensemaking/SKILL.md")
+        validate_payload_path("skills/agentic-eros/manifest.json")
         validate_payload_path("skills/cognitive-continuity/scripts/continuity_store.py")
         validate_payload_path("scripts/query_associative_field.py")
         validate_payload_path("scripts/build_associative_assets.py")
