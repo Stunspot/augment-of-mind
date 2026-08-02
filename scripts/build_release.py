@@ -27,7 +27,10 @@ from verify_release import (
     PLUGIN_VERSION,
     PRODUCT,
     ROOT_DOCUMENTS,
+    RUNTIME_SCRIPT_NAMES,
     SKILL_ALLOWED_DIRECTORIES,
+    SKILL_ALLOWED_ROOT_FILES,
+    SKILL_EXCLUDED_FILES,
     SKILL_EXCLUDED_SEGMENTS,
     file_records,
     sha256_file,
@@ -122,11 +125,13 @@ def skill_release_files(source: Path) -> list[Path]:
                 continue
             relative = path.relative_to(source)
             inner = relative.parts[1:]
+            if relative.as_posix() in SKILL_EXCLUDED_FILES:
+                continue
             if any(segment in SKILL_EXCLUDED_SEGMENTS for segment in inner):
                 continue
             if path.suffix.lower() in {".pyc", ".pyo"}:
                 continue
-            if inner == ("SKILL.md",):
+            if len(inner) == 1 and inner[0] in SKILL_ALLOWED_ROOT_FILES:
                 selected.append(path)
                 continue
             if len(inner) >= 2 and inner[0] in SKILL_ALLOWED_DIRECTORIES:
@@ -165,6 +170,7 @@ def selected_source_files(repo: Path) -> list[Path]:
         repo / "scripts" / "build_release.py",
         repo / "scripts" / "verify_release.py",
     ]
+    paths.extend(repo / "scripts" / name for name in RUNTIME_SCRIPT_NAMES)
     paths.extend(skill_release_files(repo / "skills"))
     paths.extend(repo / "assets" / name for name in ASSET_NAMES)
     paths.extend(repo / name for name in ROOT_DOCUMENTS)
@@ -233,6 +239,8 @@ def stage_release(
     for name in ROOT_DOCUMENTS:
         copy_regular(repo / name, root / name)
     copy_regular(repo / "scripts" / "verify_release.py", root / "verify-release.py")
+    for name in RUNTIME_SCRIPT_NAMES:
+        copy_regular(repo / "scripts" / name, root / "scripts" / name)
     wheel_target = root / "optional-core" / wheel.name
     copy_regular(wheel, wheel_target)
     wheel_relative = wheel_target.relative_to(root).as_posix()

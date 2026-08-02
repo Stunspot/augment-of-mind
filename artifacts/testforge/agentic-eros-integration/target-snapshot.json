@@ -1,0 +1,184 @@
+{
+    "format":  "testforge-target-snapshot/v1",
+    "target":  "MIND Agentic Eros Faculty integration working-tree candidate",
+    "evidence_boundary":  "Exact current filesystem bytes for the 34 integration paths; not a commit, push, release, installed-host, or live-model receipt.",
+    "base_git_head":  "997bdf1be0b9deff8cd4765fb6a4bcbec5adf7d8",
+    "branch":  "codex/mobile-install-overflow",
+    "canonical_eros_source_git_head":  "ec5de1027b1b824da03b1cc3bdeee80ddd9124a4",
+    "canonical_eros_tree_sha256":  "569a6f9a576b6ba9398b5f894c89ccda29beaaf7edefd697bcdb178d58c6df6c",
+    "aggregate_algorithm":  "sha256 over ordinal path + NUL + decimal byte length + NUL + file sha256 + LF",
+    "file_count":  34,
+    "aggregate_sha256":  "bc9fc390b7e6ff64aaba05e3c06e9716714292dc9bc680a7710c42f0ad911d0a",
+    "files":  [
+                  {
+                      "path":  ".codex-plugin/plugin.json",
+                      "bytes":  1739,
+                      "sha256":  "035a22faa6476e9b6c11b0ff42c24d9537b11803a8e4c833f40b658aa190a2ac"
+                  },
+                  {
+                      "path":  "scripts/build_release.py",
+                      "bytes":  17346,
+                      "sha256":  "7f61f3c1b92f1e48312d867f5412c214895902eb992047a453fd4d694df2476d"
+                  },
+                  {
+                      "path":  "scripts/verify_release.py",
+                      "bytes":  16645,
+                      "sha256":  "99b946c20d78905804a0dc4371d94603b1ce02237c89173b0f072b528779b0c2"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/SKILL.md",
+                      "bytes":  14249,
+                      "sha256":  "d43b6963018fd565866b4fc5a28f3916c1fb473c0e1fb25c61172e46abce8070"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/agents/openai.yaml",
+                      "bytes":  256,
+                      "sha256":  "79358eeb5866f196f6b5577b9bdee0d56ace8c01f35fc4072a7a4f1a307f0896"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/assets/preference-capsule.md",
+                      "bytes":  870,
+                      "sha256":  "5cfadb733821b0ec3c03656f95636ab1b5e9e3232ed6d50b4e651b08f7ac1439"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/assets/scene-state-card.md",
+                      "bytes":  630,
+                      "sha256":  "993bc1131f3fb36cc83c15937847b45dd75948fba1e744f78ab6dc205291ec20"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/evals/core-transfer-cases.yaml",
+                      "bytes":  19223,
+                      "sha256":  "adcadf0fe5a68168ad55e4b45978187697e0c4c49dd07d46b2777759a7a0c790"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/evals/eval-manifest.yaml",
+                      "bytes":  1150,
+                      "sha256":  "22848696616f5b5c2a01da74cd17b1d5df37dd2ff44a8408e9ab73fdfbc3f8dc"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/ambient-analysis.md",
+                      "bytes":  768,
+                      "sha256":  "b2ef7ca09183d78dd45c8fef48f8b4f9208ee4bffaf38c150e342f1b702acfa1"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/ambiguous-charge.md",
+                      "bytes":  840,
+                      "sha256":  "3473310b4b459e27590eb0baad58819d029e8fbd6cf39860f78732d8c2727e5f"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/completion-variants.md",
+                      "bytes":  856,
+                      "sha256":  "e263a1f723822379521c4ec81fcb46f15af7534be575d736b2e3105e46c14b13"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/relational-restraint.md",
+                      "bytes":  723,
+                      "sha256":  "3e6a52800f219299f52c6ea050a4ee9c964d6729e9f1880e635c5814b0642a6e"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/responsive-pivot.md",
+                      "bytes":  880,
+                      "sha256":  "83979c33f34bebd9ed118fa2351a73b9d68f2f2e975f4cd8eae36276ca553dd0"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/examples/sparse-signal.md",
+                      "bytes":  868,
+                      "sha256":  "52ae187bacdbe5830a2105d0c029758efb70b8dda2749f39432149d78e7f0cc9"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/fallbacks/copy-paste-prompt.md",
+                      "bytes":  9715,
+                      "sha256":  "e118ffa399dc1bda441084d089c4f0927cb5720191c737bc96637b27d4aced02"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/manifest.json",
+                      "bytes":  340,
+                      "sha256":  "e6c56fd624aae2351b4b748e487943b4acdb0468d1dc8c01979ef0f098b91a6e"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/desire-and-response.md",
+                      "bytes":  2295,
+                      "sha256":  "3e43b9a13fc809b3aee92cc722c6c467df320b489a4bacb73b88bf8d4e2e82ae"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/discovery-and-personalization.md",
+                      "bytes":  2669,
+                      "sha256":  "0c813d29a3e2c74ffdbff97dc12cd60944f46d7882826345d1729c64d3ad2e34"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/eros-and-relational-perception.md",
+                      "bytes":  3221,
+                      "sha256":  "7beeccd2aef78657729423a12424db70d4ef27fa357a64bc0389980cefca3575"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/evidence-and-boundaries.md",
+                      "bytes":  2368,
+                      "sha256":  "7d8000159ed2f7ed06ede84a6a8a33c8a6846314c338ebfd317b2bdea42fecce"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/host-policy-adapter.md",
+                      "bytes":  1828,
+                      "sha256":  "b7d32d4267c00cf384f3d51a27ac9ec208a105caee1cc6ac99cffb788de30b93"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/pacing-completion-and-closure.md",
+                      "bytes":  2316,
+                      "sha256":  "a22cfee57f6faadd66694b3641fca44260338ef7d9260b1fe988739e12a48e97"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/roleplay-and-continuity.md",
+                      "bytes":  1759,
+                      "sha256":  "09937d0ed0bf4a48f8da643518fefb2c0bad4412ab825be81799bf3e4508eb6b"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/seduction-and-embodiment.md",
+                      "bytes":  3053,
+                      "sha256":  "0212b1554a18884eb6442204c23ce6fe17206c12a75ac587cf5cfbfa3db572b2"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/references/variation-and-inclusion.md",
+                      "bytes":  1722,
+                      "sha256":  "6c5418f2a0d6ce9915749ec6be061e7e01b69b8193c3aa54c6d678e7158f4a67"
+                  },
+                  {
+                      "path":  "skills/agentic-eros/scripts/validate_package.py",
+                      "bytes":  6433,
+                      "sha256":  "d7feadcea2bc4a3a8b73cff5b538ae79eef63971a27331054c68e46756ee728b"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/SKILL.md",
+                      "bytes":  5096,
+                      "sha256":  "ceefe855fd687c64766c68fe39543a5e878970e80ffe7ff745d70259deb4bec0"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/assets/integrated-capability-fingerprint.json",
+                      "bytes":  4048,
+                      "sha256":  "5d4b7b6a639c234b4009218429e73d5f3b275a133e186b3e650de55261467112"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/evals/eval-manifest.yaml",
+                      "bytes":  1007,
+                      "sha256":  "e73239a3c4b5c464ac0d1fc39fdcc99e690efed7bd659ce658c298c35cd544f7"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/evals/faculty-runtime-cases.yaml",
+                      "bytes":  18158,
+                      "sha256":  "c1410b67775da4c675c10b63d8538d81637ead7cae2dc6c32eae2bcf285c00b8"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/references/faculty-runtime/faculty-registry.json",
+                      "bytes":  8912,
+                      "sha256":  "b719c5b665fc6bade51d782df84198b0d4735f1e4f1ed9cc0c240d5e68cdf47d"
+                  },
+                  {
+                      "path":  "skills/augment-of-mind/references/faculty-runtime/runtime.md",
+                      "bytes":  8515,
+                      "sha256":  "b8d38288ce58d7a42942c486959722175094bba3374e7439150091f6a2b20389"
+                  },
+                  {
+                      "path":  "tests/test_release_tooling.py",
+                      "bytes":  8842,
+                      "sha256":  "61a62dc7017be357291392e7321fcbab60ecafc061b075dfbd20cf3209519753"
+                  }
+              ]
+}

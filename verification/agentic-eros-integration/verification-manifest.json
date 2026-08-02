@@ -1,0 +1,585 @@
+{
+    "manifest_version":  "1.0",
+    "target":  {
+                   "name":  "MIND Agentic Eros Faculty integration",
+                   "revision":  "base:997bdf1be0b9deff8cd4765fb6a4bcbec5adf7d8+working-tree-sha256:bc9fc390b7e6ff64aaba05e3c06e9716714292dc9bc680a7710c42f0ad911d0a",
+                   "target_class":  "change"
+               },
+    "scope":  {
+                  "included":  [
+                                   "byte-identical Agentic Eros 0.2.0 Faculty import from E:\\Github\\erotic-intelligence",
+                                   "sixteen-Faculty registry and MIND runtime ownership contract",
+                                   "semantic discovery metadata and orchestration contracts for implicit associative promotion, without collapsing it into activation, expression, escalation, or memory",
+                                   "Agentic Eros versus Kairos custody and near-neighbor restraint",
+                                   "MIND deterministic skill packaging of Agentic Eros root manifest metadata"
+                               ],
+                  "excluded":  [
+                                   "changes to the standalone erotic-intelligence source repository",
+                                   "live model or fresh-host behavioral evaluation",
+                                   "active SQLite associative-index ingestion, embedding generation, or snapshot activation",
+                                   "public documentation, imagery, release archive, Git commit, push, marketplace update, and publication",
+                                   "user-owned untracked release-v0.2.0 directory"
+                               ],
+                  "constraints":  [
+                                      "Executed on Windows with Windows PowerShell 5.1 and Python 3.14",
+                                      "The candidate is an uncommitted working tree bound to artifacts/testforge/agentic-eros-integration/target-snapshot.json",
+                                      "No dependencies were installed and no network or external service was used"
+                                  ],
+                  "safety_boundary":  [
+                                          "local non-production verification only",
+                                          "no private memory mutation, active index mutation, external publication, push, or release"
+                                      ]
+              },
+    "claim_custody":  {
+                          "observed":  [
+                                           {
+                                               "id":  "C-SOURCE",
+                                               "statement":  "All 24 integrated Agentic Eros files match the canonical source bytes.",
+                                               "basis":  "E-005 plus target-snapshot.json and canonical tree SHA-256 569a6f9a576b6ba9398b5f894c89ccda29beaaf7edefd697bcdb178d58c6df6c.",
+                                               "confidence":  "high"
+                                           },
+                                           {
+                                               "id":  "C-EXECUTION",
+                                               "statement":  "The current 84-test MIND suite and three package validators returned exit code 0.",
+                                               "basis":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json, bound before and after to the authoritative base and candidate aggregate.",
+                                               "confidence":  "high"
+                                           },
+                                           {
+                                               "id":  "C-CONTRACT",
+                                               "statement":  "The runtime, registry, metadata, provenance receipt, and HAFR-010 through HAFR-012 encode the four distinct Eros gates.",
+                                               "basis":  "Direct inspection plus T-001 and T-006.",
+                                               "confidence":  "high"
+                                           }
+                                       ],
+                          "inferred":  [
+                                           {
+                                               "id":  "C-STATIC-FIT",
+                                               "statement":  "The static integration is ready for the later live-host and release legs.",
+                                               "basis":  "Every in-scope structural, parity, package, and regression check passed.",
+                                               "confidence":  "high",
+                                               "consequence":  "This does not establish live associative delivery or model behavior."
+                                           }
+                                       ],
+                          "assumed":  [
+
+                                      ],
+                          "unresolved":  [
+                                             {
+                                                 "id":  "C-LIVE-BEHAVIOR",
+                                                 "statement":  "A live host and model will reliably preserve the four gates under natural conversation.",
+                                                 "basis":  "Three authored eval cases exist but were not executed against a live host/model in this packet.",
+                                                 "confidence":  "low",
+                                                 "consequence":  "No live behavioral reliability claim is made."
+                                             },
+                                             {
+                                                 "id":  "C-ACTIVE-INDEX",
+                                                 "statement":  "An active associative snapshot already contains an authored Agentic Eros capability card.",
+                                                 "basis":  "No active SQLite estate or index was mutated or inventoried in this packet.",
+                                                 "confidence":  "low",
+                                                 "consequence":  "The repository integration supplies semantic discovery and runtime contracts; active index population remains a separate data operation."
+                                             }
+                                         ]
+                      },
+    "impact_map":  [
+                       "Requiring explicit invocation would hide Eros when relational meaning is relevant but unnamed.",
+                       "Treating semantic proximity as selection could sexualize care, rapport, analysis, or unrelated work.",
+                       "Treating activation as expression or invitation as blanket escalation could violate user intent.",
+                       "Persisting inferred attraction or intimate meaning could contaminate continuity and privacy.",
+                       "Assigning erotic ownership to Kairos would confuse content custody with timing and expression fit.",
+                       "Dropping manifest.json from release bytes would silently break the canonical package contract."
+                   ],
+    "invariants":  [
+                       {
+                           "id":  "I-PARITY",
+                           "statement":  "The embedded Faculty remains byte-identical to the canonical standalone source."
+                       },
+                       {
+                           "id":  "I-ASSOCIATION",
+                           "statement":  "Semantic association may bring Agentic Eros into attention without proving relevance or selecting it."
+                       },
+                       {
+                           "id":  "I-EXPRESSION",
+                           "statement":  "Activation, visible interpretation, reciprocal expression, and escalation remain distinct gates."
+                       },
+                       {
+                           "id":  "I-MEMORY",
+                           "statement":  "Inferred intimate meaning remains transient; durable promotion requires explicit bounded user authority."
+                       },
+                       {
+                           "id":  "I-CUSTODY",
+                           "statement":  "Agentic Eros owns erotic-relational understanding and participation; Kairos owns timing, tone, form, and pressure fit."
+                       },
+                       {
+                           "id":  "I-PACKAGE",
+                           "statement":  "The release selector preserves canonical root manifest metadata while still excluding eval and test material."
+                       }
+                   ],
+    "risks":  [
+                  {
+                      "id":  "R-001",
+                      "statement":  "When Eros requires explicit invocation, unnamed but material relational or erotic meaning can remain outside the active cognitive field.",
+                      "severity":  "high",
+                      "likelihood":  "medium",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-PROMOTION",
+                                           "T-001",
+                                           "T-006",
+                                           "E-001",
+                                           "E-006"
+                                       ]
+                  },
+                  {
+                      "id":  "R-002",
+                      "statement":  "When association is collapsed into activation or expression, ordinary affection, care, rapport, analysis, or aesthetic pleasure can be sexualized.",
+                      "severity":  "high",
+                      "likelihood":  "medium",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-PROMOTION",
+                                           "S-EXPRESSION",
+                                           "T-001",
+                                           "T-006",
+                                           "E-001",
+                                           "E-006"
+                                       ]
+                  },
+                  {
+                      "id":  "R-003",
+                      "statement":  "When intimate inference is promoted without explicit user authority, continuity can preserve a false or overbroad private claim.",
+                      "severity":  "high",
+                      "likelihood":  "medium",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-MEMORY",
+                                           "T-001",
+                                           "T-006",
+                                           "E-001",
+                                           "E-006"
+                                       ]
+                  },
+                  {
+                      "id":  "R-004",
+                      "statement":  "When Kairos receives erotic ownership, timing and style custody can replace evidence-led relational interpretation or direct participation.",
+                      "severity":  "medium",
+                      "likelihood":  "medium",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-EXPRESSION",
+                                           "T-001",
+                                           "T-006",
+                                           "E-001",
+                                           "E-006"
+                                       ]
+                  },
+                  {
+                      "id":  "R-005",
+                      "statement":  "When the release selector recognizes only SKILL.md at a skill root, canonical Agentic Eros manifest metadata is rejected or silently omitted.",
+                      "severity":  "medium",
+                      "likelihood":  "high",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-PACKAGE",
+                                           "T-001",
+                                           "T-004",
+                                           "E-001",
+                                           "E-004"
+                                       ]
+                  },
+                  {
+                      "id":  "R-006",
+                      "statement":  "When the MIND copy drifts from the standalone source, fixes and doctrine can diverge across products.",
+                      "severity":  "high",
+                      "likelihood":  "medium",
+                      "confidence":  "high",
+                      "disposition":  "covered",
+                      "verification":  [
+                                           "S-PARITY",
+                                           "T-002",
+                                           "T-003",
+                                           "T-005",
+                                           "E-002",
+                                           "E-003",
+                                           "E-005"
+                                       ]
+                  }
+              ],
+    "scenarios":  [
+                      {
+                          "id":  "S-PARITY",
+                          "risk_ids":  [
+                                           "R-006"
+                                       ],
+                          "title":  "Canonical source parity and standalone validation",
+                          "layer":  "contract",
+                          "preconditions":  [
+                                                "Canonical Agentic Eros 0.2.0 source and MIND copy are readable."
+                                            ],
+                          "action":  [
+                                         "Compare the exact relative file set and SHA-256 of every file; run both package validators."
+                                     ],
+                          "expected":  [
+                                           "Both trees contain 24 identical files and both validators pass."
+                                       ],
+                          "forbidden":  [
+                                            "Missing, extra, transformed, or hash-divergent source material."
+                                        ],
+                          "evidence":  [
+                                           "skills/agentic-eros",
+                                           "artifacts/testforge/agentic-eros-integration/execution-evidence.json",
+                                           "artifacts/testforge/agentic-eros-integration/target-snapshot.json"
+                                       ],
+                          "status":  "executed"
+                      },
+                      {
+                          "id":  "S-PROMOTION",
+                          "risk_ids":  [
+                                           "R-001",
+                                           "R-002"
+                                       ],
+                          "title":  "Association enters attention without becoming certainty or performance",
+                          "layer":  "contract",
+                          "preconditions":  [
+                                                "Relational cues are relevant but attraction is unconfirmed."
+                                            ],
+                          "action":  [
+                                         "Inspect host metadata, runtime gate, registry record, and HAFR-010/HAFR-011."
+                                     ],
+                          "expected":  [
+                                           "Implicit promotion is allowed; relevance, alternatives, and non-erotic neighbors remain explicit; visible performance is not implied."
+                                       ],
+                          "forbidden":  [
+                                            "Explicit-invocation requirement, association as proof, or forced erotic output."
+                                        ],
+                          "evidence":  [
+                                           "skills/agentic-eros/agents/openai.yaml",
+                                           "skills/augment-of-mind/references/faculty-runtime/runtime.md",
+                                           "skills/augment-of-mind/evals/faculty-runtime-cases.yaml"
+                                       ],
+                          "status":  "executed"
+                      },
+                      {
+                          "id":  "S-EXPRESSION",
+                          "risk_ids":  [
+                                           "R-002",
+                                           "R-004"
+                                       ],
+                          "title":  "Invitation activates Eros while Kairos retains only expression-fit custody",
+                          "layer":  "contract",
+                          "preconditions":  [
+                                                "Adults, ethical context, and a clear bounded invitation are established."
+                                            ],
+                          "action":  [
+                                         "Inspect HAFR-012 and the Faculty registry ownership boundaries."
+                                     ],
+                          "expected":  [
+                                           "Agentic Eros owns participation; Kairos supports tone/form only; invitation does not authorize arbitrary escalation."
+                                       ],
+                          "forbidden":  [
+                                            "Stock persona replacement, Kairos ownership, unlimited escalation, or architecture announcement."
+                                        ],
+                          "evidence":  [
+                                           "skills/augment-of-mind/evals/faculty-runtime-cases.yaml",
+                                           "skills/augment-of-mind/references/faculty-runtime/faculty-registry.json"
+                                       ],
+                          "status":  "executed"
+                      },
+                      {
+                          "id":  "S-MEMORY",
+                          "risk_ids":  [
+                                           "R-003"
+                                       ],
+                          "title":  "Inferred intimate meaning cannot become durable continuity",
+                          "layer":  "contract",
+                          "preconditions":  [
+                                                "The user asks MIND to remember an unconfirmed attraction inference."
+                                            ],
+                          "action":  [
+                                         "Inspect HAFR-011 and the runtime continuity gate."
+                                     ],
+                          "expected":  [
+                                           "The inference remains unknown and transient; only a user-confirmed bounded preference or fact may be promoted."
+                                       ],
+                          "forbidden":  [
+                                            "Persisted inferred attraction or a claimed memory receipt without observed persistence."
+                                        ],
+                          "evidence":  [
+                                           "skills/augment-of-mind/evals/faculty-runtime-cases.yaml",
+                                           "skills/augment-of-mind/references/faculty-runtime/runtime.md"
+                                       ],
+                          "status":  "executed"
+                      },
+                      {
+                          "id":  "S-PACKAGE",
+                          "risk_ids":  [
+                                           "R-005"
+                                       ],
+                          "title":  "Canonical skill metadata survives deterministic release selection",
+                          "layer":  "unit",
+                          "preconditions":  [
+                                                "Agentic Eros contains SKILL.md, manifest.json, development evals, and runtime references."
+                                            ],
+                          "action":  [
+                                         "Run release selection and deterministic archive tests."
+                                     ],
+                          "expected":  [
+                                           "SKILL.md, manifest.json, and runtime references ship; evals/tests do not; two fixed-metadata builds are byte-identical."
+                                       ],
+                          "forbidden":  [
+                                            "Manifest rejection, development material leakage, or nondeterministic archive bytes."
+                                        ],
+                          "evidence":  [
+                                           "tests/test_release_tooling.py",
+                                           "scripts/build_release.py",
+                                           "scripts/verify_release.py"
+                                       ],
+                          "status":  "executed"
+                      }
+                  ],
+    "tests":  [
+                  {
+                      "id":  "T-001",
+                      "scenario_ids":  [
+                                           "S-PROMOTION",
+                                           "S-EXPRESSION",
+                                           "S-MEMORY",
+                                           "S-PACKAGE"
+                                       ],
+                      "path":  "tests/test_release_tooling.py",
+                      "status":  "passed",
+                      "execution_id":  "E-001"
+                  },
+                  {
+                      "id":  "T-002",
+                      "scenario_ids":  [
+                                           "S-PARITY"
+                                       ],
+                      "path":  "skills/agentic-eros/scripts/validate_package.py",
+                      "status":  "passed",
+                      "execution_id":  "E-002"
+                  },
+                  {
+                      "id":  "T-003",
+                      "scenario_ids":  [
+                                           "S-PARITY"
+                                       ],
+                      "path":  "skills/agentic-eros/SKILL.md",
+                      "status":  "passed",
+                      "execution_id":  "E-003"
+                  },
+                  {
+                      "id":  "T-004",
+                      "scenario_ids":  [
+                                           "S-PACKAGE"
+                                       ],
+                      "path":  ".codex-plugin/plugin.json",
+                      "status":  "passed",
+                      "execution_id":  "E-004"
+                  },
+                  {
+                      "id":  "T-005",
+                      "scenario_ids":  [
+                                           "S-PARITY"
+                                       ],
+                      "path":  "skills/agentic-eros",
+                      "status":  "passed",
+                      "execution_id":  "E-005"
+                  },
+                  {
+                      "id":  "T-006",
+                      "scenario_ids":  [
+                                           "S-PROMOTION",
+                                           "S-EXPRESSION",
+                                           "S-MEMORY"
+                                       ],
+                      "path":  "skills/augment-of-mind/evals/faculty-runtime-cases.yaml",
+                      "status":  "passed",
+                      "execution_id":  "E-006"
+                  }
+              ],
+    "executions":  [
+                       {
+                           "id":  "E-001",
+                           "command":  [
+                                           "python",
+                                           "-X",
+                                           "utf8",
+                                           "-m",
+                                           "unittest",
+                                           "discover",
+                                           "-s",
+                                           "tests",
+                                           "-v"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "84 tests passed"
+                       },
+                       {
+                           "id":  "E-002",
+                           "command":  [
+                                           "python",
+                                           "-X",
+                                           "utf8",
+                                           "skills/agentic-eros/scripts/validate_package.py"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "VALID; 18 cases; 24 files"
+                       },
+                       {
+                           "id":  "E-003",
+                           "command":  [
+                                           "python",
+                                           "-X",
+                                           "utf8",
+                                           "quick_validate.py",
+                                           "skills/agentic-eros"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "Skill is valid"
+                       },
+                       {
+                           "id":  "E-004",
+                           "command":  [
+                                           "python",
+                                           "-X",
+                                           "utf8",
+                                           "validate_plugin.py",
+                                           "E:/Github/augment-of-mind"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "Plugin validation passed"
+                       },
+                       {
+                           "id":  "E-005",
+                           "command":  [
+                                           "PowerShell",
+                                           "bounded canonical source parity check"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "SOURCE_FILES=24 TARGET_FILES=24 MISMATCHES=0"
+                       },
+                       {
+                           "id":  "E-006",
+                           "command":  [
+                                           "PowerShell",
+                                           "bounded eval schema and git diff check"
+                                       ],
+                           "working_directory":  ".",
+                           "status":  "passed",
+                           "exit_code":  0,
+                           "raw_evidence":  "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                           "observed_result":  "CASES=12 EROS_CASES=3 DIMENSIONS=3 DIFF_CHECK=PASS"
+                       }
+                   ],
+    "findings":  [
+                     {
+                         "id":  "F-001",
+                         "classification":  "PRODUCT_DEFECT",
+                         "severity":  "medium",
+                         "statement":  "MIND release selection rejected canonical per-skill manifest.json metadata because its root-file allowlist admitted only SKILL.md.",
+                         "evidence":  [
+                                          "scripts/build_release.py",
+                                          "tests/test_release_tooling.py",
+                                          "E-001"
+                                      ],
+                         "confidence":  "high",
+                         "next_action":  "Retain the explicit SKILL_ALLOWED_ROOT_FILES contract and manifest inclusion assertion.",
+                         "status":  "resolved"
+                     },
+                     {
+                         "id":  "F-002",
+                         "classification":  "TEST_DEFECT",
+                         "severity":  "low",
+                         "statement":  "The first manual eval verifier addressed dimensions instead of the schema field indispensable_dimensions.",
+                         "evidence":  [
+                                          "skills/augment-of-mind/evals/eval-manifest.yaml",
+                                          "E-006"
+                                      ],
+                         "confidence":  "high",
+                         "next_action":  "Retain the corrected repository oracle on indispensable_dimensions.",
+                         "status":  "resolved"
+                     },
+                     {
+                         "id":  "F-003",
+                         "classification":  "TOOLING_FAILURE",
+                         "severity":  "high",
+                         "statement":  "The first verification packet expanded an abbreviated base SHA incorrectly and failed to bind exact E-005/E-006 scripts and all executions to the candidate aggregate.",
+                         "evidence":  [
+                                          "artifacts/testforge/agentic-eros-integration/reviewer-disposition-r1.md",
+                                          "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+                                          "artifacts/testforge/agentic-eros-integration/target-snapshot.json"
+                                      ],
+                         "confidence":  "high",
+                         "next_action":  "Retain the r2 before/after base and aggregate binding plus exact executable command or script capture.",
+                         "status":  "resolved"
+                     }
+                 ],
+    "residual_risks":  [
+                           {
+                               "id":  "RR-001",
+                               "statement":  "The three new HAFR cases are authored but were not executed against a live host and model.",
+                               "treatment":  "Run HAFR-010 through HAFR-012 through the later live-host TestForge gate before claiming behavioral reliability.",
+                               "owner":  "MIND maintainers",
+                               "revisit_condition":  "Before fresh-host qualification or release"
+                           },
+                           {
+                               "id":  "RR-002",
+                               "statement":  "No active SQLite associative snapshot was inventoried or mutated to add an Agentic Eros capability card.",
+                               "treatment":  "At the next authorized capability-estate build, author or confirm the Agentic Eros card/views and activate them through the existing immutable index-manifest path.",
+                               "owner":  "MIND capability estate",
+                               "revisit_condition":  "Before claiming active associative delivery from a named snapshot"
+                           },
+                           {
+                               "id":  "RR-003",
+                               "statement":  "Public documentation, images, release archive, commit, push, and publication remain intentionally deferred.",
+                               "treatment":  "Run the separately authorized Hesperos, imagery, release, and repository-custody leg after Faculty integration is accepted.",
+                               "owner":  "MIND release process",
+                               "revisit_condition":  "When Sam begins the final documentation and release leg"
+                           }
+                       ],
+    "review":  {
+                   "status":  "REVIEW_PASS_WITH_CONDITIONS",
+                   "findings":  [
+                                    "The r1 base-identity mismatch is repaired: manifest, target snapshot, current HEAD, and execution evidence agree on 997bdf1be0b9deff8cd4765fb6a4bcbec5adf7d8.",
+                                    "E-001 through E-006 are bound before and after to snapshot bc9fc390b7e6ff64aaba05e3c06e9716714292dc9bc680a7710c42f0ad911d0a, and E-005/E-006 retain exact scripts.",
+                                    "Live HAFR behavior and active immutable SQLite card/snapshot delivery remain explicit later gates rather than claims of this packet."
+                                ],
+                   "reviewer":  "independent TestForge verification-reviewer",
+                   "evidence":  "artifacts/testforge/agentic-eros-integration/reviewer-disposition-r2.md"
+               },
+    "decision":  {
+                     "status":  "READY_WITH_RESIDUAL_RISK",
+                     "basis":  [
+                                   "All 24 Agentic Eros files are byte-identical to canonical source version 0.2.0.",
+                                   "The sealed candidate passed 84 MIND tests, Agentic Eros validation, standard skill validation, plugin validation, source parity, eval-schema checks, and git diff checks.",
+                                   "The static runtime and registry preserve association, activation, expression, escalation, intimate-memory, and Kairos-custody boundaries.",
+                                   "TestForge manifest and traceability validation passed without warnings.",
+                                   "The independent reviewer confirmed the repaired base and snapshot evidence binding and returned REVIEW_PASS_WITH_CONDITIONS."
+                               ],
+                     "authority_required":  [
+                                                "Execute HAFR-010 through HAFR-012 live before a behavioral-reliability claim.",
+                                                "Author or confirm card views and activate a complete immutable SQLite generation before an active-associative-delivery claim.",
+                                                "Sam retains documentation, imagery, commit, push, release, marketplace, and publication authority."
+                                            ]
+                 }
+}

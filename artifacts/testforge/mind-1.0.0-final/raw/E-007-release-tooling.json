@@ -1,0 +1,22 @@
+{
+  "format_version": "1.0",
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "tests.test_release_tooling",
+    "tests.test_associative_release_assets"
+  ],
+  "working_directory": ".",
+  "started_at": "2026-08-02T02:42:21.098404+00:00",
+  "finished_at": "2026-08-02T02:42:21.666141+00:00",
+  "duration_seconds": 0.567735,
+  "exit_code": 0,
+  "timed_out": false,
+  "stdout": "",
+  "stderr": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.334s\n\nOK\n",
+  "status": "passed"
+}

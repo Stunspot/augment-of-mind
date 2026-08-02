@@ -1,7 +1,7 @@
 {
   "name": "augment-of-mind",
   "version": "1.0.0",
-  "description": "Fifteen Faculties, one coherent adaptive mind for consequential work.",
+  "description": "Sixteen Faculties, one coherent adaptive mind for consequential work.",
   "author": {
     "name": "Collaborative Dynamics",
     "url": "https://collaborative-dynamics.com"
@@ -13,7 +13,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "MIND by Collaborative Dynamics",
-    "shortDescription": "Fifteen Faculties, one coherent adaptive mind.",
+    "shortDescription": "Sixteen Faculties, one coherent adaptive mind.",
     "longDescription": "Compose only the cognitive Faculties a consequential task needs, then return one accountable result.",
     "developerName": "Collaborative Dynamics",
     "category": "Productivity",

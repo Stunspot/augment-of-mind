@@ -1,6 +1,6 @@
 # Start here
 
-MIND is a skills-only Codex plugin: one integrator coordinates fifteen focused
+MIND is a skills-only Codex plugin: one integrator coordinates sixteen focused
 cognitive Faculties and returns one accountable result. It does not install a
 persona, phone home, or quietly award itself new authority. Civilization may
 continue.

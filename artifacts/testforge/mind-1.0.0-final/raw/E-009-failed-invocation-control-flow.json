@@ -1,0 +1,12 @@
+{
+    "format":  "cd-testforge-failed-invocation-control-flow/v1",
+    "attempt_receipt":  "artifacts/testforge/mind-1.0.0-final/raw/E-004-attempt1-missing-output.json",
+    "exit_code":  2,
+    "stderr":  "usage: run_qualification.py [-h] --output OUTPUT [--bootstrap BOOTSTRAP]\n                            [--index INDEX] [--model MODEL]\nrun_qualification.py: error: the following arguments are required: --output\n",
+    "parse_args_line":  31,
+    "temporary_database_creation_line":  35,
+    "first_embedding_call_line":  42,
+    "output_argument_present":  false,
+    "product_behavior_dispatched":  false,
+    "basis":  "argparse required-argument exit occurs at parse_args before TemporaryDirectory, MindCore construction, index ingest, or embed call; Python ran with -B and no output target existed."
+}

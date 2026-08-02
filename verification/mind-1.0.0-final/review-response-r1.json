@@ -1,0 +1,58 @@
+{
+  "format": "cd-testforge-independent-review/v1",
+  "model": "qwen35:latest",
+  "prompt_sha256": "bda5109eeb7b8b8978ba3b084713a67b5b00666254c2c828b34ca86cadd47bc1",
+  "prompt_bytes": 68095,
+  "target_aggregate_sha256": "247edac6d37be683df59628ad24fffb46ff2803fa47c21c1ef0d8516f7b271ea",
+  "done_reason": "stop",
+  "eval_count": 1033,
+  "review": {
+    "disposition": "REVIEW_FAIL",
+    "summary": "The bounded source readiness claim fails due to critical evidence custody violations and unverified downstream gates masquerading as passed status. Specifically: (1) The 'failed first E-004 receipt' is cited in the manifest but lacks a corrected dispatch record proving product behavior was actually executed; it remains an invocation failure, not a behavioral proof. (2) Evidence boundary claims explicitly exclude fresh installation and GitHub release behaviors, yet the decision status implies readiness for these gates without independent verification receipts. (3) The 149 'snapshot' smells are treated as heuristic noise rather than potential evidence of brittle state-dependency testing that could fail in production environments with different data distributions.",
+    "findings": [
+      {
+        "severity": "critical",
+        "challenged_claim": "C-READY: The source is ready for commit and final package/install/publication gates.",
+        "evidence": [
+          "manifest.claim_custody.inferred.C-READY",
+          "decision.status"
+        ],
+        "why_support_fails": "The claim assumes readiness based on in-scope tests only, but explicitly lists 'fresh archive', 'fresh-host installation', 'GitHub publication' as later gates requiring verification. The manifest states these are excluded from the current source packet and not yet verified. A green suite cannot exist if the evidence for entering those specific gates is missing.",
+        "discriminating_check": "Verify that a fresh install of the committed archive on an isolated host discovers all skills without manual intervention, producing identical fingerprints to E-004's canonical v2 bytes.",
+        "required_revision": "Execute and attach raw execution receipts for: (1) Fresh installation discovery test; (2) GitHub release artifact integrity check against source SHA; (3) Live Pages deployment behavior audit. Do not proceed until these are appended as 'observed' evidence, not just listed in unresolved risks.",
+        "status_consequence": "Committing this source now violates the invariant I-EVIDENCE ('Source, package, install... remain distinct') by conflating current test-pass status with downstream gate readiness."
+      },
+      {
+        "severity": "high",
+        "challenged_claim": "E-004 passed: 6 of 6 live probes passed; final result bytes match canonical v2 evidence.",
+        "evidence": [
+          "executions.E-004.command",
+          "artifacts/testforge/mind-1.0.0-final/raw/E-004-captured-final-results.json"
+        ],
+        "why_support_fails": "The command log shows a 'failed first E-004 receipt' (E-004-attempt1-missing-output) was preserved but the manifest does not provide evidence that this failure never dispatched product behavior. The corrected receipt changes the premise, but without an explicit assertion in the raw output that the failed invocation did NOT trigger side effects or partial state updates.",
+        "discriminating_check": "Inspect E-004-attempt1-missing-output.json to confirm no SQLite writes occurred and verify the corrected run's stdout explicitly states 'no prior state modified' before passing probes.",
+        "required_revision": "Append a forensic log entry confirming zero side effects from the failed invocation attempt, or re-run with strict isolation flags enabled."
+      },
+      {
+        "severity": "medium",
+        "challenged_claim": "149 snapshot smells are heuristic uses and not defects.",
+        "evidence": [
+          "test-smells.json"
+        ],
+        "why_support_fails": "Counting 'snapshot' as a non-defect ignores the risk of brittle state-dependency. If these tests rely on exact byte-for-byte snapshots rather than semantic equivalence, they will fail under minor environment drift (OS updates, library patches). This violates boundary realism.",
+        "discriminating_check": "Run one test with modified input data to verify it still passes; if any snapshot-based assertion fails due to non-semantic differences, the smell is a defect requiring refactoring to semantic checks.",
+        "required_revision": "Refactor high-frequency 'snapshot_assertion' lines in phase2_helpers.py and test_associative_disclosure.py to use structural or property-based assertions instead of raw byte comparison."
+      }
+    ],
+    "conditions": [
+      "Do not commit source until fresh-install discovery receipt is attached.",
+      "Re-run E-004 with isolation flags enabled and attach forensic log proving no side effects from failed attempt.",
+      "Refactor snapshot-heavy tests to semantic equivalence checks before next review cycle."
+    ],
+    "passed_lenses": [
+      "scope",
+      "impact"
+    ],
+    "evidence_boundary": "Current source packet only; excludes fresh install, release artifacts, and live Pages behavior. Claims regarding these are unverified assumptions violating I-EVIDENCE invariant."
+  }
+}

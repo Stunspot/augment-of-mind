@@ -6,9 +6,10 @@ The release ZIP contains one root: `augment-of-mind-v1.0.0/`.
 |---|---|
 | `.codex-plugin/plugin.json` | Codex plugin identity and presentation metadata. |
 | `.agents/plugins/marketplace.json` | Local or Git-backed marketplace catalog entry. |
-| `skills/` | MIND integrator, fifteen Faculties, references, templates, schemas, examples, and runtime helpers. Development evals and nested tests are excluded. |
+| `skills/` | MIND integrator, sixteen Faculties, references, templates, schemas, examples, and runtime helpers. Development evals and nested tests are excluded. |
 | `assets/` | Product icon, hero, and capability-card artwork. |
 | `optional-core/*.whl` | Offline-installable `cd-mind-core` 0.2.0 wheel. |
+| `scripts/` | Deterministic associative asset builder and explicit H0 field adapter. |
 | `START-HERE.md` | Reader entry and task routing. |
 | `INSTALL-CODEX.md` | Online and offline Codex installation. |
 | `OPTIONAL-CORE.md` | Core installation, commands, and removal. |

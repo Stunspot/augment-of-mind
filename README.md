@@ -1,8 +1,8 @@
 # MIND by Collaborative Dynamics
 
-<img src="assets/mind-icon-1024.png" width="128" alt="A luminous central MIND sphere connected to fifteen distinct Faculty nodes.">
+<img src="assets/mind-icon-1024.png" width="128" alt="A luminous central MIND sphere connected to distinct Faculty nodes.">
 
-> **Fifteen Faculties. One coherent, accountable mind.**
+> **Sixteen Faculties. One coherent, accountable mind.**
 
 MIND is a persona-neutral Codex plugin for consequential work. One adaptive
 integrator composes only the cognitive Faculties a mission needs, keeps their
@@ -19,7 +19,7 @@ read the minutes from an imaginary committee meeting.
 
 | Component | Version | Role |
 |---|---:|---|
-| MIND plugin | `1.0.0` | Installable integrator plus fifteen Faculty skills. |
+| MIND plugin | `1.0.0` | Installable integrator plus sixteen Faculty skills. |
 | Optional MIND Core | `0.2.0` | Local SQLite metadata and explicit associative-reminder runtime. |
 
 Nova is not bundled or required. The optional Core wheel is included in the
@@ -56,7 +56,7 @@ Use $aesthetic-intelligence to diagnose why this composition feels wrong.
 Selection is not activation. A Faculty is opened only when its doctrine must
 materially change the work.
 
-## The fifteen Faculties
+## The sixteen Faculties
 
 | Faculty | Owns |
 |---|---|
@@ -65,6 +65,7 @@ materially change the work.
 | **Cognitive Continuity** | Durable scoped state, provenance, correction, resumption, and forgetting. |
 | **Agent Striving** | Authorized long-horizon pursuit across interruption and recoverable failure. |
 | **Agent Dreaming** | Explicitly authorized replay, perturbation, rehearsal, and associative incubation. |
+| **Agentic Eros** | Adult erotic-relational meaning, desire, sensuality, intimacy, flirtation, consent, pacing, and closure. |
 | **Kairos** | Truthful timing, voice, tone, channel, form, pressure ceiling, and rhetorical repair. |
 | **Sensemaking** | Provisional models of actors, forces, causes, constraints, feedback, scale, and time. |
 | **Epistemic Regulation** | Claim state, warrant, confidence, assumptions, contradictions, and revision conditions. |
@@ -77,24 +78,25 @@ materially change the work.
 | **Instrumental Agency** | Authorized action choreography, state checks, rollback or recovery, and truthful disposition. |
 
 The integrator is the coordination entry around these Faculties; it is not a
-sixteenth Faculty.
+seventeenth Faculty.
 
 ## Associative reminders, not tool rankings
 
 ![Overlapping semantic neighborhoods bring nearby capability handles into a local MIND reminder field while a coral false-friend boundary stays distinct.](assets/mind-capability-card-1080x1350.png)
 
-Optional MIND Core can compile an **Arm's Reach** field from distinct ephemeral
-anchors. Every visible capability inside an exact vector radius, every approved
-lexical match, and explicit one-hop bridges or false-friend boundaries can
-enter the field.
+MIND ships an authored sixteen-Faculty reminder generation and an optional H0
+adapter that can compile an **Arm's Reach** field from ephemeral anchors. Every
+visible capability inside the configured vector radius can enter the field;
+explicit `--hint` values add exhaustive lexical matching, and typed relations
+can add one-hop bridges or false-friend boundaries.
 
 The field is a reminder surface. It emits no universal fitness scalar, top-K
 recommendation, selection, activation, or action authority. Package hierarchy
 still handles custody and expansion; semantic geometry supplies the
 serendipitous “oh, right—that exists” layer.
 
-Codex support remains **H0/query-capable**: the plugin does not automatically
-observe a turn or inject this field before reasoning. The portable delivery
+Codex support remains **H0/query-capable**: the included adapter can query a configured
+Core before substantive work, but Codex does not guarantee automatic pre-turn injection. The portable delivery
 envelope has a producer-generated contract vector consumed unchanged by
 Exoframe's separately tested transient pre-sampling seam, but that local
 construction proof is not a complete live H1 or provider-receipt claim.

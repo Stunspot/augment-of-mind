@@ -1,0 +1,27 @@
+{
+    "format":  "cd-testforge-smell-triage/v1",
+    "scanner_heuristic_only":  true,
+    "finding_count":  149,
+    "unique_smells":  [
+                          "snapshot_assertion"
+                      ],
+    "unique_lexical_evidence":  [
+                                    "snapshot"
+                                ],
+    "snapshot_framework_or_assertion_hits":  [
+                                                 "tests\\test_associative_disclosure.py:1005:        self.assertEqual(receipt[\"receipt_type\"], \"reminder.snapshot_activation\")",
+                                                 "tests\\test_associative_disclosure.py:1006:        self.assertEqual(receipt[\"subject_id\"], SNAPSHOT_TWO)",
+                                                 "tests\\test_associative_release_assets.py:40:        self.assertEqual(manifest[\"snapshot\"][\"expected_card_count\"], 16)",
+                                                 "tests\\test_associative_release_assets.py:41:        self.assertEqual(manifest[\"snapshot\"][\"expected_vector_count\"], 96)",
+                                                 "tests\\test_handshake_isolation.py:214:        self.assertFalse(result[\"session\"][\"catalog_snapshot_fresh\"])"
+                                             ],
+    "domain_explanation":  "MIND Core names immutable associative index generations snapshots. The scanner flags the token snapshot without establishing a golden-snapshot assertion.",
+    "discriminating_semantic_tests":  [
+                                          "test_row_order_does_not_change_membership_or_rendering",
+                                          "test_snapshot_digest_binds_cluster_content",
+                                          "test_current_source_binding_drift_marks_snapshot_noncurrent",
+                                          "test_query_is_side_effect_free_and_persists_no_raw_anchor_or_field",
+                                          "test_new_generation_invalidates_old_queries_and_card_tokens"
+                                      ],
+    "disposition":  "HEURISTIC_FALSE_POSITIVE_NON_BLOCKING"
+}

@@ -13,7 +13,7 @@ Use `$augment-of-mind` when:
 - you are not sure which Faculty owns the work.
 
 Call one Faculty directly when the task is narrow. The complete Faculty map is
-in [Capabilities and limits](CAPABILITIES-AND-LIMITS.md#the-fifteen-faculties).
+in [Capabilities and limits](CAPABILITIES-AND-LIMITS.md#the-sixteen-faculties).
 
 ## Write a useful mission
 
@@ -67,10 +67,9 @@ host's sandbox and approval policy.
 
 ## Optional associative reminders
 
-MIND Core can compile an associative reminder field when a cooperating host
-supplies a qualified capability index and ephemeral anchors. In Codex today,
-that is an explicit H0 query surface; the plugin does not automatically inject
-the field before a turn. See [Optional MIND Core](OPTIONAL-CORE.md).
+MIND Core ships with an authored sixteen-Faculty generation. Its H0 adapter can
+embed a task, correction, or error locally and compile the field before substantive
+work. Codex still does not guarantee automatic host-level pre-turn injection. See [Optional MIND Core](OPTIONAL-CORE.md).
 
 ## Stop and recover
 

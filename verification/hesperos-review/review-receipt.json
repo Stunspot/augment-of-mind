@@ -1,53 +1,41 @@
 {
-  "format": "cd-hesperos-documentation-review/v1",
-  "product": {
-    "slug": "augment-of-mind",
-    "plugin_version": "1.0.0",
-    "core_version": "0.2.0"
-  },
-  "review": {
-    "capability": "documentation-accessibility-reviewer",
-    "capability_entrypoint_sha256": "279717e733e3aebcb195ea7a520fb0463dc6dac06e41def23910c5ffe1977d34",
-    "mode": "independent-subagent-read-only",
-    "disposition": "REVIEW_PASS",
-    "reviewed_head": "79e7b74599e47d2a231f1099734a578e39600a80",
-    "reviewed_documentation_fingerprint": "b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9",
-    "declared_file_count": 18,
-    "declared_markdown_count": 16,
-    "finding_count": 0,
-    "prior_findings_closed": 4
-  },
-  "static_audit": {
-    "headings": 22,
-    "links": 29,
-    "image_elements": 4,
-    "required_image_roles": 3,
-    "issues": 0
-  },
-  "evidence": {
-    "documentation_manifest": "documentation-manifest.json",
-    "authorship_receipt": "verification/hesperos-authoring/documentation-authorship.json",
-    "image_inspection": "verification/hesperos-authoring/image-inspection.json",
-    "review_report": "verification/hesperos-review/review-report.md"
-  },
-  "limitations": [
-    "The independent reviewer's native image viewer was unavailable because the Codex sandbox helper could not launch; visual appearance and local layout measurements were treated as retained evidence.",
-    "The corrected public Pages deployment, assistive-technology behavior, release assets, and fresh-public host behavior remain separate gates."
-  ],
-  "claim_boundary": "Independent corrected source-level documentation and accessibility review, including retained local true-390px remediation evidence.",
-  "responsive_regression": {
-    "status": "PASS",
-    "mode": "local-prepublication-retained-evidence",
-    "viewport_css_px": 390,
-    "document_width_px": 390,
-    "installation_card_width_px": 342,
-    "code_block_width_px": 295,
-    "code_scroll_width_px": 613,
-    "code_overflow_x": "auto",
-    "focused_screenshot": {
-      "width": 390,
-      "height": 1301,
-      "sha256": "34ff8908e590487b1f1a4658db286d064da91829c33c1a9639ae19fbb3325b7a"
-    }
-  }
+    "format":  "cd-hesperos-documentation-review/v1",
+    "product":  {
+                    "slug":  "augment-of-mind",
+                    "plugin_version":  "1.0.0",
+                    "core_version":  "0.2.0"
+                },
+    "review":  {
+                   "capability":  "documentation-accessibility-reviewer",
+                   "mode":  "independent-local-model-read-only",
+                   "model":  "qwen35:latest",
+                   "disposition":  "REVIEW_PASS",
+                   "reviewed_base_head":  "997bdf1be0b9deff8cd4765fb6a4bcbec5adf7d8",
+                   "reviewed_documentation_fingerprint":  "b91874a17296f6aa8837d5417174bfca10e8360b07a643d49937ac15ee023b1c",
+                   "declared_file_count":  18,
+                   "declared_markdown_count":  16,
+                   "finding_count":  0,
+                   "prompt_sha256":  "65b1c25230a4a14d89264f48d5ce0c634a174e8df819a3d3df1fce2191ccc499",
+                   "provider_done_reason":  "stop"
+               },
+    "static_audit":  {
+                         "headings":  22,
+                         "links":  29,
+                         "image_elements":  4,
+                         "required_image_roles":  3,
+                         "issues":  0
+                     },
+    "evidence":  {
+                     "documentation_manifest":  "documentation-manifest.json",
+                     "authorship_receipt":  "verification/hesperos-authoring/documentation-authorship.json",
+                     "image_inspection":  "verification/hesperos-authoring/image-inspection.json",
+                     "content_review_response":  "verification/hesperos-review/content-review-response.json",
+                     "provider_envelope":  "verification/hesperos-review/content-review-provider-envelope.json",
+                     "review_report":  "verification/hesperos-review/review-report.md"
+                 },
+    "limitations":  [
+                        "The review establishes source-content and implementation-claim alignment, not public deployment, fresh-host behavior, assistive-technology behavior, or representative-user outcomes.",
+                        "The app-native image viewer was unavailable because the Codex sandbox helper executable is missing; source images were directly inspected through an in-memory PowerShell/.NET rendering path."
+                    ],
+    "claim_boundary":  "Independent source-level documentation and accessibility content review of the exact authored fingerprint."
 }

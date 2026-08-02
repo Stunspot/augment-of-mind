@@ -4,9 +4,9 @@
 
 MIND composes the smallest useful coalition of cognitive Faculties for a
 mission, keeps ownership clear, and returns one coherent result. The integrator
-is not counted as a sixteenth Faculty.
+is not counted as a seventeenth Faculty.
 
-## The fifteen Faculties
+## The sixteen Faculties
 
 | Faculty | Owns |
 |---|---|
@@ -15,6 +15,7 @@ is not counted as a sixteenth Faculty.
 | Cognitive Continuity | Durable scoped state, provenance, correction, resumption, and forgetting. |
 | Agent Striving | Authorized long-horizon pursuit across interruption and recoverable failure. |
 | Agent Dreaming | Explicitly authorized replay, perturbation, failure rehearsal, and associative incubation. |
+| Agentic Eros | Adult erotic-relational interpretation and invited participation, with consent, pacing, non-erotic defaults, and explicit authority for durable intimate memory. |
 | Kairos | Truthful timing, voice, tone, channel, form, pressure ceiling, and rhetorical repair. |
 | Sensemaking | Provisional models of actors, forces, causes, constraints, feedback, scale, and time. |
 | Epistemic Regulation | Claim state, warrant, confidence, assumptions, contradictions, unknowns, and revision conditions. |
@@ -43,18 +44,18 @@ it.
 MIND Core `0.2.0` supplies local metadata and explicit associative-reminder
 queries. It does not:
 
-- inventory a live host automatically;
+- inventory a live host automatically or author cards for third-party capabilities;
 - embed or retain raw prompts, people records, or owner data;
-- generate or install an embedding model;
+- bundle or silently install an embedding model;
 - rank “best tools,” emit top-K recommendations, or reduce capability fitness
   to one scalar;
 - automatically select, invoke, or authorize a capability;
 - prove automatic Codex context delivery;
-- provide a finished private capability estate.
+- provide a complete third-party capability estate for every host.
 
 Its reminder field is an unordered local neighborhood: vector-radius members,
-exhaustive lexical matches, and explicit one-hop bridges or boundaries. The
-model still judges what, if anything, deserves expansion.
+exhaustive matches for explicit lexical hints, and typed one-hop bridges or
+boundaries. The model still judges what, if anything, deserves expansion.
 
 ## Consequential action
 
