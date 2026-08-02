@@ -130,7 +130,7 @@ def validate_payload_path(value: str) -> None:
             raise ReleaseError(f"development skill payload is not allowed: {value}")
         if PurePosixPath(value).suffix.lower() in {".pyc", ".pyo"}:
             raise ReleaseError(f"skill cache payload is not allowed: {value}")
-        if inner == ("SKILL.md",):
+        if len(inner) == 1 and inner[0] in SKILL_ALLOWED_ROOT_FILES:
             return
         if len(inner) >= 2 and inner[0] in SKILL_ALLOWED_DIRECTORIES:
             return
