@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 import tempfile
 import unittest
@@ -19,6 +20,7 @@ from build_release import (  # noqa: E402
     safe_extract,
     skill_release_files,
 )
+from build_integrated_fingerprint import build as build_integrated_fingerprint  # noqa: E402
 from verify_release import (  # noqa: E402
     MARKETPLACE_DISPLAY_NAME,
     MARKETPLACE_NAME,
@@ -29,16 +31,31 @@ from verify_release import (  # noqa: E402
 
 
 class ReleaseToolingTests(unittest.TestCase):
+    def test_integrated_capability_fingerprint_recomputes_from_source(self) -> None:
+        recorded = json.loads(
+            (REPO_ROOT / "skills" / "augment-of-mind" / "assets" / "integrated-capability-fingerprint.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(recorded, build_integrated_fingerprint())
+
+
     def test_skill_selection_excludes_development_material(self) -> None:
         selected = skill_release_files(REPO_ROOT / "skills")
         relative = {
             path.relative_to(REPO_ROOT / "skills").as_posix() for path in selected
         }
-        self.assertEqual(sum(path.endswith("/SKILL.md") for path in relative), 16)
+        self.assertEqual(sum(path.endswith("/SKILL.md") for path in relative), 17)
         self.assertIn(
             "cognitive-continuity/scripts/continuity_store.py",
             relative,
         )
+        self.assertIn("agentic-eros/SKILL.md", relative)
+        self.assertIn("agentic-eros/manifest.json", relative)
+        self.assertIn(
+            "agentic-eros/references/eros-and-relational-perception.md",
+            relative,
+        )
+        self.assertNotIn("agentic-eros/evals/eval-manifest.yaml", relative)
+        self.assertNotIn("agentic-eros/scripts/validate_package.py", relative)
         for path in relative:
             self.assertNotIn("/evals/", f"/{path}")
             self.assertNotIn("/tests/", f"/{path}")
@@ -48,6 +65,10 @@ class ReleaseToolingTests(unittest.TestCase):
     def test_verifier_enforces_the_same_skill_boundary(self) -> None:
         validate_payload_path("skills/sensemaking/SKILL.md")
         validate_payload_path("skills/cognitive-continuity/scripts/continuity_store.py")
+        validate_payload_path("scripts/query_associative_field.py")
+        validate_payload_path("scripts/build_associative_assets.py")
+        with self.assertRaises(ReleaseError):
+            validate_payload_path("scripts/unapproved.py")
         with self.assertRaises(ReleaseError):
             validate_payload_path("skills/sensemaking/evals/eval-manifest.yaml")
         with self.assertRaises(ReleaseError):
@@ -120,6 +141,74 @@ class ReleaseToolingTests(unittest.TestCase):
                 archive.writestr(f"{ARCHIVE_ROOT}/", b"")
             with self.assertRaisesRegex(BuildError, "unsafe archive member"):
                 safe_extract(archive_path, Path(temporary) / "extract")
+
+
+    def test_registry_and_agentic_eros_promotion_contract(self) -> None:
+        registry_path = (
+            REPO_ROOT
+            / "skills"
+            / "augment-of-mind"
+            / "references"
+            / "faculty-runtime"
+            / "faculty-registry.json"
+        )
+        runtime_path = registry_path.with_name("runtime.md")
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        faculties = registry["faculties"]
+        by_name = {faculty["name"]: faculty for faculty in faculties}
+
+        self.assertEqual(registry["faculty_count"], 16)
+        self.assertEqual(len(faculties), 16)
+        self.assertEqual(len(by_name), 16)
+        eros = by_name["agentic-eros"]
+        self.assertIn("associatively surfaced", eros["activate_when"])
+        self.assertIn("absent invitation", eros["must_not_own"])
+        self.assertIn("durable intimate inference", eros["must_not_own"])
+
+        eros_root = REPO_ROOT / "skills" / "agentic-eros"
+        metadata = (eros_root / "agents" / "openai.yaml").read_text(encoding="utf-8")
+        manifest = json.loads((eros_root / "manifest.json").read_text(encoding="utf-8"))
+        runtime = runtime_path.read_text(encoding="utf-8")
+        self.assertIn("allow_implicit_invocation: true", metadata)
+        self.assertEqual(manifest["name"], "agentic-eros")
+        self.assertEqual(manifest["version"], "0.2.0")
+        self.assertEqual(manifest["privacy_default"], "transient conversation state")
+        self.assertIn("that reminder is attention, not selection", runtime)
+        self.assertIn("association into activation", runtime)
+        self.assertIn("Only explicit user authority", runtime)
+
+        fingerprint_path = (
+            REPO_ROOT
+            / "skills"
+            / "augment-of-mind"
+            / "assets"
+            / "integrated-capability-fingerprint.json"
+        )
+        fingerprint = json.loads(fingerprint_path.read_text(encoding="utf-8"))
+        fingerprint_by_name = {item["name"]: item for item in fingerprint["capabilities"]}
+        self.assertEqual(fingerprint["capability_count"], 17)
+        self.assertEqual(fingerprint["faculty_count"], 16)
+        self.assertEqual(
+            fingerprint_by_name["agentic-eros"]["tree_sha256"],
+            "39c22a578415776263204a97dea4ea82db84341168bc8173db961823816e9ae9",
+        )
+
+        eval_root = REPO_ROOT / "skills" / "augment-of-mind" / "evals"
+        eval_manifest = json.loads(
+            (eval_root / "eval-manifest.yaml").read_text(encoding="utf-8")
+        )
+        runtime_cases = json.loads(
+            (eval_root / "faculty-runtime-cases.yaml").read_text(encoding="utf-8")
+        )
+        self.assertTrue(
+            {
+                "implicit_eros_promotion",
+                "eros_expression_gate",
+                "intimate_state_boundary",
+            }.issubset(eval_manifest["indispensable_dimensions"])
+        )
+        case_ids = {case["id"] for case in runtime_cases["cases"]}
+        self.assertTrue({"HAFR-010", "HAFR-011", "HAFR-012"}.issubset(case_ids))
 
 
 if __name__ == "__main__":

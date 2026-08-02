@@ -33,8 +33,9 @@ data into MIND.
 
 ## Network behavior
 
-The plugin and Core have no required network service. The release does not
-bundle or fetch an embedding model. A host that calls a model provider,
+The plugin and Core have no required hosted service. The release does not
+bundle or fetch an embedding model. The optional H0 adapter calls the configured
+Ollama HTTP endpoint, which defaults to the local loopback address. A host that calls a model provider,
 connector, Git remote, package index, or other service is governed by that
 service and the host's policy.
 

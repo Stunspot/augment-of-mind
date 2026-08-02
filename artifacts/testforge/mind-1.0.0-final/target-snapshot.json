@@ -1,0 +1,1587 @@
+{
+  "format": "cd-testforge-target-snapshot/v1",
+  "target": "MIND 1.0.0 final source candidate",
+  "evidence_boundary": "Exact current source and retained-evidence bytes excluding this final TestForge packet and user-owned release-v0.2.0; not a commit, push, archive, install, release, or live Pages receipt.",
+  "base_git_head": "997bdf1be0b9deff8cd4765fb6a4bcbec5adf7d8",
+  "branch": "codex/mobile-install-overflow",
+  "aggregate_algorithm": "sha256 over ordinal path + NUL + decimal byte length + NUL + file sha256 + LF",
+  "file_count": 315,
+  "aggregate_sha256": "247edac6d37be683df59628ad24fffb46ff2803fa47c21c1ef0d8516f7b271ea",
+  "files": [
+    {
+      "path": ".agents/plugins/marketplace.json",
+      "bytes": 392,
+      "sha256": "1c9a7cfea904e30476ac15b82ffbe4dc87ede0bae37802302d3c4d2a32f2dc62"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "bytes": 1739,
+      "sha256": "035a22faa6476e9b6c11b0ff42c24d9537b11803a8e4c833f40b658aa190a2ac"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "bytes": 816,
+      "sha256": "ed6e616c898d68b618c7a0211240ee44844b33c694e149d71dfd2aa4405ead5c"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 59,
+      "sha256": "1a1ec74784a3ca506b989306b14e3037355f2576f180be7ccbb316ee553f41cb"
+    },
+    {
+      "path": "CAPABILITIES-AND-LIMITS.md",
+      "bytes": 3757,
+      "sha256": "e27691a8e2b8156bff5ff6f74ad156a61cddd0607cb7bda4d5d008aaa5e1aaef"
+    },
+    {
+      "path": "DATA-AND-PRIVACY.md",
+      "bytes": 2355,
+      "sha256": "f495fa0d4f6827f94054fac97d20395ac4fde433afdb7e8d302f74f8bc14bd8e"
+    },
+    {
+      "path": "HOST-COMPATIBILITY.md",
+      "bytes": 2411,
+      "sha256": "ea9d8f015bb0dce38961a538a076249b09362172108739c121328a46ca469d6a"
+    },
+    {
+      "path": "INSTALL-CODEX.md",
+      "bytes": 3482,
+      "sha256": "a555589380586a6472ea9a0f80234d57459957249e7eb121fe068e49d495ec68"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 1404,
+      "sha256": "017dd10cd41d2bb0dbc2136d9d420bc6a5773ebbbf5600b015a2b85da4350d04"
+    },
+    {
+      "path": "MAINTAINER-GUIDE.md",
+      "bytes": 2119,
+      "sha256": "6e3e8163786467b60925fc37778a910f431146d9d49b77c0d2db29f9df4c0b6d"
+    },
+    {
+      "path": "NOTICE.md",
+      "bytes": 978,
+      "sha256": "4538f50403b262cfab930dca66cf8d76ea86e20981921cb0876811ba8d3f3d0a"
+    },
+    {
+      "path": "OPTIONAL-CORE.md",
+      "bytes": 5585,
+      "sha256": "02bc483f0fcdf3190df408ec825c388023e9f57808f490b6de3e5bb6801abfbf"
+    },
+    {
+      "path": "PACKAGE-REFERENCE.md",
+      "bytes": 1749,
+      "sha256": "0ffe0d22f362b04ec0e3665da0006f1373e1948c56f4c42838a192568faf7926"
+    },
+    {
+      "path": "QUICK-START.md",
+      "bytes": 1645,
+      "sha256": "31ee98ca330f4584346875095de2b8daecc599df5eadf544f2f5153e3027230d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7375,
+      "sha256": "c399b9d2c60c65ca7a5e97f5b6346098705a8a1f0f6c91b783f545d1441d84b4"
+    },
+    {
+      "path": "RELEASE-NOTES.md",
+      "bytes": 1945,
+      "sha256": "d5e5bb87ecf2dbd27dc90bd26ee3ce5d402879ad03fce330bea22330dba90b6f"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 1604,
+      "sha256": "4d767c97191553b08b64c83ac89aaf6499dd8f76feb3da2453b3f11a635b2849"
+    },
+    {
+      "path": "START-HERE.md",
+      "bytes": 2035,
+      "sha256": "226a018feaffca75e41302b3443df394020d7ade9db73b6bb091f373a3f77270"
+    },
+    {
+      "path": "SUPPORT.md",
+      "bytes": 1313,
+      "sha256": "83e2ad87751e5b0588a3b805e0bd0a39bfad159f45cdde1c6c93246b84394831"
+    },
+    {
+      "path": "TERMS-OF-USE.md",
+      "bytes": 920,
+      "sha256": "d48d4eab68f26543f17f026c6830ef15c6297930a944752de84ee7c40cf921c5"
+    },
+    {
+      "path": "TROUBLESHOOTING.md",
+      "bytes": 4068,
+      "sha256": "ba3fe84224ab0fd2eae242dc4e0362b6bc5ed393e81dd90b960952f793de48b3"
+    },
+    {
+      "path": "USER-GUIDE.md",
+      "bytes": 2933,
+      "sha256": "51fd9580148bd9fccfe90fe723921f4098a4615ae239e6be2ee3f67565b729cb"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/execution-evidence-r2.json",
+      "bytes": 25358,
+      "sha256": "68a0b70464665b19f179381245e5cbf540bcd8c65c3e534f36377c63b859f4ef"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/execution-evidence.json",
+      "bytes": 19987,
+      "sha256": "43025f5440c2b07d0823c0ec69d8697ccce3f04a1486c352a69cf8725e22128d"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/manifest-validation.json",
+      "bytes": 156,
+      "sha256": "2a7cedc6c4c7fe3c92d8dff6cd4a5b18030bd28aa9be06596fe0d44a70ff3654"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/reviewer-disposition-r1.md",
+      "bytes": 1027,
+      "sha256": "ccce40ff518b90393d8b604c2d29d65fdb3ad6f58c2ef96810f325b4b15787c4"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/reviewer-disposition-r2.md",
+      "bytes": 787,
+      "sha256": "795e6a1cf38ee0e027e9056f337b0426519ee672a9dee2daa92cb334112f81ff"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/target-snapshot.json",
+      "bytes": 9933,
+      "sha256": "337496949a1183abf65ea51fd85f716f78c6bcebdae8ae63550d8d38e1a12fb7"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/test-smells.json",
+      "bytes": 125,
+      "sha256": "f5c4640813372aee75d9595ecddd310facb071bd2201d1b8d7f6399bf4c6b139"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/traceability-validation.json",
+      "bytes": 156,
+      "sha256": "2a7cedc6c4c7fe3c92d8dff6cd4a5b18030bd28aa9be06596fe0d44a70ff3654"
+    },
+    {
+      "path": "artifacts/testforge/agentic-eros-integration/verification-report.md",
+      "bytes": 6304,
+      "sha256": "c99a37d4c9f0b67cfb716d1c99da45bacc893ad3e0644ef8d662bd9809ff6e36"
+    },
+    {
+      "path": "artifacts/testforge/build-backend-probe.json",
+      "bytes": 645,
+      "sha256": "2fb9448d329053d20483f26d70ac132cb0f3f4363d9b841571e9c5af47d6e56d"
+    },
+    {
+      "path": "artifacts/testforge/manifest-validation.json",
+      "bytes": 156,
+      "sha256": "b08c9d28a94b902a4d31578b815cf0385d9fbec51cceae904863ca19e7891266"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-001-mind-full-unittest.json",
+      "bytes": 13921,
+      "sha256": "54e936801b0138589a1c0c6f9b83ce06058c80bd8fa55eac9f05c85b6b3816fc"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-001-mind-full-unittest.normalized.json",
+      "bytes": 603,
+      "sha256": "876f56de943507fa376c0af6848d95bf5c347fe665cbe46769ad3527b6f39383"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-002-exoframe-full-pytest.json",
+      "bytes": 4989,
+      "sha256": "8edfd337956c771f16fd6bed32cb9b2cd7eac1d76a8539f65e12615c947f40f9"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-002-exoframe-full-pytest.normalized.json",
+      "bytes": 679,
+      "sha256": "2230f133db934f236a1a440fe68b0b10b202dc2fe2fc03ddafd38fc45940e27a"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-003-exoframe-windows-vault-host.json",
+      "bytes": 1528,
+      "sha256": "0ee5afa59f31708f55626890ae1e0eac4ec7bb107f572e43ee83dc6ac4094994"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-003-exoframe-windows-vault-host.normalized.json",
+      "bytes": 776,
+      "sha256": "770554ae411a3d23813bb70289a083fd27aed97134391ab86bfb915fe748bca9"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-003-exoframe-windows-vault-host.xml",
+      "bytes": 508,
+      "sha256": "6b620e5c192e580d9152a1e2fe2df4665cbd89c44913b852eba22efc4d795fb7"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-004-exoframe-hermetic-pytest.json",
+      "bytes": 1625,
+      "sha256": "e3c510ff06787f5539c101f4cdf2d3ea4b661794dac78ee8799af9f4103d5537"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-004-exoframe-hermetic-pytest.normalized.json",
+      "bytes": 26190,
+      "sha256": "75f0a87e30731cca5b4c99805e0c66f63871fc4ebc9e66f564aa0a2d8d30837e"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-004-exoframe-hermetic-pytest.xml",
+      "bytes": 17536,
+      "sha256": "aa4f33fe7d43ad1fb88ab7e852ce55ff9f3d26a7fe318e2114a39c7928baa2f4"
+    },
+    {
+      "path": "artifacts/testforge/phase2/E-005-contract-vector-byte-identity.json",
+      "bytes": 1162,
+      "sha256": "a08c3f4f9383560f6477187ac1407fc107b1ba98d7a29398e3cee6db1334db37"
+    },
+    {
+      "path": "artifacts/testforge/phase2/charter.md",
+      "bytes": 1180,
+      "sha256": "915abf3b5b9018976493ac909c9521c814eb0e95e8352f4bb95a639d477abb6f"
+    },
+    {
+      "path": "artifacts/testforge/phase2/exoframe-diff-summary.json",
+      "bytes": 4445,
+      "sha256": "7a423c458d456326bb8f14fbb3bb1188ae199ab9c35b06266d08d832310d87ba"
+    },
+    {
+      "path": "artifacts/testforge/phase2/exoframe-repo-inventory.json",
+      "bytes": 2732,
+      "sha256": "4dd9873c18aa878bbb46a90b77a9e0a8abc14db0befe3f6d1c11b840d976152a"
+    },
+    {
+      "path": "artifacts/testforge/phase2/exoframe-test-stack.json",
+      "bytes": 338,
+      "sha256": "3033d3975a619ff89ba73e007743131b4ea53a5ce8bb8dad330f49c3b5682f2b"
+    },
+    {
+      "path": "artifacts/testforge/phase2/manifest-validation.json",
+      "bytes": 156,
+      "sha256": "4c8d45a8b960ab7b22d3c7e6789e8500f0c1928befaa8e022c3f54c9b637bebd"
+    },
+    {
+      "path": "artifacts/testforge/phase2/mind-diff-summary.json",
+      "bytes": 1870,
+      "sha256": "6eba8407d8b5614e847cf716c5d0313230cfc7861030c86d36a0399f8d4ad666"
+    },
+    {
+      "path": "artifacts/testforge/phase2/mind-repo-inventory.json",
+      "bytes": 1147,
+      "sha256": "71aa84868602d20263295d2403646ab803812e4b82aa543c34e0fde53eecbc91"
+    },
+    {
+      "path": "artifacts/testforge/phase2/mind-test-stack.json",
+      "bytes": 553,
+      "sha256": "3a8701df92be9ea7f85d2b618a4f1738556d9eb4b9327df83e316e11fca81d81"
+    },
+    {
+      "path": "artifacts/testforge/phase2/reviewer-disposition.md",
+      "bytes": 1851,
+      "sha256": "ac64cc9d4066d2b5e526ae58bbf02456ee424c27821813a1bc50fb623969c184"
+    },
+    {
+      "path": "artifacts/testforge/phase2/target-snapshot.json",
+      "bytes": 8879,
+      "sha256": "3e222aca461a18897eaec25ab7c8f09ba2593a7b174c58b1f05ca4985536267b"
+    },
+    {
+      "path": "artifacts/testforge/phase2/test-smells.json",
+      "bytes": 24107,
+      "sha256": "33a9fd4d552281906c4d9b9613657939891e6ad7a9e07020578c3cb337603786"
+    },
+    {
+      "path": "artifacts/testforge/phase2/traceability-validation.json",
+      "bytes": 156,
+      "sha256": "4c8d45a8b960ab7b22d3c7e6789e8500f0c1928befaa8e022c3f54c9b637bebd"
+    },
+    {
+      "path": "artifacts/testforge/phase2/verification-manifest.json",
+      "bytes": 27853,
+      "sha256": "5a55ef549614c81dfbc53dc4f29d1d2a237c29160050be2f362083079bdd4737"
+    },
+    {
+      "path": "artifacts/testforge/phase2/verification-report.md",
+      "bytes": 7401,
+      "sha256": "34eb36ab0ceeeadb4fd5ae13ff535e4333834aa5e09847202a592df7c6042e91"
+    },
+    {
+      "path": "artifacts/testforge/repo-inventory.json",
+      "bytes": 1030,
+      "sha256": "84a09e01adcc324ab69c71145c22df55a5d1377538c833c0f7e5f34b00c833d2"
+    },
+    {
+      "path": "artifacts/testforge/reviewer-disposition.md",
+      "bytes": 2348,
+      "sha256": "7d61c168a60a6a7b4d38926693291cd8c35523b8231009c9fa30880c1a1cc96b"
+    },
+    {
+      "path": "artifacts/testforge/target-snapshot.json",
+      "bytes": 5479,
+      "sha256": "f269b0e04849ffbf6396873f5fe3eb24954e24deefa60373febf3924ebcecabe"
+    },
+    {
+      "path": "artifacts/testforge/test-smells.json",
+      "bytes": 725,
+      "sha256": "d2cdbfecf191dd30745dbd7ee179dfd4922334dc86c8760395aad7ff206cd451"
+    },
+    {
+      "path": "artifacts/testforge/test-stack.json",
+      "bytes": 538,
+      "sha256": "516464f5dc87913c92b669b558410b94ae3f43be735e2ffbf71e0e960e56eab0"
+    },
+    {
+      "path": "artifacts/testforge/traceability-validation.json",
+      "bytes": 156,
+      "sha256": "b08c9d28a94b902a4d31578b815cf0385d9fbec51cceae904863ca19e7891266"
+    },
+    {
+      "path": "artifacts/testforge/unittest-execution.json",
+      "bytes": 5876,
+      "sha256": "8ae3c02dc62a4b4b97fac46f8a22829a1fc74a1c8f11cdf0e6d3706f1c5542e5"
+    },
+    {
+      "path": "artifacts/testforge/verification-report.md",
+      "bytes": 7166,
+      "sha256": "f374797c98deb8f598ad35d73ecf0e64252f9b6276d85d19a3e940e23e4f0a14"
+    },
+    {
+      "path": "assets/mind-capability-card-1080x1350.png",
+      "bytes": 1317609,
+      "sha256": "84fde3564788dcae7defa1350b3c99da9661b60c68ebee0a7db82ed4b637c6b8"
+    },
+    {
+      "path": "assets/mind-hero-1600x900.png",
+      "bytes": 339178,
+      "sha256": "2d1bfc60b60809ce0f88dc287e02aef18ceaa3354a3e469c2a4da55b908124de"
+    },
+    {
+      "path": "assets/mind-icon-1024.png",
+      "bytes": 1030904,
+      "sha256": "52b9ded68825fc5b141e40a72fe24097bf176bc7da42154d55b2c63e41bdc46c"
+    },
+    {
+      "path": "assets/templates/verification-manifest.json",
+      "bytes": 26323,
+      "sha256": "f61ad858f81ff467f64e67b6fecc5dd11ef22d786a371135845614e982726bf6"
+    },
+    {
+      "path": "docs/.nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 1015,
+      "sha256": "1004267bc60ca8682a51f6214b2194fff8bd968da3842f947be41eb8c6b9d6d4"
+    },
+    {
+      "path": "docs/architecture/MIND-REMINDER-DELIVERY-PROTOCOL.md",
+      "bytes": 1716,
+      "sha256": "76d736867106815a7d4a7d56104de258896c80b0562b107e0f03beb19285474c"
+    },
+    {
+      "path": "docs/architecture/PHASE-1-WORK-PACKET.md",
+      "bytes": 6632,
+      "sha256": "447de579defba8c6336459fb050aab760f3e90b690da3e836d8ef3c00dea9a17"
+    },
+    {
+      "path": "docs/architecture/PHASE-2-ASSOCIATIVE-DISCLOSURE-WORK-PACKET.md",
+      "bytes": 16403,
+      "sha256": "0d8670725b31ff2daac6cd060afa48a868d22a3479189637a26cdd5dddc39a72"
+    },
+    {
+      "path": "docs/architecture/RELEASE-CONTRACT-v1.0.0.md",
+      "bytes": 2694,
+      "sha256": "20e908b221ac8c28185108ac3ba24de23ca9792f88931f8ff44b9ef183794ad2"
+    },
+    {
+      "path": "docs/assets/mind-capability-card-1080x1350.png",
+      "bytes": 1317609,
+      "sha256": "84fde3564788dcae7defa1350b3c99da9661b60c68ebee0a7db82ed4b637c6b8"
+    },
+    {
+      "path": "docs/assets/mind-hero.png",
+      "bytes": 339178,
+      "sha256": "2d1bfc60b60809ce0f88dc287e02aef18ceaa3354a3e469c2a4da55b908124de"
+    },
+    {
+      "path": "docs/assets/mind-icon-1024.png",
+      "bytes": 1030904,
+      "sha256": "52b9ded68825fc5b141e40a72fe24097bf176bc7da42154d55b2c63e41bdc46c"
+    },
+    {
+      "path": "docs/index.html",
+      "bytes": 16301,
+      "sha256": "8965763dfef7b4d85f10133a15713491a9cbb85192fd7409294944b3d4a87cd6"
+    },
+    {
+      "path": "docs/style.css",
+      "bytes": 10933,
+      "sha256": "bc7cd8d9782c933add2f99fa8466337399a87a9024a415c0d4faeb3fef3bbba3"
+    },
+    {
+      "path": "documentation-manifest.json",
+      "bytes": 761,
+      "sha256": "7a81d8b695e3a49a01bf49e0a5b879ceabc8d114cbbe0588ad5f540a66676860"
+    },
+    {
+      "path": "mind_core/__init__.py",
+      "bytes": 161,
+      "sha256": "0a949db36d12992a3582f9daece3221ac290245dd6402f1027759928dc902346"
+    },
+    {
+      "path": "mind_core/__main__.py",
+      "bytes": 97,
+      "sha256": "132852db7a7b582905a3f19e210e4fed265d3d31683623e29d6a9a88fbe2589f"
+    },
+    {
+      "path": "mind_core/association_math.py",
+      "bytes": 5835,
+      "sha256": "8293096d9ee02fe0e55e1af6cf2602c93fd61e0664b9e938d5f080407c50563e"
+    },
+    {
+      "path": "mind_core/cli.py",
+      "bytes": 4376,
+      "sha256": "da25c0f4bb4e75381fe3435f0622e8194f786260eaa2278fdbdb5012802f26b5"
+    },
+    {
+      "path": "mind_core/constants.py",
+      "bytes": 2484,
+      "sha256": "bc8ee953dc227677c4a6146de3acde641ae61d1b27734a523023d703a2beefc9"
+    },
+    {
+      "path": "mind_core/core.py",
+      "bytes": 6767,
+      "sha256": "ef6989498fb127014765ff70b6fcf624a9e461d6e7e5b1b80a27e3aa8fc673a0"
+    },
+    {
+      "path": "mind_core/delivery.py",
+      "bytes": 2668,
+      "sha256": "e8844cfb1ca28fb213e1f7373533366f547620b2982f62b713ad423ab3d2b143"
+    },
+    {
+      "path": "mind_core/errors.py",
+      "bytes": 831,
+      "sha256": "e4050cc0ecf5882dcebfcdef1e83a787166f542af5f3f76b1810a899688636d9"
+    },
+    {
+      "path": "mind_core/estate.py",
+      "bytes": 18944,
+      "sha256": "f927366825c202c84ac6c7a36d9ac9eaf81e90400a726c711cf14aade5cec462"
+    },
+    {
+      "path": "mind_core/field_tokens.py",
+      "bytes": 2199,
+      "sha256": "3c48422688d104808f6e72a7fac0087cc7ec45d9afcb63426e392b0192070aa2"
+    },
+    {
+      "path": "mind_core/handshake.py",
+      "bytes": 13551,
+      "sha256": "076e9197982894f9f4f30256f5a50aa4c91f606a56a6ccfdee64b98a89bea418"
+    },
+    {
+      "path": "mind_core/migration_runner.py",
+      "bytes": 3064,
+      "sha256": "83fe5c61bc9e693e0ea54dea3936d52b9c486aec25e85fa3c8ed880587b16513"
+    },
+    {
+      "path": "mind_core/migrations/0001_core_metadata.sql",
+      "bytes": 16370,
+      "sha256": "f94f2d271b9163b242d26d5119aa37867281513626d161ee15cba796f96adb60"
+    },
+    {
+      "path": "mind_core/migrations/0002_associative_disclosure.sql",
+      "bytes": 22621,
+      "sha256": "4d18d3091ed11aa728191a62438300fd1f20196a8bdf1672cea1750527411e8e"
+    },
+    {
+      "path": "mind_core/migrations/__init__.py",
+      "bytes": 44,
+      "sha256": "d1e77abd80497db6538b828a6a3dba6d95bc3ff75c1481233b7f00bb55772a6d"
+    },
+    {
+      "path": "mind_core/mounts.py",
+      "bytes": 14176,
+      "sha256": "20e7bb9b4256330543bdbd4e3bfda55aaf1bca8c3c5145dbd70cb985b93d2a3c"
+    },
+    {
+      "path": "mind_core/protocol.py",
+      "bytes": 3457,
+      "sha256": "77216e82b0ada2d004a760ba6522a3ee376edf4103cb7b2eac172f51423cd344"
+    },
+    {
+      "path": "mind_core/receipts.py",
+      "bytes": 13299,
+      "sha256": "6440931899067ef47c3d5cf62120433dfab69899b8da405e0ab15849620b69aa"
+    },
+    {
+      "path": "mind_core/reminders.py",
+      "bytes": 112253,
+      "sha256": "9edea745b65965de7f6c3a2d5f51b685cd8038336e426e8b30df8fec6b44416f"
+    },
+    {
+      "path": "mind_core/service.py",
+      "bytes": 7256,
+      "sha256": "71881029d4cf2c126d04b19e9c7b64a00f31a0250bbe032e67a8c49f9e86e404"
+    },
+    {
+      "path": "mind_core/store.py",
+      "bytes": 5377,
+      "sha256": "a2113909c568a517d565e2d2423d7f956a2ebecd121488885c7bf01421a27e81"
+    },
+    {
+      "path": "mind_core/util.py",
+      "bytes": 4153,
+      "sha256": "2cc4af1e97d42af446c9c5c759395e58445f3680494eb1f827cce7ef7e34c2d0"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 487,
+      "sha256": "6867a74de1f946786fed3296fa0734787f79aea69c8a81185c5a05ac744f3840"
+    },
+    {
+      "path": "scripts/audit_pages.py",
+      "bytes": 6083,
+      "sha256": "64cdc55bdbac72136c835b3189db63765578d743d1510755471e4316c2bed23d"
+    },
+    {
+      "path": "scripts/build_associative_assets.py",
+      "bytes": 23990,
+      "sha256": "69aa8fe908172f9b5b78c72a57a395822efbefa5b1d97ef244354def6be5758b"
+    },
+    {
+      "path": "scripts/build_integrated_fingerprint.py",
+      "bytes": 2809,
+      "sha256": "6ebfb1bcf9be4bd75e0f682e4391130f759822e87a385547c90849a8a1574ab0"
+    },
+    {
+      "path": "scripts/build_release.py",
+      "bytes": 17667,
+      "sha256": "4fde855400fb1a2cacc846709b52ac7fe1ec3ecc3ffdf72473f7b34fa5757d5a"
+    },
+    {
+      "path": "scripts/query_associative_field.py",
+      "bytes": 4566,
+      "sha256": "28cdcb354fdda57c47b2541909fa9f6a71f691a016af641f5f6107690ab21e86"
+    },
+    {
+      "path": "scripts/verify_release.py",
+      "bytes": 16917,
+      "sha256": "385223cc19adbb8840de93368e7f8e83c7e82959706dca52140c1cee1f3398cb"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/SKILL.md",
+      "bytes": 3424,
+      "sha256": "67e7365be00ab05576ae4e0f7662c93755952a1464c067f244605b46667bc130"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/agents/openai.yaml",
+      "bytes": 254,
+      "sha256": "5c257fe4a4989ebba681325feab03010085380b87718748d50c72a0faa4a58da"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/assets/tastefield-map.template.md",
+      "bytes": 1142,
+      "sha256": "ff3817270b12bbc9f72c7801a622184d8256e94e8779140bfdf542020294567b"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/evals/core-transfer-cases.yaml",
+      "bytes": 7691,
+      "sha256": "b91aa37be059ab13e76ac89ab7c25b6fb7f9940f180098d1c734e9453b31bc27"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/evals/eval-manifest.yaml",
+      "bytes": 807,
+      "sha256": "5504ec429ae1855af3fc434f03b4dca6c9b8ba3eda103121789cb6ba703765be"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/references/aesthetic-intelligence-doctrine.md",
+      "bytes": 7657,
+      "sha256": "cca6fe9e9ebd4d2ef8bef8853f55e6c14dc2020b85b506985daeec620559fc0d"
+    },
+    {
+      "path": "skills/aesthetic-intelligence/references/source/tastefield-compass-canonical.md",
+      "bytes": 3241,
+      "sha256": "1df59d302939fd42d3f8185670dd4dfdcc9316db9b112a12938a1d1edc818c2e"
+    },
+    {
+      "path": "skills/agent-dreaming/SKILL.md",
+      "bytes": 4281,
+      "sha256": "62d857134b314dc90ce89956e39ab5716f3a7ba0ce1aceb017cada3a6b7987bb"
+    },
+    {
+      "path": "skills/agent-dreaming/agents/openai.yaml",
+      "bytes": 282,
+      "sha256": "6a66f72ff080f8828d2fd1ec9be1617bca5fffdf411a71d3690d7ca62c7b7278"
+    },
+    {
+      "path": "skills/agent-dreaming/assets/templates/dream-report.md",
+      "bytes": 1695,
+      "sha256": "344bcad2942a25ae7ab136b22567aefcb26f154b03c62c0dc348bc115b4ea224"
+    },
+    {
+      "path": "skills/agent-dreaming/assets/templates/waking-review.md",
+      "bytes": 718,
+      "sha256": "01f19347e394ece6eae7dc90875f3ddb020ecae1cc046b82a1a39426f50c90ca"
+    },
+    {
+      "path": "skills/agent-dreaming/references/dream-doctrine.md",
+      "bytes": 4332,
+      "sha256": "6393c47b0f92495401fe97efe2100d9f135beec8e730b513d210d68daf7d561c"
+    },
+    {
+      "path": "skills/agent-striving/SKILL.md",
+      "bytes": 6974,
+      "sha256": "48c361af7c43ae775bb502f4d908bf8efbeae9eaa527aaac612b370733c3aed7"
+    },
+    {
+      "path": "skills/agent-striving/agents/openai.yaml",
+      "bytes": 323,
+      "sha256": "0ecd2895718f6e1e3af25500365098a9dff9ffa0631fe054306eeb6e683e26c4"
+    },
+    {
+      "path": "skills/agent-striving/assets/pursuit-state.schema.json",
+      "bytes": 3857,
+      "sha256": "3e2c76e85c93cdfbe6bfd2b5afe35bbbf0335bd1f13d4405d484664e97a6f580"
+    },
+    {
+      "path": "skills/agent-striving/assets/pursuit-state.template.json",
+      "bytes": 1272,
+      "sha256": "d088549b784239af4048a2778abd2ddd7f2de37c282449cd951c4e820740bec4"
+    },
+    {
+      "path": "skills/agent-striving/evals/core-transfer-cases.yaml",
+      "bytes": 10526,
+      "sha256": "01a241779d97af7924ab89bb4dce271554e7f1cccaa11c8700c1eda6bac9a932"
+    },
+    {
+      "path": "skills/agent-striving/evals/eval-manifest.yaml",
+      "bytes": 903,
+      "sha256": "d254084298a35974a10b67b52803f89f1922ed2ec8b4c89ac4f888a7b4c353d5"
+    },
+    {
+      "path": "skills/agent-striving/examples/interrupted-recovery.md",
+      "bytes": 1325,
+      "sha256": "d57f307f9eccb4313f7b38cfbb5f93625f5bf34f9f88c8d46989e963d6c31d29"
+    },
+    {
+      "path": "skills/agent-striving/references/conation-and-goal-custody.md",
+      "bytes": 4226,
+      "sha256": "d559f813a616113d848ce522446ef9bee2b5db8aa706f4ed770df0763f6f83a9"
+    },
+    {
+      "path": "skills/agent-striving/references/degraded-operation.md",
+      "bytes": 2218,
+      "sha256": "9f1cbc9967ebaedc7d25e286b582bd6d94cfee44b53d351a32290786532319da"
+    },
+    {
+      "path": "skills/agent-striving/references/pursuit-loop.md",
+      "bytes": 5832,
+      "sha256": "7f82bb915d2c345a4f526d263be05923085e135783ab0385af7a65ad322e7fe8"
+    },
+    {
+      "path": "skills/agent-striving/scripts/tests/test_validate_pursuit_state.py",
+      "bytes": 2715,
+      "sha256": "c28d02e7973c5edd23c2231b1d9dc386dc8115219208293d493f92723d53ccc0"
+    },
+    {
+      "path": "skills/agent-striving/scripts/validate_pursuit_state.py",
+      "bytes": 9150,
+      "sha256": "2031884492e3250e58c4323161ba26eb9a96fb98e97b044dfccaa99362236b85"
+    },
+    {
+      "path": "skills/agentic-eros/SKILL.md",
+      "bytes": 14249,
+      "sha256": "d43b6963018fd565866b4fc5a28f3916c1fb473c0e1fb25c61172e46abce8070"
+    },
+    {
+      "path": "skills/agentic-eros/agents/openai.yaml",
+      "bytes": 256,
+      "sha256": "79358eeb5866f196f6b5577b9bdee0d56ace8c01f35fc4072a7a4f1a307f0896"
+    },
+    {
+      "path": "skills/agentic-eros/assets/preference-capsule.md",
+      "bytes": 870,
+      "sha256": "5cfadb733821b0ec3c03656f95636ab1b5e9e3232ed6d50b4e651b08f7ac1439"
+    },
+    {
+      "path": "skills/agentic-eros/assets/scene-state-card.md",
+      "bytes": 630,
+      "sha256": "993bc1131f3fb36cc83c15937847b45dd75948fba1e744f78ab6dc205291ec20"
+    },
+    {
+      "path": "skills/agentic-eros/evals/core-transfer-cases.yaml",
+      "bytes": 19223,
+      "sha256": "adcadf0fe5a68168ad55e4b45978187697e0c4c49dd07d46b2777759a7a0c790"
+    },
+    {
+      "path": "skills/agentic-eros/evals/eval-manifest.yaml",
+      "bytes": 1150,
+      "sha256": "22848696616f5b5c2a01da74cd17b1d5df37dd2ff44a8408e9ab73fdfbc3f8dc"
+    },
+    {
+      "path": "skills/agentic-eros/examples/ambient-analysis.md",
+      "bytes": 768,
+      "sha256": "b2ef7ca09183d78dd45c8fef48f8b4f9208ee4bffaf38c150e342f1b702acfa1"
+    },
+    {
+      "path": "skills/agentic-eros/examples/ambiguous-charge.md",
+      "bytes": 840,
+      "sha256": "3473310b4b459e27590eb0baad58819d029e8fbd6cf39860f78732d8c2727e5f"
+    },
+    {
+      "path": "skills/agentic-eros/examples/completion-variants.md",
+      "bytes": 856,
+      "sha256": "e263a1f723822379521c4ec81fcb46f15af7534be575d736b2e3105e46c14b13"
+    },
+    {
+      "path": "skills/agentic-eros/examples/relational-restraint.md",
+      "bytes": 723,
+      "sha256": "3e6a52800f219299f52c6ea050a4ee9c964d6729e9f1880e635c5814b0642a6e"
+    },
+    {
+      "path": "skills/agentic-eros/examples/responsive-pivot.md",
+      "bytes": 880,
+      "sha256": "83979c33f34bebd9ed118fa2351a73b9d68f2f2e975f4cd8eae36276ca553dd0"
+    },
+    {
+      "path": "skills/agentic-eros/examples/sparse-signal.md",
+      "bytes": 868,
+      "sha256": "52ae187bacdbe5830a2105d0c029758efb70b8dda2749f39432149d78e7f0cc9"
+    },
+    {
+      "path": "skills/agentic-eros/fallbacks/copy-paste-prompt.md",
+      "bytes": 9715,
+      "sha256": "e118ffa399dc1bda441084d089c4f0927cb5720191c737bc96637b27d4aced02"
+    },
+    {
+      "path": "skills/agentic-eros/manifest.json",
+      "bytes": 340,
+      "sha256": "e6c56fd624aae2351b4b748e487943b4acdb0468d1dc8c01979ef0f098b91a6e"
+    },
+    {
+      "path": "skills/agentic-eros/references/desire-and-response.md",
+      "bytes": 2295,
+      "sha256": "3e43b9a13fc809b3aee92cc722c6c467df320b489a4bacb73b88bf8d4e2e82ae"
+    },
+    {
+      "path": "skills/agentic-eros/references/discovery-and-personalization.md",
+      "bytes": 2669,
+      "sha256": "0c813d29a3e2c74ffdbff97dc12cd60944f46d7882826345d1729c64d3ad2e34"
+    },
+    {
+      "path": "skills/agentic-eros/references/eros-and-relational-perception.md",
+      "bytes": 3221,
+      "sha256": "7beeccd2aef78657729423a12424db70d4ef27fa357a64bc0389980cefca3575"
+    },
+    {
+      "path": "skills/agentic-eros/references/evidence-and-boundaries.md",
+      "bytes": 2368,
+      "sha256": "7d8000159ed2f7ed06ede84a6a8a33c8a6846314c338ebfd317b2bdea42fecce"
+    },
+    {
+      "path": "skills/agentic-eros/references/host-policy-adapter.md",
+      "bytes": 1828,
+      "sha256": "b7d32d4267c00cf384f3d51a27ac9ec208a105caee1cc6ac99cffb788de30b93"
+    },
+    {
+      "path": "skills/agentic-eros/references/pacing-completion-and-closure.md",
+      "bytes": 2316,
+      "sha256": "a22cfee57f6faadd66694b3641fca44260338ef7d9260b1fe988739e12a48e97"
+    },
+    {
+      "path": "skills/agentic-eros/references/roleplay-and-continuity.md",
+      "bytes": 1759,
+      "sha256": "09937d0ed0bf4a48f8da643518fefb2c0bad4412ab825be81799bf3e4508eb6b"
+    },
+    {
+      "path": "skills/agentic-eros/references/seduction-and-embodiment.md",
+      "bytes": 3053,
+      "sha256": "0212b1554a18884eb6442204c23ce6fe17206c12a75ac587cf5cfbfa3db572b2"
+    },
+    {
+      "path": "skills/agentic-eros/references/variation-and-inclusion.md",
+      "bytes": 1722,
+      "sha256": "6c5418f2a0d6ce9915749ec6be061e7e01b69b8193c3aa54c6d678e7158f4a67"
+    },
+    {
+      "path": "skills/agentic-eros/scripts/validate_package.py",
+      "bytes": 6433,
+      "sha256": "d7feadcea2bc4a3a8b73cff5b538ae79eef63971a27331054c68e46756ee728b"
+    },
+    {
+      "path": "skills/augment-of-mind/SKILL.md",
+      "bytes": 6313,
+      "sha256": "661fcbfa15b3adc08e353c92ab688bbe74c9c98af9d9ad57875833231608f31f"
+    },
+    {
+      "path": "skills/augment-of-mind/agents/openai.yaml",
+      "bytes": 411,
+      "sha256": "0582cb0de6e245c20f523dc2c33503c6d9261b40462dc396e0cc6adcdad0d9bd"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/associative-bootstrap.json",
+      "bytes": 18833,
+      "sha256": "2a81d6bc481c7b281d2fff95fd9cb08e149954d436be437c1e4b4d5540a15d0c"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/associative-capability-cards.json",
+      "bytes": 18590,
+      "sha256": "c2030e7973352a29ef235b51bcf59f39eb7a7e5a0614e7664e3beb7201e9e356"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/associative-index-qwen3-embedding-0.6b.json",
+      "bytes": 3152548,
+      "sha256": "ac55fb9420d3c796dd96780baac8b3c979a6acd2fb084ffdbeb30e416ac9a37f"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/collaborative-dynamics-logo.png",
+      "bytes": 30392,
+      "sha256": "85725355c5c7ac1516a156d3cc37ca74e1dee314418bc300252d8436d0ce2ce6"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/faculty-runtime/faculty-return.schema.json",
+      "bytes": 4309,
+      "sha256": "6ffc3ecfbcc69a1c5b46032ce4b11eee890e2af0c30500aace5b353e264c542a"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/faculty-runtime/faculty-return.template.json",
+      "bytes": 852,
+      "sha256": "cb04bf060acb1dae56a89ff631b42bf3b582f8cf1e4e25cbf4a96a8a2302593e"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/faculty-runtime/mission-capsule.schema.json",
+      "bytes": 3872,
+      "sha256": "10cef36fd077df35ccfc86e446ce9328049e17bd76412fcda61308a78c329022"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/faculty-runtime/mission-capsule.template.json",
+      "bytes": 1285,
+      "sha256": "02ccf230fdd0a1fc4a68f8bc87789bad07c8a9d40595cbd473a1af197a7e384a"
+    },
+    {
+      "path": "skills/augment-of-mind/assets/integrated-capability-fingerprint.json",
+      "bytes": 4773,
+      "sha256": "f7a81ec065e5f60987d4f185ce1a5b9c793752918e45b0865ff2b7169ad773c6"
+    },
+    {
+      "path": "skills/augment-of-mind/evals/eval-manifest.yaml",
+      "bytes": 1007,
+      "sha256": "e73239a3c4b5c464ac0d1fc39fdcc99e690efed7bd659ce658c298c35cd544f7"
+    },
+    {
+      "path": "skills/augment-of-mind/evals/faculty-runtime-cases.yaml",
+      "bytes": 18158,
+      "sha256": "c1410b67775da4c675c10b63d8538d81637ead7cae2dc6c32eae2bcf285c00b8"
+    },
+    {
+      "path": "skills/augment-of-mind/references/faculty-runtime/faculty-registry.json",
+      "bytes": 8912,
+      "sha256": "b719c5b665fc6bade51d782df84198b0d4735f1e4f1ed9cc0c240d5e68cdf47d"
+    },
+    {
+      "path": "skills/augment-of-mind/references/faculty-runtime/runtime.md",
+      "bytes": 8515,
+      "sha256": "b8d38288ce58d7a42942c486959722175094bba3374e7439150091f6a2b20389"
+    },
+    {
+      "path": "skills/capability-conductor/SKILL.md",
+      "bytes": 3590,
+      "sha256": "6e4418e764ab45120405390b0b584fa8adbfb2fe8b346a99582ae880815a1b34"
+    },
+    {
+      "path": "skills/capability-conductor/agents/openai.yaml",
+      "bytes": 284,
+      "sha256": "af0b5eb7d341f8c2b37c641da2e10a33966765fbe9463ba126c0a5e958a371b2"
+    },
+    {
+      "path": "skills/capability-conductor/assets/capability-registry.template.yaml",
+      "bytes": 460,
+      "sha256": "cb37c38ec117c39fb0639d44e82d254c5a4a72c8425580cefafd60aedb6b6e77"
+    },
+    {
+      "path": "skills/capability-conductor/assets/mission-ledger.template.md",
+      "bytes": 582,
+      "sha256": "e3d7b014b1ecb532120f492c4886bc8814aa10603840821195f2219dcbe39833"
+    },
+    {
+      "path": "skills/capability-conductor/evals/core-transfer-cases.yaml",
+      "bytes": 3546,
+      "sha256": "da06072c083e5565439d58b3af5c252b36f3751aca000acbf683318d7f9961dd"
+    },
+    {
+      "path": "skills/capability-conductor/evals/eval-manifest.yaml",
+      "bytes": 511,
+      "sha256": "033858f47314b16ab85e68c62b872b7b0b90eeea166abbdd0cbecb759d0e000d"
+    },
+    {
+      "path": "skills/capability-conductor/references/routing-doctrine.md",
+      "bytes": 2695,
+      "sha256": "892f9551e5630d571179cdca20c41c9ce8da4752c86627ee93cf91f8e9df240f"
+    },
+    {
+      "path": "skills/cognitive-continuity/SKILL.md",
+      "bytes": 4360,
+      "sha256": "bb0774b45492ab1bfa8a98a19e2274016d7d07a79c199c15c5e8c6370dabac64"
+    },
+    {
+      "path": "skills/cognitive-continuity/adapters/claude-code.md",
+      "bytes": 897,
+      "sha256": "a2ea4912f166860060c2e5bec2727e7dcf758ad766b6e621e027c4778f51a9c4"
+    },
+    {
+      "path": "skills/cognitive-continuity/adapters/codex.md",
+      "bytes": 1216,
+      "sha256": "20a1e594e8dcfcda809df7fbc22103125801d0ce3f6ad17e858c4d82f8accf5c"
+    },
+    {
+      "path": "skills/cognitive-continuity/agents/openai.yaml",
+      "bytes": 268,
+      "sha256": "7046d2bdfb1692e914e91728fef58fe819f0a8c82fdcdf3c2b99769351768409"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/context-request.schema.json",
+      "bytes": 955,
+      "sha256": "56970785369c8c29890faae6e407ec4e6e1a0c53d046890f821c77512d8e01be"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/continuity-manifest.schema.json",
+      "bytes": 1716,
+      "sha256": "5588df80a5abae7b9b417e44fe237ba29cde927d8bc502ed20e4ef2d48c6e74f"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/dream-report.schema.json",
+      "bytes": 2643,
+      "sha256": "a0c5179a7ad0917d5920464e04ca3d51c22221cd9e25e1eefce55e9504bfc4c3"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/episode.schema.json",
+      "bytes": 1458,
+      "sha256": "474a1eeff14f417e9bbd68cf56582670d5ec009327dffa87b7cefe0123150a0e"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/export.schema.json",
+      "bytes": 1001,
+      "sha256": "3bac3f1d1d6d2fdd9e5767b790adc34192ccb927b0d4ab8fdf1a7aec7165ae43"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/proposal.schema.json",
+      "bytes": 1280,
+      "sha256": "493ab1b1c72a0a529b149f222ab62d3f1d4c01a1c59607f1788404ebb0c908c9"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/schemas/state-record.schema.json",
+      "bytes": 2643,
+      "sha256": "0e7c33cc7d176c7ba527f734082099b1f9cf71fda93ff66263540fc858e5685e"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/capability-report.md",
+      "bytes": 989,
+      "sha256": "753b87e2fc483418bfd136d1c7f3ed74079deeb878681c25f9a6f54a316b6ba9"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/compiled-context.md",
+      "bytes": 920,
+      "sha256": "623363fe561508f317207270422c079ac18146cdfa92ba0b44d206bfbcb16d97"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/consolidation-report.md",
+      "bytes": 837,
+      "sha256": "e5df28fed8bb72591cc14c5997f56a7ab132189c339d0ec14202fa000364b5cf"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/context-request.json",
+      "bytes": 341,
+      "sha256": "e8a350835a17e5a3b3820920aba7991efc92847e8ec077cfc0381390c64d61f3"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/continuity-manifest.json",
+      "bytes": 635,
+      "sha256": "dd0e22d8a5b017bb36b969831231ffe2cf85cdad2e5ccd4c60a458b90a909e15"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/contradiction-review.md",
+      "bytes": 684,
+      "sha256": "898765316d9e098c20a1a6702cbb30afefddf4a726764d1c8235c1d3762afcfb"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/deletion-plan.md",
+      "bytes": 1136,
+      "sha256": "977cd57c24f9f0ebe060907c779cf2a16267ac593327fbd244756764dfeef34e"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/dream-report.md",
+      "bytes": 1695,
+      "sha256": "344bcad2942a25ae7ab136b22567aefcb26f154b03c62c0dc348bc115b4ea224"
+    },
+    {
+      "path": "skills/cognitive-continuity/assets/templates/waking-review.md",
+      "bytes": 718,
+      "sha256": "01f19347e394ece6eae7dc90875f3ddb020ecae1cc046b82a1a39426f50c90ca"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/correction-and-freshness.md",
+      "bytes": 922,
+      "sha256": "816961119c38fede1e11c3748cee5824f50c741ffa31aec9b2e6ceb5168522da"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/deletion.md",
+      "bytes": 983,
+      "sha256": "80ff64d3a5c9633c5247348ffad8450ab9cad4f281a5c8b105b8292e51affaa0"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/dream-incubation.md",
+      "bytes": 1090,
+      "sha256": "d6110f76610b231ddbe104354a831bd9bd6cbbcdfd7f250e1b9bc3165faa5248"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/permission-revocation.md",
+      "bytes": 822,
+      "sha256": "12122fe1245f9497effa45b3fc14c96f5ba15cd69aac92124399bdc9624851c5"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/portable-transfer.md",
+      "bytes": 997,
+      "sha256": "018e6912e2ed6743c0bd76eb7ae5b49decb04af8c0693d46206839658817c457"
+    },
+    {
+      "path": "skills/cognitive-continuity/examples/project-resumption.md",
+      "bytes": 1250,
+      "sha256": "920548e45f2333705f270441f34d3974dab3573188f0de8e8a7c8a1b203e9f95"
+    },
+    {
+      "path": "skills/cognitive-continuity/fallbacks/copy-paste-continuity.md",
+      "bytes": 2763,
+      "sha256": "f0d189c49774953c6a7fe3a515ced7b99ce030d7ef493dff7778b4f1ecef53ed"
+    },
+    {
+      "path": "skills/cognitive-continuity/personas/cognitive-ecologist-lyra-anstice.md",
+      "bytes": 1989,
+      "sha256": "e0a1a6813615c2c02bb9631d0df374c2205d93433f4705cc29eb37564773d4f2"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/consolidation.md",
+      "bytes": 2258,
+      "sha256": "9e72fad0a1d233abb004d11a4e29de40c2a66078ec2a1828f7251cd1339d8368"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/context-compilation.md",
+      "bytes": 2050,
+      "sha256": "a590b3a1cb7e9900ca4ecf0ad6f146c73cd0f212892fb1875165c461609aedae"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/continuity-state-model.md",
+      "bytes": 2571,
+      "sha256": "53ae6e03afac18561d24dd82a91ea10c2075bdfb24d14117d00505aa62ffdf26"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/dream-doctrine.md",
+      "bytes": 4332,
+      "sha256": "6393c47b0f92495401fe97efe2100d9f135beec8e730b513d210d68daf7d561c"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/evaluation-doctrine.md",
+      "bytes": 2736,
+      "sha256": "f75b084e39afa32c174cf4dbd7d54a4b7752df1cc2ae9f11c56ef676b2d0ee1e"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/operating-method.md",
+      "bytes": 2675,
+      "sha256": "c4c3c734922c629d982932c3581ce021a504a0791fd27a22ec3292e6a2095dcb"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/portability-and-degraded-operation.md",
+      "bytes": 2117,
+      "sha256": "ad8ff1d98983e9ff5c55e7bef92abff592730c56a98d4f4508fcf6e85d35a9ee"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/privacy-correction-and-forgetting.md",
+      "bytes": 2537,
+      "sha256": "a003bff9a5b1623a50206c6aee9c722adad259114a81c0307fc037a3a9777efe"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/procedural-learning-handoff.md",
+      "bytes": 2093,
+      "sha256": "762cc1aa4b22d3316c91b01707dc0e8e0bf05083bd42be5de492c23587339eef"
+    },
+    {
+      "path": "skills/cognitive-continuity/references/source-time-and-authority.md",
+      "bytes": 2270,
+      "sha256": "36edef55d4170a3297cd38a2a960d5765220c2987167830e9589769f99849e1d"
+    },
+    {
+      "path": "skills/cognitive-continuity/scripts/README.md",
+      "bytes": 1283,
+      "sha256": "385b167d17c13c9c44fdf40bc85442df224ff909409c9ae63072560e5a184307"
+    },
+    {
+      "path": "skills/cognitive-continuity/scripts/compile_context.py",
+      "bytes": 8958,
+      "sha256": "97f3db821f8189070f196820bbabf3f6f8f4260b553ef751859c63fa14e59faf"
+    },
+    {
+      "path": "skills/cognitive-continuity/scripts/continuity_store.py",
+      "bytes": 25583,
+      "sha256": "b74e8283e88bb296bd2fcf979f02efc94426bbb5e88da4ec00f485ba4403d83e"
+    },
+    {
+      "path": "skills/cognitive-continuity/scripts/tests/test_continuity.py",
+      "bytes": 11814,
+      "sha256": "25329b5823e209ea6b121d27f46fb701bffd2ed79f1996b7977b4890d67a0711"
+    },
+    {
+      "path": "skills/cognitive-continuity/scripts/validate_continuity.py",
+      "bytes": 9344,
+      "sha256": "07a7686290f9f82e6727778fe5633887abba7daca4cf24953a3ba656042bddb3"
+    },
+    {
+      "path": "skills/creative-synthesis/SKILL.md",
+      "bytes": 1974,
+      "sha256": "088052af78cf79779e6c0b12bf39a275bd2a0a7b7d0e911914e67a86fc2a9a50"
+    },
+    {
+      "path": "skills/creative-synthesis/agents/openai.yaml",
+      "bytes": 323,
+      "sha256": "0aeb118f9a020971d9db22bcfa369e8fd44c2fb71149b5e71ddd803ca6ece1dc"
+    },
+    {
+      "path": "skills/creative-synthesis/assets/concept-field.template.md",
+      "bytes": 1164,
+      "sha256": "16791aa50d1cbd24a1a1c98239e981e9c7a3630e1b86b59ac289ca8cdef783ba"
+    },
+    {
+      "path": "skills/creative-synthesis/evals/core-transfer-cases.yaml",
+      "bytes": 4665,
+      "sha256": "c94e52250ca2deb6937e860db5b4a86d09af468889f22a63da4ef62db3183065"
+    },
+    {
+      "path": "skills/creative-synthesis/evals/eval-manifest.yaml",
+      "bytes": 659,
+      "sha256": "a6357aa4a6c176ed0d010768a643eb42dca887bded668c9ec8b6b693ea6f574f"
+    },
+    {
+      "path": "skills/creative-synthesis/references/creative-synthesis-doctrine.md",
+      "bytes": 6464,
+      "sha256": "b1a0ade67eab4323e81265a1a6e6c2c67e2c242f530463ec20f43d69874d0312"
+    },
+    {
+      "path": "skills/decision-intelligence/SKILL.md",
+      "bytes": 2810,
+      "sha256": "03fbd23634c323dec1d8983e7bb205c1714bcfc2ed3293f5260441f8ea271682"
+    },
+    {
+      "path": "skills/decision-intelligence/agents/openai.yaml",
+      "bytes": 336,
+      "sha256": "3a3a61e86aba71277f3b4a6e42a7b31ec27ccb351965ff052a247b2b2ce75552"
+    },
+    {
+      "path": "skills/decision-intelligence/assets/decision-record.template.md",
+      "bytes": 1414,
+      "sha256": "6db9ed9acee3a2db061502a91982df22a22b071bd5516b5e4a6f4ed1f72fd51c"
+    },
+    {
+      "path": "skills/decision-intelligence/evals/core-transfer-cases.yaml",
+      "bytes": 5034,
+      "sha256": "899342beed0ea743e876e1dd1b4850d7dc6a4fccc9744e111e242032c81f634b"
+    },
+    {
+      "path": "skills/decision-intelligence/evals/eval-manifest.yaml",
+      "bytes": 651,
+      "sha256": "9fd0e0f135e2c5e50d59b14652b405c6bcd2bd0cfb981bf55eca3e8a5937c8f5"
+    },
+    {
+      "path": "skills/decision-intelligence/references/decision-intelligence-doctrine.md",
+      "bytes": 5227,
+      "sha256": "80dd69073ddbf079664f09fa6e83005b91728918a74e2cb7a535a9b1c6e7bd09"
+    },
+    {
+      "path": "skills/deliberative-intelligence/SKILL.md",
+      "bytes": 2280,
+      "sha256": "97ca5052517a99c280999ebce259be5df5ca39a88baf834f3d4cbddf394c8b34"
+    },
+    {
+      "path": "skills/deliberative-intelligence/agents/openai.yaml",
+      "bytes": 325,
+      "sha256": "427a5bdc8b363f1472d0244968238b9014bbafa5ef4e6b95cf670d868ae46844"
+    },
+    {
+      "path": "skills/deliberative-intelligence/assets/deliberation-map.template.md",
+      "bytes": 1601,
+      "sha256": "20c9466c257142df5d1ad9fe32c0fdaecae15c91efdf16e9bd31104411b00b11"
+    },
+    {
+      "path": "skills/deliberative-intelligence/evals/core-transfer-cases.yaml",
+      "bytes": 4855,
+      "sha256": "64b4e0794a6ced16110da8f1cb37d6b52b207a79eeeaa3a753b2d59a2d77f93e"
+    },
+    {
+      "path": "skills/deliberative-intelligence/evals/eval-manifest.yaml",
+      "bytes": 595,
+      "sha256": "8f6512f3569a5c725cdeeda45fc87d4b5af1af1ef891cabc762b013ac0d961d6"
+    },
+    {
+      "path": "skills/deliberative-intelligence/references/deliberative-intelligence-doctrine.md",
+      "bytes": 7164,
+      "sha256": "3454ce0017ffcd9a1ef59d133cc35461a80b8ff5898485495d9d7dd772905e29"
+    },
+    {
+      "path": "skills/epistemic-regulation/SKILL.md",
+      "bytes": 2667,
+      "sha256": "eed630f7e09657dbd4f89d009c05c8edc7e8ab77f87cd1edd551a04f8751b63f"
+    },
+    {
+      "path": "skills/epistemic-regulation/agents/openai.yaml",
+      "bytes": 307,
+      "sha256": "010dc855e7d75015fa48e829064393ceb3bb35cca0024d5d34a791193399dfb6"
+    },
+    {
+      "path": "skills/epistemic-regulation/assets/claim-register.template.md",
+      "bytes": 975,
+      "sha256": "28cd37804eed3fc7f8b41f0ab915dbe4aa754e32e016b5b6b4ae24328f3dc7b9"
+    },
+    {
+      "path": "skills/epistemic-regulation/evals/core-transfer-cases.yaml",
+      "bytes": 4554,
+      "sha256": "f26982d14eb41a9beaae195304f5d02794b2707f52a4ae8a1b4b569209b36a07"
+    },
+    {
+      "path": "skills/epistemic-regulation/evals/eval-manifest.yaml",
+      "bytes": 609,
+      "sha256": "16980ab96d2fdd5da0d6502035ba11a0d924084dd4dd86d01ad00a06bf7a28c7"
+    },
+    {
+      "path": "skills/epistemic-regulation/references/epistemic-regulation-doctrine.md",
+      "bytes": 5080,
+      "sha256": "23da74511778a40d0420ac442224f860ac5024e836246a316d3282b6602d3d76"
+    },
+    {
+      "path": "skills/executive-function/SKILL.md",
+      "bytes": 2027,
+      "sha256": "a9c1a0895c8ad1ee8f7485967da6a2732853964d33f814da1891a99d5328e24f"
+    },
+    {
+      "path": "skills/executive-function/agents/openai.yaml",
+      "bytes": 267,
+      "sha256": "c000492b37f13ad9e53ea6681bb8cf44884e460f708f7e725d7e8c633479ca9e"
+    },
+    {
+      "path": "skills/executive-function/assets/mission-control.template.md",
+      "bytes": 300,
+      "sha256": "3ff2ea895607031313ca8a198e4af8893fdbe762ca2e8b07d023e053a8b0c1c7"
+    },
+    {
+      "path": "skills/executive-function/evals/core-transfer-cases.yaml",
+      "bytes": 2603,
+      "sha256": "2f84eb32178ba155b35a033b1c4e8f9bf62aab08f4223da845b8e5d73ea766ae"
+    },
+    {
+      "path": "skills/executive-function/evals/eval-manifest.yaml",
+      "bytes": 482,
+      "sha256": "2724abf241764530500d9a1d92cdbbb58daff6c6fd23c3d9ce3ec200bfb0cb0e"
+    },
+    {
+      "path": "skills/executive-function/references/governance-doctrine.md",
+      "bytes": 2153,
+      "sha256": "2a3e78fb8bff4ba99ba426fd67389deb885f93413486e520dd345b486af2f7bd"
+    },
+    {
+      "path": "skills/instrumental-agency/SKILL.md",
+      "bytes": 3971,
+      "sha256": "c4b55b9c944e1279b2ab0b9cb1012efd3b228c3aa26f8a6ee60772a9b146c8ab"
+    },
+    {
+      "path": "skills/instrumental-agency/agents/openai.yaml",
+      "bytes": 325,
+      "sha256": "853b32f06d705c8b61819b670623481c6d60b5d05e4485c4bf423f82a94a520c"
+    },
+    {
+      "path": "skills/instrumental-agency/assets/action-ledger.template.md",
+      "bytes": 1162,
+      "sha256": "b7d1b7d8c70bd36ca554fece04113cdfc70384bc5d7671abe2577561d5193331"
+    },
+    {
+      "path": "skills/instrumental-agency/evals/core-transfer-cases.yaml",
+      "bytes": 4950,
+      "sha256": "b12a1373b9ef1691e79f7ce734160bbc61af5c6246fabd79b86f52d6fa147b52"
+    },
+    {
+      "path": "skills/instrumental-agency/evals/eval-manifest.yaml",
+      "bytes": 657,
+      "sha256": "ba90f1ed421e8b06da4f27421920fc37e6d2faa759623762d8eacc7a0f8806a2"
+    },
+    {
+      "path": "skills/instrumental-agency/references/instrumental-agency-doctrine.md",
+      "bytes": 5715,
+      "sha256": "69eedb90cf1627e31340be8e57b5057426aacf7e950a23825d2e3b27c5a694a6"
+    },
+    {
+      "path": "skills/kairos/SKILL.md",
+      "bytes": 3170,
+      "sha256": "4121bb3b187b871a65e30ca7dc1d14a857fe775d52f9035e3d4b65155e3d2059"
+    },
+    {
+      "path": "skills/kairos/agents/openai.yaml",
+      "bytes": 267,
+      "sha256": "031ef12a116133025594a9f9629f4d4d050da5471903e2b41fd2f5ade57f6372"
+    },
+    {
+      "path": "skills/kairos/assets/kairos-brief.template.md",
+      "bytes": 703,
+      "sha256": "5205fd206e968508da78ab7901da019c649121efe5772d5126d68ea45debbe51"
+    },
+    {
+      "path": "skills/kairos/evals/core-transfer-cases.yaml",
+      "bytes": 4826,
+      "sha256": "cfab96ad0e923e09dab10e30c882edcb5d00f5a729f421c757f855e26af80889"
+    },
+    {
+      "path": "skills/kairos/evals/eval-manifest.yaml",
+      "bytes": 599,
+      "sha256": "a37cf1f1a02219f81d07c684bd6f3cb86fc944b6477d7e8911f9e1179b204a7f"
+    },
+    {
+      "path": "skills/kairos/references/kairos-doctrine.md",
+      "bytes": 4484,
+      "sha256": "faccb3efe1d3510668d0d6354a62a9ef82b434cb5c39db2ce56e0f674acb9985"
+    },
+    {
+      "path": "skills/measurement-intelligence/SKILL.md",
+      "bytes": 3731,
+      "sha256": "61b2a7c61b0abf4cc15af84930c75a166e69f06534674e76f175150168806a17"
+    },
+    {
+      "path": "skills/measurement-intelligence/agents/openai.yaml",
+      "bytes": 341,
+      "sha256": "b797ead7a972bbe6cbc8f09fff781b422aaeb94cc22f1f20951ed841bc49b2f8"
+    },
+    {
+      "path": "skills/measurement-intelligence/assets/measurement-plan.template.md",
+      "bytes": 2010,
+      "sha256": "493333b93fc88fb44591fdf52ef1a0f5ecfefda1aa43e0bdb55721d257b03f7f"
+    },
+    {
+      "path": "skills/measurement-intelligence/evals/core-transfer-cases.yaml",
+      "bytes": 5280,
+      "sha256": "ef53c92c15b91c5e2b5518109c8d40c9334a8e0961194e6d6bc1582c3184203b"
+    },
+    {
+      "path": "skills/measurement-intelligence/evals/eval-manifest.yaml",
+      "bytes": 690,
+      "sha256": "5b70dd98546f06aadfcafa89ef10d8f341529b53f54b2edd4703a10b7562c24d"
+    },
+    {
+      "path": "skills/measurement-intelligence/references/measurement-intelligence-doctrine.md",
+      "bytes": 7121,
+      "sha256": "b37542171201fa4c0bb7494e83e4c99bc75c84f88d44d7c0013852dcbba0dba1"
+    },
+    {
+      "path": "skills/prosocial-influence/SKILL.md",
+      "bytes": 3498,
+      "sha256": "56fe66e0c3ad578cf4a944e204c0a9b417b5facb7845446b7ccff889c1a4ae9d"
+    },
+    {
+      "path": "skills/prosocial-influence/agents/openai.yaml",
+      "bytes": 316,
+      "sha256": "679df427dc6f302a8b30d6318d5dbc513223b5a28ca0d1556aad3a372ebf6425"
+    },
+    {
+      "path": "skills/prosocial-influence/assets/influence-brief.template.md",
+      "bytes": 1046,
+      "sha256": "7fc4646b54f3d0942e55cdbefa9326d6753ac2863bf60b96622953f5c9b14e62"
+    },
+    {
+      "path": "skills/prosocial-influence/evals/core-transfer-cases.yaml",
+      "bytes": 4788,
+      "sha256": "234194a583072690d4f9e151cc77cf247f7910ae96ef4f02794a188c65c57993"
+    },
+    {
+      "path": "skills/prosocial-influence/evals/eval-manifest.yaml",
+      "bytes": 654,
+      "sha256": "93505f29703d5bcc3d6e485ecdbc0f414a525aa74cabf7261f116cb4b92bc1e2"
+    },
+    {
+      "path": "skills/prosocial-influence/references/prosocial-influence-doctrine.md",
+      "bytes": 4906,
+      "sha256": "d08acb61665bfeb0ea2e171a4b4240cf0679a6a806d9592d1510a15411698335"
+    },
+    {
+      "path": "skills/sensemaking/SKILL.md",
+      "bytes": 2140,
+      "sha256": "97686b6bbe78067b605dc51ce6b7bb2cdd3521f0045c3ee867f5f0a147cbf722"
+    },
+    {
+      "path": "skills/sensemaking/agents/openai.yaml",
+      "bytes": 288,
+      "sha256": "72c1f1ebea61656a5a60968c3cc2900841fd9e9af90f6948e9e2efb69caa0584"
+    },
+    {
+      "path": "skills/sensemaking/assets/situation-model.template.md",
+      "bytes": 1109,
+      "sha256": "b70d0ceea7bb01516c04db390577e1816507dc03ac54e8c066af397f1e1dae72"
+    },
+    {
+      "path": "skills/sensemaking/evals/core-transfer-cases.yaml",
+      "bytes": 4853,
+      "sha256": "edc66d963c1fc11c88c64950943a2697677c7ea7751168e6cc3d47febad7b6df"
+    },
+    {
+      "path": "skills/sensemaking/evals/eval-manifest.yaml",
+      "bytes": 615,
+      "sha256": "86d014d3ebb9e6487e598e4037d0731ecc482e0ff2e2eca45bd340be6e1845ce"
+    },
+    {
+      "path": "skills/sensemaking/references/sensemaking-doctrine.md",
+      "bytes": 4094,
+      "sha256": "3b89709f7654cdbed6a01dadf4e6d817d39a52ef24d61d44f604238f7e8e6db8"
+    },
+    {
+      "path": "tests/__init__.py",
+      "bytes": 34,
+      "sha256": "14fbc0920fed241354aea8df152dd7341b6221c898a62814e6de149535470bc5"
+    },
+    {
+      "path": "tests/fixtures/mind_associative_field_delivery_v1.json",
+      "bytes": 923,
+      "sha256": "3dd8a9f117f0223201128989473c52720fc53f3cef03464b24e04c5fcc888db0"
+    },
+    {
+      "path": "tests/fixtures/phase1_bootstrap.json",
+      "bytes": 8246,
+      "sha256": "d0c2783d43be97c7fa9e4367ff94498186bf29fc8bfccf5fb12fff377e413daa"
+    },
+    {
+      "path": "tests/helpers.py",
+      "bytes": 4533,
+      "sha256": "270a4090936d10ba9d4d4247ad4064620ff8cbb3d0b64875f2e72703f70fae70"
+    },
+    {
+      "path": "tests/phase2_helpers.py",
+      "bytes": 23979,
+      "sha256": "bf32a30f7ec8786eeb7d67ae2fa64a8a7fd4f80eb45a6134e400e0df1c0d1dfa"
+    },
+    {
+      "path": "tests/test_associative_disclosure.py",
+      "bytes": 59616,
+      "sha256": "b808df10f01d758597da7377b2aef78381d0bf69009102d786d32de01113e167"
+    },
+    {
+      "path": "tests/test_associative_release_assets.py",
+      "bytes": 2639,
+      "sha256": "9eff5edadf239d6da1a8b3cc53cd4450d9b6b231f3c7dd52feb588627d4e07c0"
+    },
+    {
+      "path": "tests/test_core_truth.py",
+      "bytes": 4095,
+      "sha256": "ce3a424f4bc67de9d8b7f20b628d00ae9500bf8c37e1f15ddc9877409b4587eb"
+    },
+    {
+      "path": "tests/test_delivery_protocol.py",
+      "bytes": 4269,
+      "sha256": "eec44a3a95ecf6d2ecb6860ddf8f39944a09f85700d1da55685bf57c2e6c049c"
+    },
+    {
+      "path": "tests/test_handshake_isolation.py",
+      "bytes": 8434,
+      "sha256": "c5c8a86f6a19fc27c5db9f4b0e40a23a561899142260063a2210319e4f059940"
+    },
+    {
+      "path": "tests/test_mount_semantics.py",
+      "bytes": 11282,
+      "sha256": "0cd167b0f2ac8794909555c1daa4330a59b34cf6e2a69655fe0e5bce8d9a9bb9"
+    },
+    {
+      "path": "tests/test_protocol_service.py",
+      "bytes": 4069,
+      "sha256": "293f62dc2f78577df53be5bd443ffa9b17fe857c5a83e51bc225921b7a0f9263"
+    },
+    {
+      "path": "tests/test_receipts.py",
+      "bytes": 7299,
+      "sha256": "20c86afb8dc27478be626b2d6236798bc130ed7beb79b4e8e24ab7d624281690"
+    },
+    {
+      "path": "tests/test_release_tooling.py",
+      "bytes": 9598,
+      "sha256": "97c42db874d1426013e9e8e42376f3f9b68696e5735ea69ceb73ac7d7a7214d0"
+    },
+    {
+      "path": "tests/test_store_migrations.py",
+      "bytes": 3153,
+      "sha256": "2d17d8405e24aee6c0ff9147d3cf43ca7f8cd8a604b972acb2deb855011ef2bb"
+    },
+    {
+      "path": "verification/agentic-eros-integration/verification-manifest.json",
+      "bytes": 36800,
+      "sha256": "b53f465e7cea597476102ec16e7b8778e8f645b08a9f0ac96468707b0f83ff33"
+    },
+    {
+      "path": "verification/associative-retrieval/live-results.json",
+      "bytes": 4512,
+      "sha256": "44869d79e1a5d730b1db16bc660b2cd3b13b02797f39dfb7d27236b4362da1bd"
+    },
+    {
+      "path": "verification/associative-retrieval/run_qualification.py",
+      "bytes": 4942,
+      "sha256": "0b8446ff95c462ab8749cf18ba53a3264f4e3ef2714a43fb1f10bb20d4e71b52"
+    },
+    {
+      "path": "verification/hesperos-authoring/authoring-response.md",
+      "bytes": 1124,
+      "sha256": "deccf53ade5653497c02f45ab4a01d2ead273ef47bba20d4ab92cfe1734b7d06"
+    },
+    {
+      "path": "verification/hesperos-authoring/documentation-authorship.json",
+      "bytes": 4670,
+      "sha256": "92f91d8260a9be6d8e7482a285d85fbcf77631b4da07e5f8af1f5a118dd30cf2"
+    },
+    {
+      "path": "verification/hesperos-authoring/documentation-project.json",
+      "bytes": 5736,
+      "sha256": "d3f91004e34305268351fecc76e0496f041f3166e61dffe971e959670c1bb75e"
+    },
+    {
+      "path": "verification/hesperos-authoring/evidence-packet.md",
+      "bytes": 1747,
+      "sha256": "41890d9102228a8daa06b469dde49f664ec89d56aa9dc38fe84d789e261f9b5a"
+    },
+    {
+      "path": "verification/hesperos-authoring/image-inspection.json",
+      "bytes": 1241,
+      "sha256": "ce7016a1a1e1cc4304f18c8e8243fceb75113e4423e3a42af21d9849de82fe53"
+    },
+    {
+      "path": "verification/hesperos-authoring/refresh_evidence.py",
+      "bytes": 15608,
+      "sha256": "c4db87d4f97c13623c5830a396d024a61d9ebfa5e2ee655a9c5cb45fb2c52347"
+    },
+    {
+      "path": "verification/hesperos-authoring/source-ledger.md",
+      "bytes": 2604,
+      "sha256": "c63d23bccfce10d3201d88e20904adbca72d1f90f01ddc0a3ab582b712041eaf"
+    },
+    {
+      "path": "verification/hesperos-authoring/validation-evidence.md",
+      "bytes": 2707,
+      "sha256": "014d16cab2b50db8882b7faf65f8ec5498a206d02756f50f806b8d3d70f1007c"
+    },
+    {
+      "path": "verification/hesperos-review/content-review-provider-envelope.json",
+      "bytes": 342495,
+      "sha256": "6da06f3f58ba40280c6ca2ec5adac7099ffb78a544004aa19541c0ec4b764dad"
+    },
+    {
+      "path": "verification/hesperos-review/content-review-response.json",
+      "bytes": 1424,
+      "sha256": "db44a1a2310e86754022fab66045358d1e60ee09e7bf40e88b34c4ee02c9a507"
+    },
+    {
+      "path": "verification/hesperos-review/review-receipt.json",
+      "bytes": 2557,
+      "sha256": "d64f73059670b86b4f237fef516095030852dc05dce7d9a5e6bc2742b7468a6c"
+    },
+    {
+      "path": "verification/hesperos-review/review-report.md",
+      "bytes": 2669,
+      "sha256": "2a6dc7e4bb07c77c2d28027f708cd480213c6a26f468d3201ba2f76a7f839ac2"
+    },
+    {
+      "path": "verification/hesperos-review/run_content_review.py",
+      "bytes": 4885,
+      "sha256": "7bda01bae0fcefc8894ca138bc8d228dd0b8e95546238daeb06203572ecd21d0"
+    }
+  ]
+}

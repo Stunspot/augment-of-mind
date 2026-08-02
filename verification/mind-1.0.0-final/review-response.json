@@ -1,0 +1,70 @@
+{
+  "format": "cd-testforge-independent-review/v1",
+  "model": "qwen2.5-coder:14b",
+  "prompt_sha256": "a9c5c242cd754fe628ec5223e0605faae5fb80e0844c60b25624b65027b0266e",
+  "prompt_bytes": 71584,
+  "target_aggregate_sha256": "247edac6d37be683df59628ad24fffb46ff2803fa47c21c1ef0d8516f7b271ea",
+  "done_reason": "stop",
+  "eval_count": 907,
+  "review": {
+    "disposition": "REVIEW_FAIL",
+    "summary": "The bounded source-readiness claim fails due to multiple critical issues, including invalid review status, unmet reviewer pass requirement, and potential false positives in snapshot assertions.",
+    "findings": [
+      {
+        "severity": "high",
+        "challenged_claim": "88 tests and every focused validator passed.",
+        "evidence": [
+          "artifacts/testforge/mind-1.0.0-final/raw/E-001-tests.json",
+          "artifacts/testforge/mind-1.0.0-final/manifest-validation.json"
+        ],
+        "why_support_fails": "The manifest validation indicates that the review status is invalid and requires a reviewer pass, which has not been met.",
+        "discriminating_check": "review.status is invalid",
+        "required_revision": "Ensure an independent final review is conducted and passes before claiming readiness.",
+        "status_consequence": "Cannot proceed with READY_WITH_RESIDUAL_RISK until the review status is valid."
+      },
+      {
+        "severity": "high",
+        "challenged_claim": "Six live association probes and exact evidence match passed.",
+        "evidence": [
+          "artifacts/testforge/mind-1.0.0-final/raw/E-004-associative-qualification.json",
+          "verification/associative-retrieval/live-results.json"
+        ],
+        "why_support_fails": "The first E-004 receipt indicates that the invocation omitted required --output and never dispatched product behavior.",
+        "discriminating_check": "E-009-failed-invocation-control-flow.json",
+        "required_revision": "Correct the command to include the --output argument and ensure it dispatches product behavior.",
+        "status_consequence": "Cannot proceed with READY_WITH_RESIDUAL_RISK until the invocation is corrected."
+      },
+      {
+        "severity": "high",
+        "challenged_claim": "Substantive Hesperos repository and Pages review passed.",
+        "evidence": [
+          "verification/hesperos-review/review-receipt.json"
+        ],
+        "why_support_fails": "The Hesperos review receipt indicates that the review establishes source-content alignment but does not cover public deployment, fresh-host behavior, assistive-technology behavior, or representative-user outcomes.",
+        "discriminating_check": "Hesperos review limitations",
+        "required_revision": "Conduct additional reviews to ensure coverage of all required aspects.",
+        "status_consequence": "Cannot proceed with READY_WITH_RESIDUAL_RISK until the Hesperos review covers all necessary aspects."
+      },
+      {
+        "severity": "high",
+        "challenged_claim": "Reproducible v2 provenance replaced opaque and circular receipts.",
+        "evidence": [
+          "artifacts/testforge/mind-1.0.0-final/raw/E-004-associative-qualification.json",
+          "artifacts/testforge/mind-1.0.0-final/raw/E-007-release-tooling.json"
+        ],
+        "why_support_fails": "The smell triage indicates potential false positives in snapshot assertions, which could affect the reproducibility of provenance.",
+        "discriminating_check": "artifacts/testforge/mind-1.0.0-final/raw/E-010-smell-triage.json",
+        "required_revision": "Review and address the snapshot assertion smells to ensure they do not impact provenance.",
+        "status_consequence": "Cannot proceed with READY_WITH_RESIDUAL_RISK until snapshot assertions are verified as non-blocking."
+      }
+    ],
+    "conditions": [
+      "Independent final review must pass before claiming readiness.",
+      "The first E-004 invocation must be corrected to include the --output argument and dispatch product behavior.",
+      "Hesperos review must cover all necessary aspects including public deployment, fresh-host behavior, assistive-technology behavior, and representative-user outcomes.",
+      "Snapshot assertions must be reviewed and addressed to ensure they do not impact provenance."
+    ],
+    "passed_lenses": [],
+    "evidence_boundary": "Exact current source and retained-evidence bytes excluding this final TestForge packet and user-owned release-v0.2.0; not a commit, push, archive, install, release, or live Pages receipt."
+  }
+}

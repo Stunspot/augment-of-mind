@@ -5,7 +5,7 @@ shape, installation, discovery, behavior, and automatic reminder delivery.
 
 | Host or surface | Release status | What is supported | What is not claimed |
 |---|---|---|---|
-| Codex in the ChatGPT desktop app | Release target | Install the skills-only plugin from a configured marketplace; use its Faculties in a new task. | Automatic pre-turn MIND Core reminders; IDE-extension support. |
+| Codex in the ChatGPT desktop app | Release target | Install the skills-only plugin from a configured marketplace; use its Faculties in a new task. | Automatic host-level pre-turn injection; IDE-extension support. The included H0 adapter remains explicit. |
 | Codex CLI | Release target | Configure the GitHub or extracted marketplace, install through `/plugins`, then use skills in a new session. | A background Core service or silent package activation. |
 | Codex IDE extension | Not supported by the current plugin surface | None in this release. | Plugin browsing or installation. |
 | ChatGPT web | Directory publication not performed | The source package remains portable plugin material. | Availability in the universal public plugin directory. |
@@ -22,7 +22,7 @@ shape, installation, discovery, behavior, and automatic reminder delivery.
   correction, compiles the correlated field, and proves delivery before the
   model turn begins.
 
-This public release claims Codex H0 only. A rendered provider payload is useful
+This public release claims Codex H0 only and includes an explicit local adapter. A rendered provider payload is useful
 pre-sampling evidence, but it does not by itself prove the complete H1 chain or
 that a provider received, sampled, attended to, or used the field.
 

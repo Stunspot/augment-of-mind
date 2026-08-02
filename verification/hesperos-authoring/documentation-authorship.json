@@ -1,148 +1,141 @@
 {
-  "authored_files": [
-    {
-      "bytes": 7096,
-      "path": "README.md",
-      "sha256": "d120aede2451e4637342abe57c31434e205efe0621c47d546b53fe12ead747ca"
-    },
-    {
-      "bytes": 2035,
-      "path": "START-HERE.md",
-      "sha256": "295f37fd07004c2ae8fd430e8aac71b5a22d6173ed1dac42a6c62cab2849c76d"
-    },
-    {
-      "bytes": 3482,
-      "path": "INSTALL-CODEX.md",
-      "sha256": "a555589380586a6472ea9a0f80234d57459957249e7eb121fe068e49d495ec68"
-    },
-    {
-      "bytes": 1645,
-      "path": "QUICK-START.md",
-      "sha256": "31ee98ca330f4584346875095de2b8daecc599df5eadf544f2f5153e3027230d"
-    },
-    {
-      "bytes": 2948,
-      "path": "USER-GUIDE.md",
-      "sha256": "7dd69bf8219924102b0cfee19927a2addfcde941c07123609c7cefd73010e158"
-    },
-    {
-      "bytes": 3982,
-      "path": "OPTIONAL-CORE.md",
-      "sha256": "bac874288fb15aa653e5ae9987da553c32343eed2c598d5e9515154c51dd5f77"
-    },
-    {
-      "bytes": 2329,
-      "path": "HOST-COMPATIBILITY.md",
-      "sha256": "45e03bca877e257c652300fb26ab88be4b390a90c98e0acaeb82b79a390729e8"
-    },
-    {
-      "bytes": 3488,
-      "path": "CAPABILITIES-AND-LIMITS.md",
-      "sha256": "d0b837bd4209653f298584336267ee143c44bdf4b78726d1134b6d3ac1c8e62d"
-    },
-    {
-      "bytes": 2243,
-      "path": "DATA-AND-PRIVACY.md",
-      "sha256": "6f8c04ad6a708ff313910864118e60071fa72ae9e1f6e0fb18c892dca405556d"
-    },
-    {
-      "bytes": 1604,
-      "path": "SECURITY.md",
-      "sha256": "4d767c97191553b08b64c83ac89aaf6499dd8f76feb3da2453b3f11a635b2849"
-    },
-    {
-      "bytes": 4068,
-      "path": "TROUBLESHOOTING.md",
-      "sha256": "ba3fe84224ab0fd2eae242dc4e0362b6bc5ed393e81dd90b960952f793de48b3"
-    },
-    {
-      "bytes": 1313,
-      "path": "SUPPORT.md",
-      "sha256": "83e2ad87751e5b0588a3b805e0bd0a39bfad159f45cdde1c6c93246b84394831"
-    },
-    {
-      "bytes": 920,
-      "path": "TERMS-OF-USE.md",
-      "sha256": "d48d4eab68f26543f17f026c6830ef15c6297930a944752de84ee7c40cf921c5"
-    },
-    {
-      "bytes": 978,
-      "path": "NOTICE.md",
-      "sha256": "4538f50403b262cfab930dca66cf8d76ea86e20981921cb0876811ba8d3f3d0a"
-    },
-    {
-      "bytes": 1737,
-      "path": "RELEASE-NOTES.md",
-      "sha256": "e57baadfe8419b35a047fa90073e384484b1bc09b45c4f56ca959cb8c71d019d"
-    },
-    {
-      "bytes": 1661,
-      "path": "PACKAGE-REFERENCE.md",
-      "sha256": "aa53281e3f65dcd505632b160c071911854abcc0f4c3c58340aa70ec0b367e72"
-    },
-    {
-      "bytes": 16001,
-      "path": "docs/index.html",
-      "sha256": "93b4a9cded546d356c608682d6512afab7d94aec00c1187854a44719c8a9550e"
-    },
-    {
-      "bytes": 10933,
-      "path": "docs/style.css",
-      "sha256": "bc7cd8d9782c933add2f99fa8466337399a87a9024a415c0d4faeb3fef3bbba3"
-    }
-  ],
-  "authoring": {
-    "authorship_scope": "materially-revised",
-    "capability": "hesperos-documentation",
-    "capability_entrypoint_sha256": "f9284a8b14ca20a4661b15db542e3d8f52d3cf1ef42c1c56f4ed540a1036a3b3",
-    "mode": "in-process",
-    "run_id": "hesperos-augment-of-mind-v1.0.0-mobile-remediation-20260801",
-    "source_revision": "4ce7215b2156dd06f79ae156535400deebedc9b6"
-  },
-  "authoring_response": {
-    "bytes": 1392,
-    "path": "verification/hesperos-authoring/authoring-response.md",
-    "sha256": "85ace3fde40b8a3da42483073fe2e837388fa12d232d5eb72f0ae67d5fffe3a2"
-  },
-  "claim_boundary": "Binds retained evidence for one Hesperos authoring or material-revision run. It does not prove independent review, host activation, publication, accessibility conformance, or customer outcomes.",
-  "created_at": "2026-08-01T17:55:20+00:00",
-  "documentation_fingerprint": "b7dcf63ef6244b4df4f1ef869f8d7b5fb9a224a5eb667fcf4a651a88d0c903c9",
-  "documentation_manifest": {
-    "bytes": 761,
-    "path": "documentation-manifest.json",
-    "sha256": "7a81d8b695e3a49a01bf49e0a5b879ceabc8d114cbbe0588ad5f540a66676860"
-  },
-  "evidence_packet": {
-    "bytes": 3314,
-    "path": "verification/hesperos-authoring/evidence-packet.md",
-    "sha256": "aef8ded4cfa8029ba8631b86e335062a9b42f39637503a01899a989483cc0a7f"
-  },
-  "execution_evidence": [
-    {
-      "bytes": 6372,
-      "path": "verification/hesperos-authoring/validation-evidence.md",
-      "sha256": "34ef25a4a70e21e8b03ab2ef9f6d119184e33e4d2013dbdce99c6c26f1a52ade"
-    },
-    {
-      "bytes": 1187,
-      "path": "verification/hesperos-authoring/image-inspection.json",
-      "sha256": "b3baf3e20a6b4ac08c553f1b63b033f44589a607f2774dd59454302e1135acd3"
-    },
-    {
-      "bytes": 1392,
-      "path": "verification/hesperos-authoring/authoring-response.md",
-      "sha256": "85ace3fde40b8a3da42483073fe2e837388fa12d232d5eb72f0ae67d5fffe3a2"
-    }
-  ],
   "format": "cd-hesperos-documentation-authorship/v1",
   "product": {
     "slug": "augment-of-mind",
     "version": "1.0.0"
   },
-  "responsive_remediation": {
-    "status": "local-regression-pass",
-    "viewport_css_px": 390,
-    "focused_screenshot_sha256": "34ff8908e590487b1f1a4658db286d064da91829c33c1a9639ae19fbb3325b7a",
-    "public_deployment_review": "pending"
-  }
+  "created_at": "2026-08-02T02:23:11+00:00",
+  "documentation_fingerprint": "b91874a17296f6aa8837d5417174bfca10e8360b07a643d49937ac15ee023b1c",
+  "fingerprint_algorithm": "sha256(compact-utf8-json(ordered authored_files records))",
+  "authored_files": [
+    {
+      "path": "README.md",
+      "bytes": 7375,
+      "sha256": "c399b9d2c60c65ca7a5e97f5b6346098705a8a1f0f6c91b783f545d1441d84b4"
+    },
+    {
+      "path": "START-HERE.md",
+      "bytes": 2035,
+      "sha256": "226a018feaffca75e41302b3443df394020d7ade9db73b6bb091f373a3f77270"
+    },
+    {
+      "path": "INSTALL-CODEX.md",
+      "bytes": 3482,
+      "sha256": "a555589380586a6472ea9a0f80234d57459957249e7eb121fe068e49d495ec68"
+    },
+    {
+      "path": "QUICK-START.md",
+      "bytes": 1645,
+      "sha256": "31ee98ca330f4584346875095de2b8daecc599df5eadf544f2f5153e3027230d"
+    },
+    {
+      "path": "USER-GUIDE.md",
+      "bytes": 2933,
+      "sha256": "51fd9580148bd9fccfe90fe723921f4098a4615ae239e6be2ee3f67565b729cb"
+    },
+    {
+      "path": "OPTIONAL-CORE.md",
+      "bytes": 5585,
+      "sha256": "02bc483f0fcdf3190df408ec825c388023e9f57808f490b6de3e5bb6801abfbf"
+    },
+    {
+      "path": "HOST-COMPATIBILITY.md",
+      "bytes": 2411,
+      "sha256": "ea9d8f015bb0dce38961a538a076249b09362172108739c121328a46ca469d6a"
+    },
+    {
+      "path": "CAPABILITIES-AND-LIMITS.md",
+      "bytes": 3757,
+      "sha256": "e27691a8e2b8156bff5ff6f74ad156a61cddd0607cb7bda4d5d008aaa5e1aaef"
+    },
+    {
+      "path": "DATA-AND-PRIVACY.md",
+      "bytes": 2355,
+      "sha256": "f495fa0d4f6827f94054fac97d20395ac4fde433afdb7e8d302f74f8bc14bd8e"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 1604,
+      "sha256": "4d767c97191553b08b64c83ac89aaf6499dd8f76feb3da2453b3f11a635b2849"
+    },
+    {
+      "path": "TROUBLESHOOTING.md",
+      "bytes": 4068,
+      "sha256": "ba3fe84224ab0fd2eae242dc4e0362b6bc5ed393e81dd90b960952f793de48b3"
+    },
+    {
+      "path": "SUPPORT.md",
+      "bytes": 1313,
+      "sha256": "83e2ad87751e5b0588a3b805e0bd0a39bfad159f45cdde1c6c93246b84394831"
+    },
+    {
+      "path": "TERMS-OF-USE.md",
+      "bytes": 920,
+      "sha256": "d48d4eab68f26543f17f026c6830ef15c6297930a944752de84ee7c40cf921c5"
+    },
+    {
+      "path": "NOTICE.md",
+      "bytes": 978,
+      "sha256": "4538f50403b262cfab930dca66cf8d76ea86e20981921cb0876811ba8d3f3d0a"
+    },
+    {
+      "path": "RELEASE-NOTES.md",
+      "bytes": 1945,
+      "sha256": "d5e5bb87ecf2dbd27dc90bd26ee3ce5d402879ad03fce330bea22330dba90b6f"
+    },
+    {
+      "path": "PACKAGE-REFERENCE.md",
+      "bytes": 1749,
+      "sha256": "0ffe0d22f362b04ec0e3665da0006f1373e1948c56f4c42838a192568faf7926"
+    },
+    {
+      "path": "docs/index.html",
+      "bytes": 16301,
+      "sha256": "8965763dfef7b4d85f10133a15713491a9cbb85192fd7409294944b3d4a87cd6"
+    },
+    {
+      "path": "docs/style.css",
+      "bytes": 10933,
+      "sha256": "bc7cd8d9782c933add2f99fa8466337399a87a9024a415c0d4faeb3fef3bbba3"
+    }
+  ],
+  "documentation_manifest": {
+    "path": "documentation-manifest.json",
+    "bytes": 761,
+    "sha256": "7a81d8b695e3a49a01bf49e0a5b879ceabc8d114cbbe0588ad5f540a66676860"
+  },
+  "execution_evidence": [
+    {
+      "path": "verification/hesperos-authoring/validation-evidence.md",
+      "bytes": 2707,
+      "sha256": "014d16cab2b50db8882b7faf65f8ec5498a206d02756f50f806b8d3d70f1007c"
+    },
+    {
+      "path": "verification/hesperos-authoring/image-inspection.json",
+      "bytes": 1241,
+      "sha256": "ce7016a1a1e1cc4304f18c8e8243fceb75113e4423e3a42af21d9849de82fe53"
+    },
+    {
+      "path": "verification/hesperos-authoring/evidence-packet.md",
+      "bytes": 1747,
+      "sha256": "41890d9102228a8daa06b469dde49f664ec89d56aa9dc38fe84d789e261f9b5a"
+    },
+    {
+      "path": "verification/hesperos-authoring/source-ledger.md",
+      "bytes": 2604,
+      "sha256": "c63d23bccfce10d3201d88e20904adbca72d1f90f01ddc0a3ab582b712041eaf"
+    },
+    {
+      "path": "verification/hesperos-authoring/authoring-response.md",
+      "bytes": 1124,
+      "sha256": "deccf53ade5653497c02f45ab4a01d2ead273ef47bba20d4ab92cfe1734b7d06"
+    }
+  ],
+  "authoring": {
+    "capability": "hesperos-documentation",
+    "mode": "in-process",
+    "authorship_scope": "materially-revised",
+    "run_id": "hesperos-augment-of-mind-v1.0.0-associative-eros-20260801"
+  },
+  "claim_boundary": "Binds one Hesperos material-revision run to exact customer-documentation bytes. It does not prove independent review, installation, public deployment, accessibility conformance, or customer outcomes."
 }

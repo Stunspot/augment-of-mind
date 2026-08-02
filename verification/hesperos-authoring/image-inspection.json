@@ -13,7 +13,7 @@
       "height": 1024,
       "aspect_ratio": "1:1",
       "rendered": true,
-      "visual_inspection": "PASS; final corrected icon contains exactly fifteen outer Faculty nodes."
+      "visual_inspection": "PASS; a coherent Faculty constellation. The conceptual artwork is not an inventory-count authority."
     },
     {
       "role": "hero",
@@ -31,9 +31,9 @@
       "height": 1350,
       "aspect_ratio": "4:5",
       "rendered": true,
-      "visual_inspection": "PASS; semantic neighborhoods and distinct false-friend boundary are legible without embedded text."
+      "visual_inspection": "PASS; semantic neighborhoods and a distinct false-friend boundary remain legible without embedded text."
     }
   ],
   "issues": [],
-  "boundary": "Direct source-image inspection and static HTML audit only; live rendered Pages review remains pending."
+  "boundary": "Direct source-image inspection and static HTML audit only; the deployed Pages surface requires a separate live browser gate."
 }

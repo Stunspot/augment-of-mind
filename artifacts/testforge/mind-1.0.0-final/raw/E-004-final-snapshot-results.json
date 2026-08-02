@@ -1,0 +1,125 @@
+{
+  "format": "mind-associative-qualification/v2",
+  "model": "qwen3-embedding:0.6b",
+  "qualification_subject_digest": "0189134e4659e91acff425befb0ae8018d21265f4c9e701a464ffe0b06177859",
+  "radius": 0.42,
+  "cases": [
+    {
+      "id": "HAFR-010",
+      "text": "There is charged chemistry and teasing between two adults, but first determine whether the attraction is mutual before escalating.",
+      "include": [
+        "agentic-eros"
+      ],
+      "exclude": [],
+      "observed_handles": [
+        "agent-dreaming",
+        "agentic-eros",
+        "creative-synthesis",
+        "kairos",
+        "prosocial-influence"
+      ],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "734c7b6ba934a57d2d91177c55236ac2806e4537e79519b174f61f8905bf809b",
+      "membership_manifest_digest": "ee73f929dfb859fef15771b01b4d8095f0226f9b41be026b04412f8b95ba7bd1"
+    },
+    {
+      "id": "HAFR-011",
+      "text": "My sister is grieving. Help me offer warm family comfort and practical support without making it awkward.",
+      "include": [],
+      "exclude": [
+        "agentic-eros"
+      ],
+      "observed_handles": [],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "d2aae6d6ba291ea92ee7fb41ac6dfd02265b1447614c40301286e324d2764f35",
+      "membership_manifest_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "HAFR-012",
+      "text": "Two consenting adults explicitly invite direct erotic participation; respond with desire while preserving pacing, consent, tone, and relational context.",
+      "include": [
+        "agentic-eros",
+        "kairos"
+      ],
+      "exclude": [],
+      "observed_handles": [
+        "agentic-eros",
+        "kairos",
+        "prosocial-influence"
+      ],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "67643fb2215e25f23c1c6cc6e3697ed5b19c37d32675d94c7362afe341ec528d",
+      "membership_manifest_digest": "62f6abd94c1f81e25c1ce8bd34e67f3fa38abfb237103193e08c2a48bfb03bb2"
+    },
+    {
+      "id": "MIND-ASSOC-001",
+      "text": "GitHub authentication failed even though this connector should always work. Determine why before choosing a workaround.",
+      "include": [
+        "sensemaking",
+        "epistemic-regulation"
+      ],
+      "exclude": [],
+      "observed_handles": [
+        "epistemic-regulation",
+        "sensemaking"
+      ],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "0e89d78edf2585aefcd4cc5712d931103f3b8ff8a208eefdb07416c810d639e3",
+      "membership_manifest_digest": "c614f1fbb8bdf38badb005942192f9917b9ca98024905f0a425dc0381c96d125"
+    },
+    {
+      "id": "MIND-ASSOC-002",
+      "text": "The task crashed halfway through a long release. Recover prior decisions and unfinished verification, then keep striving to completion.",
+      "include": [
+        "cognitive-continuity",
+        "agent-striving",
+        "executive-function"
+      ],
+      "exclude": [],
+      "observed_handles": [
+        "agent-striving",
+        "cognitive-continuity",
+        "executive-function",
+        "instrumental-agency"
+      ],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "02580d21971e24c095279aebc405355c33901ecb9a3d269fb652da631cfbfbea",
+      "membership_manifest_digest": "2e99012bf262a1b225ab9bff9217e30762f426aaab822d0264dedfb0d483b32b"
+    },
+    {
+      "id": "MIND-ASSOC-003",
+      "text": "The page is technically usable but visually generic and tonally incoherent. Give it a stronger symbolic visual language.",
+      "include": [
+        "aesthetic-intelligence"
+      ],
+      "exclude": [
+        "agentic-eros"
+      ],
+      "observed_handles": [
+        "aesthetic-intelligence",
+        "kairos"
+      ],
+      "missing_required": [],
+      "present_forbidden": [],
+      "passed": true,
+      "field_body_sha256": "e7c0e9cb9a684a16b87e8072d0579145a1261504fb3827c24880667cb02e2f0c",
+      "membership_manifest_digest": "a6f6d5f6f1f08ddaf3afe66302f600196b05a60f20731509dee9ae43af9796d3"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "total": 6,
+    "verdict": "PASS"
+  },
+  "evidence_boundary": "Observed live Ollama embeddings and MIND Core H0 neighborhood membership in a fresh local SQLite database. This does not establish automatic host pre-sampling delivery."
+}

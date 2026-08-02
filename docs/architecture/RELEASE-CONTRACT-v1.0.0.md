@@ -5,7 +5,7 @@ Status: accepted release boundary for the standalone public repository.
 ## Customer object
 
 The release is one installable, skills-only Codex plugin named
-`augment-of-mind`, version `1.0.0`. It contains the MIND integrator and fifteen
+`augment-of-mind`, version `1.0.0`. It contains the MIND integrator and sixteen
 Faculty skills. Nova is not included or required.
 
 The same archive contains `cd-mind-core` version `0.2.0` as an optional Python

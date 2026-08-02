@@ -47,6 +47,11 @@ ASSET_NAMES = (
     "mind-hero-1600x900.png",
     "mind-capability-card-1080x1350.png",
 )
+RUNTIME_SCRIPT_NAMES = (
+    "build_associative_assets.py",
+    "query_associative_field.py",
+)
+SKILL_ALLOWED_ROOT_FILES = {"SKILL.md", "manifest.json"}
 SKILL_ALLOWED_DIRECTORIES = {
     "adapters",
     "agents",
@@ -58,6 +63,7 @@ SKILL_ALLOWED_DIRECTORIES = {
     "scripts",
 }
 SKILL_EXCLUDED_SEGMENTS = {"evals", "tests", "__pycache__", ".pytest_cache"}
+SKILL_EXCLUDED_FILES = {"agentic-eros/scripts/validate_package.py"}
 EXPECTED_WHEEL_NAME = "cd_mind_core-0.2.0-py3-none-any.whl"
 TEXT_SUFFIXES = {
     ".css", ".html", ".json", ".md", ".py", ".toml", ".txt", ".yaml", ".yml"
@@ -113,6 +119,8 @@ def validate_payload_path(value: str) -> None:
     }:
         return
     if len(parts) == 2 and parts[0] == "assets" and parts[1] in ASSET_NAMES:
+        return
+    if len(parts) == 2 and parts[0] == "scripts" and parts[1] in RUNTIME_SCRIPT_NAMES:
         return
     if parts == ("optional-core", EXPECTED_WHEEL_NAME):
         return
@@ -338,8 +346,8 @@ def verify(root: Path) -> dict[str, object]:
     if plugin.get("name") != PRODUCT or plugin.get("version") != PLUGIN_VERSION:
         raise ReleaseError("plugin manifest identity does not match the release")
     skills = sorted((root / "skills").glob("*/SKILL.md"))
-    if len(skills) != 16:
-        raise ReleaseError(f"expected 16 skill entrypoints, found {len(skills)}")
+    if len(skills) != 17:
+        raise ReleaseError(f"expected 17 skill entrypoints, found {len(skills)}")
     interface = plugin.get("interface")
     if not isinstance(interface, dict):
         raise ReleaseError("plugin interface metadata is missing")

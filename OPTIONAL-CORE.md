@@ -12,8 +12,8 @@ does not install, start, or depend on it.
   metadata supplied through its administrative interfaces;
 - ingest a complete immutable associative-index manifest;
 - issue scoped session capabilities;
-- compile exact radius, exhaustive lexical, and one-hop associative reminder
-  fields;
+- compile exact-radius reminder fields, with exhaustive lexical matching for
+  caller-supplied hints and typed one-hop relations;
 - return canonical and compact representations with identical membership;
 - serve a framed, query-only stdio protocol.
 
@@ -75,6 +75,40 @@ On macOS or Linux:
 
 Completion proof: `status` exits successfully and reports the same Core
 instance without changing its record counts.
+## Activate the included reminder generation
+
+The archive includes authored cards for all sixteen MIND Faculties and a
+behavior-qualified index for the local `qwen3-embedding:0.6b` profile. Model
+weights are not bundled or silently downloaded.
+
+Install the named model separately:
+
+```powershell
+ollama pull qwen3-embedding:0.6b
+```
+
+Bootstrap and activate the complete generation:
+
+```powershell
+.\.venv\Scripts\python.exe -m mind_core bootstrap --database .\mind-data\mind-core.sqlite3 --manifest .\skills\augment-of-mind\assets\associative-bootstrap.json
+.\.venv\Scripts\python.exe -m mind_core index --database .\mind-data\mind-core.sqlite3 --manifest .\skills\augment-of-mind\assets\associative-index-qwen3-embedding-0.6b.json
+```
+
+Compile one explicit H0 Arm's Reach field:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\query_associative_field.py "The release crashed midway; recover the prior decisions and unfinished checks." --database .\mind-data\mind-core.sqlite3 --field-only
+```
+
+Expected result: the field names nearby handles without scores or rank. The
+adapter sends the ephemeral anchor to the local Ollama loopback API, records
+session evidence in Core, and does not persist the raw anchor or rendered field.
+This proves an explicit H0 query, not automatic Codex pre-turn delivery.
+
+Add `--hint "exact phrase"` when you want exhaustive lexical matching as well
+as vector association. The adapter does not extract lexical hints from the raw
+task on its own.
+
 
 ## Administrative and query commands
 
@@ -93,8 +127,9 @@ console script is equivalent when it is on your shell's path.
 | `query` | Execute one JSON request file through the H0 service. |
 | `serve` | Run the length-prefixed query-only stdio service. |
 
-The manifest and request schemas are strict. This release intentionally does
-not ship a real inventory of your capabilities or an embedding model.
+The manifest and request schemas are strict. The included generation covers the
+sixteen MIND Faculties only. It does not inventory or author cards for third-party
+capabilities, and it does not bundle embedding-model weights.
 
 ## Safe stopping and removal
 
