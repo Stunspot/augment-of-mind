@@ -13,7 +13,7 @@ The release builder:
 - compares the staged and extracted trees byte-for-byte;
 - runs the offline customer release verifier against the extracted archive.
 
-The standalone repository synchronization computes SHA-256 inventories and requires exact byte parity with `plugins/augment-of-mind` from the verified flagship repository, excluding only repository-owned GitHub workflows, Pages content, verification record, and line-ending/editor policy files.
+The standalone repository synchronization computed SHA-256 inventories and required exact byte parity with `plugins/augment-of-mind` from the verified flagship repository, excluding only repository-owned GitHub workflows, Pages content, verification record, and line-ending/editor policy files.
 
 ## Current public release
 
@@ -39,3 +39,7 @@ The final synchronization run passed source parity, deterministic build, extract
 The publication job rebuilt and verified the archive from synchronized `main`, published the ZIP, checksum, and build receipt to GitHub Release `v2.1.1`, and uploaded the same evidence as an Actions artifact.
 
 This establishes source parity and deterministic package integrity. Host discovery, hook trust, reminder delivery, and model use remain separate runtime claims.
+
+## Post-publication cleanup
+
+After synchronization, verification, and publication completed, the version-specific sync-and-release workflow was removed from `main`. The run and job identifiers above preserve the authoritative evidence without leaving a served one-release trigger active in the public repository.
