@@ -24,16 +24,6 @@ def embed(text: str, model: str, url: str) -> list[float]:
         raise RuntimeError("embedding provider returned an invalid response")
     return values[0]
 
-def latest_snapshot(core: MindCore) -> dict:
-    row=core.store.connection.execute(
-        "SELECT s.* FROM associative_snapshot_activations a JOIN associative_index_snapshots s "
-        "ON s.associative_index_snapshot_id=a.associative_index_snapshot_id "
-        "ORDER BY a.activated_at DESC,a.associative_snapshot_activation_id DESC LIMIT 1"
-    ).fetchone()
-    if row is None:
-        raise RuntimeError("no active associative snapshot")
-    return dict(row)
-
 def parser() -> argparse.ArgumentParser:
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("text",nargs="?")
@@ -58,11 +48,10 @@ def main() -> int:
     now=datetime.now(timezone.utc)
     session_id="session:mind-h0:"+uuid.uuid4().hex
     with MindCore(args.database) as core:
-        snapshot=latest_snapshot(core)
-        if args.model != core.store.connection.execute(
-            "SELECT model_id FROM embedding_profiles WHERE embedding_profile_id=?",
-            (snapshot["embedding_profile_id"],)
-        ).fetchone()["model_id"]:
+        snapshot=core.reminders.active_snapshot_binding()
+        if not snapshot["current"]:
+            raise RuntimeError("active associative snapshot is not current")
+        if args.model != snapshot["model_id"]:
             raise RuntimeError("requested model does not match the active snapshot profile")
         core.hosts.handshake({
             "agent_instance_id":args.agent_instance_id,"host_session_id":session_id,

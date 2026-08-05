@@ -1,48 +1,23 @@
-# Start here
+# Install MIND
 
-MIND is a skills-only Codex plugin: one integrator coordinates sixteen focused
-cognitive Faculties and returns one accountable result. It does not install a
-persona, phone home, or quietly award itself new authority. Civilization may
-continue.
+MIND is a standalone cognitive architecture for an existing AI harness. It adds sixteen cognitive Faculties, integrated mission control, local semantic capability reminders, Capability Promotion, and the two-part TestForge verification gate.
 
-## Choose your path
+## The normal installation
 
-- **I want MIND in Codex:** follow [Install MIND for Codex](INSTALL-CODEX.md),
-  then complete the [Quick start](QUICK-START.md).
-- **I already installed it:** use the [User guide](USER-GUIDE.md).
-- **I want the local reminder runtime:** read [Optional MIND Core](OPTIONAL-CORE.md).
-- **Something is wrong:** start with [Troubleshooting](TROUBLESHOOTING.md).
-- **I need the exact promise:** read [Capabilities and limits](CAPABILITIES-AND-LIMITS.md)
-  and [Host compatibility](HOST-COMPATIBILITY.md).
-- **I am reviewing data handling:** read [Data and privacy](DATA-AND-PRIVACY.md)
-  and [Security](SECURITY.md).
+1. Give the MIND package to a compatible Codex harness.
+2. Ask the harness to install and enable **MIND by Collaborative Dynamics**.
+3. Review the file operations and configuration changes it proposes.
+4. Open `/hooks`, inspect the exact local MIND prompt-submit hook, and decide whether to trust it.
+5. Start a new task so Codex can discover the plugin.
 
-## What successful first use looks like
+Installation is complete when MIND is enabled, its Faculties are discoverable in a new task, and the local reminder map reports ready—or names the exact part that remains unavailable.
 
-After installation, start a new Codex task and say:
+## Manual fallback
 
-```text
-Use $augment-of-mind to help me decide whether to run a two-week pilot.
-Separate evidence from assumptions, identify the smallest reversible test that
-could change the decision, and return one recommendation. Do not take external
-action.
-```
+If your harness cannot install an attached package, extract it and follow [Manual Codex installation](INSTALL-CODEX.md).
 
-A successful response is one coherent answer. It should preserve your stated
-authority, distinguish what is known from what is inferred, and use only the
-Faculties needed for the work. It should not dump an internal committee
-transcript on your lap like a bag of cognitive receipts.
+## What you installed
 
-## The two version numbers
+MIND is one integrator, sixteen Faculties, Capability Promotion, and two TestForge skills. It coordinates cognition; it does not impersonate every occupational specialist or grant tools and permissions the host does not have.
 
-- **MIND plugin `1.0.0`** is the installable Faculty package.
-- **MIND Core `0.2.0`** is an optional Python runtime included in the release
-  archive. It is not installed or started by the plugin.
-
-Those are separate components with separate evidence. The release notes do not
-put them in a trench coat and pretend they are one version.
-
-## Get help
-
-Use the [support path](SUPPORT.md). Include the host, plugin version, exact
-symptom, and what you observed before changing anything.
+Read [Capabilities and limits](CAPABILITIES-AND-LIMITS.md) for the complete shape and [Use MIND](USER-GUIDE.md) for its operating model.

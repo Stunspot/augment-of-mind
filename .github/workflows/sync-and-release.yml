@@ -41,6 +41,7 @@ jobs:
             ! -name .editorconfig \
             ! -name .gitattributes \
             ! -name .gitignore \
+            ! -name VERIFICATION.md \
             ! -name docs \
             ! -name _flagship \
             -exec rm -rf {} +
@@ -53,7 +54,7 @@ jobs:
           target = Path('.')
           preserved = {
               '.git', '.github', '.editorconfig', '.gitattributes', '.gitignore',
-              'docs', '_flagship',
+              'VERIFICATION.md', 'docs', '_flagship',
           }
 
           def inventory(root: Path, excluded_first: set[str] = set()) -> dict[str, str]:

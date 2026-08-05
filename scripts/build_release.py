@@ -41,6 +41,8 @@ from verify_release import (
 
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
 SOURCE_DATE_EPOCH = "1767225600"
+
+
 class BuildError(RuntimeError):
     """Raised when the release cannot be constructed honestly."""
 
@@ -97,6 +99,8 @@ def validate_versions(repo: Path) -> None:
     project = tomllib.loads((repo / "pyproject.toml").read_text(encoding="utf-8"))
     if plugin.get("name") != PRODUCT or plugin.get("version") != PLUGIN_VERSION:
         raise BuildError("plugin manifest version does not match the release builder")
+    if "mcpServers" in plugin:
+        raise BuildError("plugin manifest must not register MCP servers")
     package = project.get("project", {})
     if package.get("name") != "cd-mind-core" or package.get("version") != CORE_VERSION:
         raise BuildError("Core project version does not match the release builder")
@@ -162,6 +166,11 @@ def core_source_files(repo: Path) -> list[Path]:
     return selected
 
 
+def copy_core_source(repo: Path, root: Path) -> None:
+    for path in core_source_files(repo):
+        copy_regular(path, root / path.relative_to(repo))
+
+
 def selected_source_files(repo: Path) -> list[Path]:
     paths = [
         repo / ".codex-plugin" / "plugin.json",
@@ -171,6 +180,7 @@ def selected_source_files(repo: Path) -> list[Path]:
         repo / "scripts" / "verify_release.py",
     ]
     paths.extend(repo / "scripts" / name for name in RUNTIME_SCRIPT_NAMES)
+    paths.extend((repo / "hooks" / "hooks.json", repo / "hooks" / "mind_prompt_submit.py"))
     paths.extend(skill_release_files(repo / "skills"))
     paths.extend(repo / "assets" / name for name in ASSET_NAMES)
     paths.extend(repo / name for name in ROOT_DOCUMENTS)
@@ -229,6 +239,9 @@ def stage_release(
     source_digest: str,
 ) -> dict[str, object]:
     copy_regular(repo / ".codex-plugin" / "plugin.json", root / ".codex-plugin" / "plugin.json")
+    copy_regular(repo / "hooks" / "hooks.json", root / "hooks" / "hooks.json")
+    copy_regular(repo / "hooks" / "mind_prompt_submit.py", root / "hooks" / "mind_prompt_submit.py")
+    copy_core_source(repo, root)
     copy_regular(
         repo / ".agents" / "plugins" / "marketplace.json",
         root / ".agents" / "plugins" / "marketplace.json",

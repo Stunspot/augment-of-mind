@@ -2,16 +2,22 @@
 
 from __future__ import annotations
 
-import argparse, hashlib, json, struct, sys, urllib.request
+import argparse, hashlib, json, os, struct, sys, tempfile, urllib.request
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from mind_core.util import canonical_json, sha256_text
 
-CREATED_AT = "2026-08-01T00:00:00.000000Z"
-QUALIFIED_AT = "2026-08-02T01:39:00.000000Z"
+CREATED_AT = "2026-08-04T00:00:00.000000Z"
+QUALIFIED_AT = "2026-08-04T00:00:00.000000Z"
 MODEL = "qwen3-embedding:0.6b"
+ROOT = Path(__file__).resolve().parents[1]
+INDEX_NAME = "associative-index-qwen3-embedding-0.6b.json"
+EVIDENCE_PATH = ROOT / "verification" / "mind-associative-profile.md"
+EXPECTED_EMBEDDING_PROFILE_ID = "embedding:ollama-qwen3-embedding-0.6b-mind-2.1-unqualified-r2"
+EXPECTED_SNAPSHOT_ID = "snapshot:mind-2.1:qwen3-0.6b:unqualified-r2"
+EXPECTED_ACTIVATION_ID = "activation:mind-2.1:qwen3-0.6b:unqualified-r2"
 VIEWS = ("transformation","situation","positive_cue","error_or_correction","negative_boundary","example")
 CLUSTERS = {
     "perception-expression": ("Perception and Expression","Notice form, context, and fit."),
@@ -49,8 +55,130 @@ RELATIONS = [
 ("agentic-eros","kairos","complements"),("agentic-eros","prosocial-influence","complements"),("kairos","aesthetic-intelligence","complements"),
 ]
 
+EXTRA_SPEC_PATH = ROOT / "design" / "mind-extra-capabilities.json"
+with EXTRA_SPEC_PATH.open("r", encoding="utf-8") as stream:
+    _extra_spec = json.load(stream)
+CLUSTERS.update({key: tuple(value) for key, value in _extra_spec["clusters"].items()})
+for item in _extra_spec["capabilities"]:
+    SPECS.append((
+        item["handle"], item["name"], item["cluster"], item["projection"], item["boundaries"],
+        *[item["views"][kind] for kind in VIEWS],
+    ))
+RELATIONS.extend(tuple(value) for value in _extra_spec["relations"])
+
+
 def digest(record: dict[str, Any], field: str) -> str:
     return sha256_text(canonical_json({k:v for k,v in record.items() if k != field}))
+
+
+def _load_json_object(path: Path, label: str) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError(f"cannot read {label}: {path}: {error}") from error
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{label} must be a JSON object: {path}")
+    return value
+
+
+def _require_rebind_identity(manifest: dict[str, Any]) -> None:
+    if manifest.get("format") != "mind-associative-index/v1":
+        raise RuntimeError("unsupported associative index manifest")
+    profile = manifest.get("embedding_profile")
+    snapshot = manifest.get("snapshot")
+    activation = manifest.get("activation")
+    if not isinstance(profile, dict) or profile.get("embedding_profile_id") != EXPECTED_EMBEDDING_PROFILE_ID:
+        raise RuntimeError("unexpected embedding profile identity")
+    if not isinstance(snapshot, dict) or snapshot.get("associative_index_snapshot_id") != EXPECTED_SNAPSHOT_ID:
+        raise RuntimeError("unexpected associative snapshot identity")
+    if not isinstance(activation, dict) or activation.get("associative_snapshot_activation_id") != EXPECTED_ACTIVATION_ID:
+        raise RuntimeError("unexpected associative activation identity")
+    if activation.get("prior_associative_index_snapshot_id") is not None:
+        raise RuntimeError("evidence-only rebind does not rewrite activation lineage")
+    expected_counts = {"expected_card_count": 20, "expected_relation_count": 17, "expected_vector_count": 120}
+    if any(snapshot.get(key) != value for key, value in expected_counts.items()):
+        raise RuntimeError("unexpected associative manifest counts")
+    if len(manifest.get("cards", [])) != 20 or len(manifest.get("relations", [])) != 17 or len(manifest.get("vectors", [])) != 120:
+        raise RuntimeError("associative manifest body does not match its declared counts")
+
+
+def _rebind_snapshot_digest(manifest: dict[str, Any]) -> None:
+    profile = manifest["embedding_profile"]
+    snapshot = manifest["snapshot"]
+    snapshot["profile_digest"] = sha256_text(
+        canonical_json([manifest["lexical_profile"]["profile_digest"], profile["profile_digest"]])
+    )
+    material = {
+        key: value
+        for key, value in snapshot.items()
+        if key not in {"snapshot_digest", "expected_card_count", "expected_relation_count", "expected_vector_count"}
+    }
+    material.update(
+        {
+            "cards": sorted((item["capability_card_id"], item["card_digest"]) for item in manifest["cards"]),
+            "clusters": sorted((item["cluster_id"], item["cluster_digest"]) for item in manifest["clusters"]),
+            "relations": sorted((item["capability_relation_id"], item["relation_digest"]) for item in manifest["relations"]),
+            "vectors": sorted((item["capability_card_view_id"], item["vector_digest"]) for item in manifest["vectors"]),
+        }
+    )
+    snapshot["snapshot_digest"] = sha256_text(canonical_json(material))
+
+
+def _validate_rebound_manifest(manifest: dict[str, Any], bootstrap_path: Path) -> None:
+    from mind_core import MindCore
+
+    bootstrap = _load_json_object(bootstrap_path, "associative bootstrap")
+    with tempfile.TemporaryDirectory(prefix="mind-evidence-rebind-") as directory:
+        with MindCore(Path(directory) / "mind.sqlite3") as core:
+            core.bootstrap(bootstrap)
+            core.reminders.ingest_index(manifest)
+
+
+def _atomic_write_json(path: Path, value: dict[str, Any]) -> None:
+    payload = (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb", dir=path.parent, prefix=f".{path.name}.", suffix=".tmp", delete=False
+        ) as stream:
+            temporary = Path(stream.name)
+            stream.write(payload)
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
+def rebind_qualification_evidence(index_path: Path, evidence_path: Path, bootstrap_path: Path) -> dict[str, Any]:
+    """Rebind one sealed index to current qualification evidence without regenerating vectors."""
+
+    manifest = _load_json_object(index_path, "associative index manifest")
+    evidence = _load_json_object(evidence_path, "qualification evidence")
+    _require_rebind_identity(manifest)
+    if evidence.get("format") != "mind-associative-qualification/v2" or evidence.get("summary") != {"passed": 6, "total": 6, "verdict": "PASS"}:
+        raise RuntimeError("qualification evidence is not the required six-probe PASS receipt")
+
+    profile = manifest["embedding_profile"]
+    before = {
+        "qualification_digest": profile.get("qualification_digest"),
+        "profile_digest": profile.get("profile_digest"),
+        "snapshot_profile_digest": manifest["snapshot"].get("profile_digest"),
+        "snapshot_digest": manifest["snapshot"].get("snapshot_digest"),
+    }
+    profile["qualification_digest"] = hashlib.sha256(evidence_path.read_bytes()).hexdigest()
+    profile["profile_digest"] = digest(profile, "profile_digest")
+    _rebind_snapshot_digest(manifest)
+    _validate_rebound_manifest(manifest, bootstrap_path)
+    after = {
+        "qualification_digest": profile["qualification_digest"],
+        "profile_digest": profile["profile_digest"],
+        "snapshot_profile_digest": manifest["snapshot"]["profile_digest"],
+        "snapshot_digest": manifest["snapshot"]["snapshot_digest"],
+    }
+    if before != after:
+        _atomic_write_json(index_path, manifest)
+    return {"changed": before != after, "index": str(index_path), "evidence": str(evidence_path), "before": before, "after": after}
+
 
 def embed(texts: list[str]) -> list[list[float]]:
     body = json.dumps({"model": MODEL, "input": texts}).encode()
@@ -65,11 +193,20 @@ def embed(texts: list[str]) -> list[list[float]]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-root", type=Path, default=Path("skills/augment-of-mind/assets"))
+    parser.add_argument("--rebind-evidence", action="store_true")
+    parser.add_argument("--index", type=Path)
+    parser.add_argument("--evidence", type=Path, default=EVIDENCE_PATH)
+    parser.add_argument("--bootstrap", type=Path)
     args = parser.parse_args()
+    if args.rebind_evidence:
+        index_path = args.index or args.output_root / INDEX_NAME
+        bootstrap_path = args.bootstrap or index_path.with_name("associative-bootstrap.json")
+        print(json.dumps(rebind_qualification_evidence(index_path, args.evidence, bootstrap_path), indent=2))
+        return 0
     root = args.output_root
     root.mkdir(parents=True, exist_ok=True)
-    cards_source = {"format":"mind-authored-capability-cards/v1","product":"MIND","product_version":"1.0.0",
-      "purpose":"Persona-neutral semantic reminder surfaces for the sixteen MIND Faculties.",
+    cards_source = {"format":"mind-authored-capability-cards/v1","product":"MIND","product_version":"2.1.0",
+      "purpose":"Persona-neutral semantic reminder surfaces for sixteen MIND Faculties, the integrator, Capability Promotion, and both bundled TestForge roles.",
       "evidence_boundary":"Association is a reminder, not selection, authority, invocation, or proof of fitness.",
       "cards":[],"relations":[list(x) for x in RELATIONS]}
     for row in SPECS:
@@ -78,7 +215,7 @@ def main() -> int:
     card_path = root / "associative-capability-cards.json"
     card_path.write_text(json.dumps(cards_source,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     source_digest = hashlib.sha256(card_path.read_bytes()).hexdigest()
-    source_id = "source:mind-associative-cards:1.0.0"
+    source_id = "source:mind-associative-cards:2.1.0"
     provider_id = "provider:ollama-qwen3-embedding-0.6b"
     aliases = {row[0]:[{"namespace":"global","alias":row[1].lower(),"display_alias":row[1]}] for row in SPECS}
     capabilities=[]
@@ -86,9 +223,9 @@ def main() -> int:
         capabilities.append({"capability_id":f"capability:{h}","handle":h,"name":n,"product_id":"product:mind",
           "canonical_source_id":source_id,"promise":p,"negative_space":b,"created_at":CREATED_AT,"superseded_by":None,
           "exposure_policy":"public_safe","owner_agent_instance_id":None,"aliases":aliases[h],
-          "entrypoints":[{"entrypoint_id":f"entrypoint:{h}:skill","entrypoint_kind":"skill","locator":f"skills/{h}/SKILL.md","operation":"Open only when the Faculty transformation is materially relevant."}]})
+          "entrypoints":[{"entrypoint_id":f"entrypoint:{h}:skill","entrypoint_kind":"skill","locator":f"skills/{h}/SKILL.md","operation":"Open only when this capability's transformation materially fits the live work."}]})
     bootstrap={"format":"mind-core-bootstrap/v1",
-      "sources":[{"source_id":source_id,"locator":"skills/augment-of-mind/assets/associative-capability-cards.json","digest":source_digest,"custody_state":"canonical-constructed","authority_ref":"MIND 1.0.0 authored associative card source","observed_at":CREATED_AT}],
+      "sources":[{"source_id":source_id,"locator":"skills/augment-of-mind/assets/associative-capability-cards.json","digest":source_digest,"custody_state":"canonical-constructed","authority_ref":"MIND 2.1.0 reviewed associative card source","observed_at":CREATED_AT}],
       "products":[{"product_id":"product:mind","name":"MIND","owner":"Collaborative Dynamics","canonical_uri":"https://github.com/Stunspot/augment-of-mind","created_at":CREATED_AT}],
       "providers":[{"provider_id":provider_id,"name":"Ollama qwen3-embedding 0.6b","owner":"local operator","provider_kind":"local_embedding","canonical_uri":"https://ollama.com/library/qwen3-embedding:0.6b","created_at":CREATED_AT}],
       "capabilities":capabilities,"distributions":[],"receipts":[],"lifecycle_observations":[],"mounts":[]}
@@ -105,12 +242,12 @@ def main() -> int:
       "normalization_contract":"nfkc-casefold-contiguous-token-v1","unicode_token_grammar":r"\w+(?:[.:/-]\w+)* under Python Unicode semantics",
       "cue_membership_contract":"Complete contiguous hint-token sequence; exhaustive over visible approved surfaces.","created_at":CREATED_AT}
     lexical["profile_digest"]=digest(lexical,"profile_digest")
-    evidence_path=Path("verification/associative-retrieval/live-results.json")
+    evidence_path=EVIDENCE_PATH
     evidence_digest=hashlib.sha256(evidence_path.read_bytes()).hexdigest()
-    profile={"embedding_profile_id":"embedding:ollama-qwen3-embedding-0.6b-behavior-qualified-v1","name":"Ollama qwen3-embedding 0.6b behavior-qualified neighborhood",
-      "provider_id":provider_id,"model_id":MODEL,"dimensions":dims,"metric":"cosine_distance","radius":0.42,
-      "comparison_tolerance":1e-6,"vector_encoding":"float32_le","qualification_state":"behavior_qualified",
-      "qualification_evidence_ref":"verification/associative-retrieval/live-results.json",
+    profile={"embedding_profile_id":"embedding:ollama-qwen3-embedding-0.6b-mind-2.1-unqualified-r2","name":"Ollama qwen3-embedding 0.6b MIND 2.1 unqualified neighborhood",
+      "provider_id":provider_id,"model_id":MODEL,"dimensions":dims,"metric":"cosine_distance","radius":0.40,
+      "comparison_tolerance":1e-6,"vector_encoding":"float32_le","qualification_state":"unqualified",
+      "qualification_evidence_ref":"verification/mind-associative-profile.md",
       "qualification_digest":evidence_digest,
       "created_at":QUALIFIED_AT}
     profile["profile_digest"]=digest(profile,"profile_digest")
@@ -143,13 +280,13 @@ def main() -> int:
     for cap in sorted(capabilities,key=lambda x:x["capability_id"]):
         estate.append({"capability_id":cap["capability_id"],"handle":cap["handle"],"exposure_policy":"public_safe",
           "owner_agent_instance_id":None,"aliases":[{"namespace":a["namespace"],"normalized_alias":a["alias"].casefold(),"display_alias":a["display_alias"]} for a in cap["aliases"]]})
-    snapshot={"associative_index_snapshot_id":"snapshot:mind-faculties:qwen3-0.6b:qualified-r1","embedding_profile_id":profile["embedding_profile_id"],
+    snapshot={"associative_index_snapshot_id":"snapshot:mind-2.1:qwen3-0.6b:unqualified-r2","embedding_profile_id":profile["embedding_profile_id"],
       "lexical_profile_id":lexical["lexical_profile_id"],"vector_coverage_state":"complete",
       "estate_digest":sha256_text(canonical_json(estate)),
       "source_digest":sha256_text(canonical_json([(source_id,source_digest)])),
       "card_digest":sha256_text(canonical_json(sorted(x["card_digest"] for x in manifest_cards))),
       "profile_digest":sha256_text(canonical_json([lexical["profile_digest"],profile["profile_digest"]])),
-      "builder_identity":"MIND deterministic associative asset builder","evidence_boundary":"Authored views plus local model vectors; semantic behavior requires separate qualification.",
+      "builder_identity":"MIND 2.1 deterministic associative asset builder","evidence_boundary":"Reviewed views plus local model vectors; this successor profile is unqualified pending separate behavioral and fresh-host evidence.",
       "created_at":QUALIFIED_AT,"expected_card_count":len(manifest_cards),"expected_relation_count":len(relations),"expected_vector_count":len(vector_rows)}
     material={k:v for k,v in snapshot.items() if k not in {"snapshot_digest","expected_card_count","expected_relation_count","expected_vector_count"}}
     material.update({"cards":sorted((x["capability_card_id"],x["card_digest"]) for x in manifest_cards),
@@ -159,7 +296,7 @@ def main() -> int:
     snapshot["snapshot_digest"]=sha256_text(canonical_json(material))
     index={"format":"mind-associative-index/v1","lexical_profile":lexical,"embedding_profile":profile,"clusters":clusters,
       "cards":manifest_cards,"relations":relations,"snapshot":snapshot,"vectors":vector_rows,
-      "activation":{"associative_snapshot_activation_id":"activation:mind-faculties:qwen3-0.6b:qualified-r1","prior_associative_index_snapshot_id":None,"activated_at":QUALIFIED_AT}}
+      "activation":{"associative_snapshot_activation_id":"activation:mind-2.1:qwen3-0.6b:unqualified-r2","prior_associative_index_snapshot_id":None,"activated_at":QUALIFIED_AT}}
     (root/"associative-index-qwen3-embedding-0.6b.json").write_text(json.dumps(index,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print(json.dumps({"cards":len(manifest_cards),"views":len(vector_rows),"dimensions":dims,"source_sha256":source_digest,"snapshot_sha256":snapshot["snapshot_digest"]},indent=2))
     return 0

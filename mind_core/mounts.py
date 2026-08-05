@@ -28,7 +28,7 @@ class MountCatalog:
     def __init__(
         self, store: CoreStore, receipts: ReceiptLedger, hosts: HostRegistry
     ) -> None:
-        self.store = store
+        self._store = store
         self.receipts = receipts
         self.hosts = hosts
 
@@ -117,7 +117,7 @@ class MountCatalog:
                 item.get("evidence_receipt_id"), "evidence_receipt_id"
             ),
         }
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             self.receipts.require_binding(
                 record["evidence_receipt_id"],
                 receipt_type="mount.grant",
@@ -191,7 +191,7 @@ class MountCatalog:
                 item.get("evidence_receipt_id"), "evidence_receipt_id"
             ),
         }
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             allowed_evidence_states = (
                 frozenset(
                     {
@@ -279,17 +279,17 @@ class MountCatalog:
         session = self.hosts.session(
             host_session_id, agent_instance_id, require_fresh=False
         )
-        mounts = self.store.connection.execute(
+        mounts = self._store.connection.execute(
             "SELECT * FROM mounts ORDER BY handle, mount_id"
         ).fetchall()
         result: list[dict[str, Any]] = []
         for mount in mounts:
-            observation = self.store.connection.execute(
+            observation = self._store.connection.execute(
                 "SELECT * FROM mount_observations WHERE mount_id=? AND agent_instance_id=? "
                 "AND host_session_id=? ORDER BY observed_at DESC, mount_observation_id DESC LIMIT 1",
                 (mount["mount_id"], agent_instance_id, host_session_id),
             ).fetchone()
-            grants = self.store.connection.execute(
+            grants = self._store.connection.execute(
                 "SELECT * FROM mount_grants WHERE mount_id=? AND agent_instance_id=? "
                 "AND host_session_id=? ORDER BY observed_at DESC, grant_id",
                 (mount["mount_id"], agent_instance_id, host_session_id),
@@ -329,11 +329,11 @@ class MountCatalog:
         session = self.hosts.session(
             host_session_id, agent_instance_id, require_fresh=False
         )
-        if self.store.connection.execute(
+        if self._store.connection.execute(
             "SELECT 1 FROM mounts WHERE mount_id=?", (mount_id,)
         ).fetchone() is None:
             raise NotFoundError(f"mount not found: {mount_id}")
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT * FROM mount_observations WHERE mount_id=? AND agent_instance_id=? "
             "AND host_session_id=? ORDER BY observed_at DESC, mount_observation_id DESC LIMIT 1",
             (mount_id, agent_instance_id, host_session_id),

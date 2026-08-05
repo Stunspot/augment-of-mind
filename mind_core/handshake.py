@@ -32,7 +32,7 @@ from .util import (
 
 class HostRegistry:
     def __init__(self, store: CoreStore, receipts: ReceiptLedger):
-        self.store = store
+        self._store = store
         self.receipts = receipts
 
     def handshake(self, record: dict[str, Any]) -> dict[str, Any]:
@@ -117,7 +117,7 @@ class HostRegistry:
         if not isinstance(session["session_epoch"], int) or session["session_epoch"] < 0:
             raise ValidationError("session_epoch must be a non-negative integer")
 
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             existing_agent = connection.execute(
                 "SELECT * FROM agent_instances WHERE agent_instance_id=?",
                 (agent_candidate["agent_instance_id"],),
@@ -202,7 +202,7 @@ class HostRegistry:
             raise ValidationError("require_fresh must be boolean")
         host_session_id = require_identifier(host_session_id, "host_session_id")
         agent_instance_id = require_identifier(agent_instance_id, "agent_instance_id")
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT * FROM host_sessions WHERE host_session_id=? AND agent_instance_id=?",
             (host_session_id, agent_instance_id),
         ).fetchone()
@@ -274,7 +274,7 @@ class HostRegistry:
             ),
         }
         payload_hash = sha256_text(canonical_json(coverage))
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             insert_exact(connection, "event_coverage", coverage, ("coverage_id",))
             receipt = self.receipts.append(
                 {
@@ -304,7 +304,7 @@ class HostRegistry:
         self.session(host_session_id, agent_instance_id, require_fresh=False)
         return [
             {**dict(row), "fresh": is_fresh(row["expires_at"])}
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT * FROM event_coverage WHERE host_session_id=? AND agent_instance_id=? "
                 "ORDER BY event_kind, action_class, observed_at DESC",
                 (host_session_id, agent_instance_id),

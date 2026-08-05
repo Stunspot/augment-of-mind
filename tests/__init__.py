@@ -1,1 +1,0 @@
-"""MIND Core acceptance tests."""
