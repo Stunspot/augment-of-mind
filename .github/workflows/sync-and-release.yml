@@ -70,16 +70,7 @@ jobs:
               raise SystemExit(f'standalone synchronization mismatch: missing={missing}, extra={extra}, changed={changed}')
           PY
           rm -rf _flagship
-      - name: Build and verify standalone MIND
-        shell: bash
-        run: |
-          set -euo pipefail
-          python -m pip install --upgrade pip setuptools wheel build
-          rm -rf /tmp/mind-release
-          python -X utf8 scripts/build_release.py --output-dir /tmp/mind-release --replace | tee /tmp/mind-build.json
-          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip
-          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip.sha256
-      - name: Commit synchronized repository
+      - name: Commit synchronized source locally
         shell: bash
         run: |
           set -euo pipefail
@@ -90,7 +81,24 @@ jobs:
             echo 'Standalone repository already matches the verified flagship package.'
           else
             git commit -m 'Synchronize standalone MIND 2.1.1 from flagship'
+          fi
+      - name: Build and verify standalone MIND
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip setuptools wheel build
+          rm -rf /tmp/mind-release
+          python -X utf8 scripts/build_release.py --output-dir /tmp/mind-release --replace | tee /tmp/mind-build.json
+          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip
+          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip.sha256
+      - name: Push verified synchronized commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/${{ github.head_ref }})" ]]; then
             git push origin HEAD:${{ github.head_ref }}
+          else
+            echo 'No synchronized commit needed.'
           fi
       - name: Upload verified standalone package
         uses: actions/upload-artifact@v4
