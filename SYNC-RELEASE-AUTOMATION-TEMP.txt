@@ -1,0 +1,1 @@
+Temporary marker used only to ensure the protected repository policy evaluates this workflow-installation PR. Delete after the synchronized release is published.

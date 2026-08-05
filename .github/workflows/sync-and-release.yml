@@ -1,0 +1,150 @@
+name: Synchronize and release standalone MIND
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-from-flagship:
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/sync-from-flagship'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out standalone branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Check out verified flagship source
+        uses: actions/checkout@v4
+        with:
+          repository: Stunspot/nova-the-optimal-ai-mind
+          ref: main
+          path: _flagship
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Synchronize standalone source from flagship package
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="$GITHUB_WORKSPACE/_flagship/plugins/augment-of-mind"
+          test -f "$source/.codex-plugin/plugin.json"
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name .git \
+            ! -name .github \
+            ! -name _flagship \
+            -exec rm -rf {} +
+          cp -a "$source"/. .
+          python - <<'PY'
+          from hashlib import sha256
+          from pathlib import Path
+
+          source = Path('_flagship/plugins/augment-of-mind')
+          target = Path('.')
+
+          def inventory(root: Path, excluded_first: set[str] = set()) -> dict[str, str]:
+              result = {}
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.is_symlink():
+                      continue
+                  relative = path.relative_to(root)
+                  if relative.parts and relative.parts[0] in excluded_first:
+                      continue
+                  if '__pycache__' in relative.parts or path.suffix.lower() in {'.pyc', '.pyo'}:
+                      continue
+                  result[relative.as_posix()] = sha256(path.read_bytes()).hexdigest()
+              return result
+
+          expected = inventory(source)
+          observed = inventory(target, {'.git', '.github', '_flagship'})
+          if observed != expected:
+              missing = sorted(set(expected) - set(observed))
+              extra = sorted(set(observed) - set(expected))
+              changed = sorted(path for path in expected.keys() & observed.keys() if expected[path] != observed[path])
+              raise SystemExit(f'standalone synchronization mismatch: missing={missing}, extra={extra}, changed={changed}')
+          PY
+          rm -rf _flagship
+      - name: Build and verify standalone MIND
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip setuptools wheel build
+          rm -rf /tmp/mind-release
+          python -X utf8 scripts/build_release.py --output-dir /tmp/mind-release --replace | tee /tmp/mind-build.json
+          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip
+          test -f /tmp/mind-release/augment-of-mind-v2.1.1.zip.sha256
+      - name: Commit synchronized repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'Standalone repository already matches the verified flagship package.'
+          else
+            git commit -m 'Synchronize standalone MIND 2.1.1 from flagship'
+            git push origin HEAD:${{ github.head_ref }}
+          fi
+      - name: Upload verified standalone package
+        uses: actions/upload-artifact@v4
+        with:
+          name: augment-of-mind-v2.1.1
+          path: |
+            /tmp/mind-release/augment-of-mind-v2.1.1.zip
+            /tmp/mind-release/augment-of-mind-v2.1.1.zip.sha256
+            /tmp/mind-release/augment-of-mind-v2.1.1.build-receipt.json
+            /tmp/mind-build.json
+
+  publish-v2-1-1:
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/publish-mind-v2.1.1'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out synchronized main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build and verify release
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip setuptools wheel build
+          rm -rf release
+          python -X utf8 scripts/build_release.py --output-dir release --replace | tee release/build-result.json
+      - name: Publish GitHub release
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='v2.1.1'
+          assets=(
+            release/augment-of-mind-v2.1.1.zip
+            release/augment-of-mind-v2.1.1.zip.sha256
+            release/augment-of-mind-v2.1.1.build-receipt.json
+          )
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${assets[@]}" --clobber
+          else
+            gh release create "$tag" "${assets[@]}" \
+              --target main \
+              --title 'MIND by Collaborative Dynamics 2.1.1' \
+              --notes-file RELEASE-NOTES.md
+          fi
+      - name: Upload release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-augment-of-mind-v2.1.1
+          path: release/
