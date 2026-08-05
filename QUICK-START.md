@@ -1,55 +1,11 @@
-# Quick start
+# Confirm MIND is ready
 
-Goal: get useful work from MIND in one new Codex task.
+Start a new Codex task after installation. MIND and its Faculties are discovered at that boundary.
 
-Starting state: MIND `1.0.0` is installed and enabled, and you have started a
-new task after installation.
+Confirm that **MIND by Collaborative Dynamics** is enabled and that the host exposes the MIND integrator and its Faculty skills. The integrator is the general entry point for consequential work involving several kinds of cognition. Individual Faculties remain available when one transformation clearly owns the job.
 
-## Use the integrator
+A healthy installation should preserve one coherent agent response, keep evidence and assumptions distinct when they matter, and retain the user’s authority over consequential action. It should not present a transcript of internal Faculties debating for sport.
 
-Paste this request:
+If MIND or a Faculty is unavailable, return to [Install MIND](START-HERE.md). If the reminder layer is unavailable, use [Troubleshooting](TROUBLESHOOTING.md).
 
-```text
-Use $augment-of-mind to help me decide whether to run a two-week pilot.
-Separate evidence from assumptions, identify the smallest reversible test that
-could change the decision, and return one recommendation. Do not take external
-action.
-```
-
-Expected result:
-
-- one coherent response rather than a transcript between Faculties;
-- a clear decision frame;
-- evidence and assumptions kept distinct;
-- a reversible information-producing next step;
-- no external action unless separately authorized.
-
-If `$augment-of-mind` is unavailable, return to
-[Install MIND for Codex](INSTALL-CODEX.md) and confirm you started a new task.
-
-## Call one Faculty directly
-
-Use a direct Faculty when one transformation owns the job:
-
-```text
-Use $sensemaking to turn this tangled situation into a working map.
-```
-
-```text
-Use $decision-intelligence to compare these options and recommend one.
-```
-
-```text
-Use $aesthetic-intelligence to diagnose why this composition feels wrong.
-```
-
-Expected result: the named Faculty performs its bounded transformation without
-assembling the rest of MIND for decorative effect.
-
-## Know when the quick start is complete
-
-You are done when the result helps you move the actual task forward and keeps
-authority with you. You do not need to inspect which internal Faculties were
-considered. The machinery is there to do work, not demand applause.
-
-Next: [Use MIND in ordinary work](USER-GUIDE.md).
+Next: [Use MIND](USER-GUIDE.md).

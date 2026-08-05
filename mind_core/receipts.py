@@ -24,7 +24,7 @@ from .util import (
 
 class ReceiptLedger:
     def __init__(self, store: CoreStore):
-        self.store = store
+        self._store = store
 
     def append(
         self,
@@ -92,7 +92,7 @@ class ReceiptLedger:
         content_digest = sha256_text(canonical_json(logical))
 
         transaction = (
-            self.store.transaction() if connection is None else nullcontext(connection)
+            self._store.transaction() if connection is None else nullcontext(connection)
         )
         with transaction as active_connection:
             if agent_instance_id is None:
@@ -208,7 +208,7 @@ class ReceiptLedger:
         receipt_id = require_identifier(receipt_id, "receipt_id")
         if (agent_instance_id is None) != (host_session_id is None):
             raise ScopeError("evidence scope requires both agent and host session")
-        active_connection = connection or self.store.connection
+        active_connection = connection or self._store.connection
         row = active_connection.execute(
             "SELECT * FROM receipts WHERE receipt_id=?", (receipt_id,)
         ).fetchone()
@@ -280,7 +280,7 @@ class ReceiptLedger:
         host_session_id: str | None = None,
     ) -> dict[str, Any]:
         receipt_id = require_identifier(receipt_id, "receipt_id")
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT * FROM receipts WHERE receipt_id=?", (receipt_id,)
         ).fetchone()
         if row is None:
@@ -291,7 +291,7 @@ class ReceiptLedger:
         result = dict(row)
         result["parents"] = [
             dict(item)
-            for item in self.store.connection.execute(
+            for item in self._store.connection.execute(
                 "SELECT parent_receipt_id AS receipt_id, relation FROM receipt_edges "
                 "WHERE child_receipt_id=? ORDER BY parent_receipt_id, relation",
                 (receipt_id,),

@@ -1,80 +1,37 @@
 # Use MIND
 
-MIND coordinates cognitive transformations. Ask for the outcome you need;
-name a Faculty only when the ownership itself matters.
+MIND is designed to disappear into competent behavior. You ordinarily ask the agent for the outcome; MIND decides whether direct work is sufficient or whether several cognitive transformations need to cooperate.
 
-## Choose the entry point
+## When MIND matters most
 
-Use `$augment-of-mind` when:
+MIND earns its keep when the work contains conflicting evidence, meaningful consequences, several kinds of reasoning, long-running state, a difficult authority boundary, or a failure that needs genuine recovery rather than another hopeful retry.
 
-- two or more distinct transformations must contribute to one result;
-- uncertainty, consequences, durable state, authority, or recovery are
-  material;
-- you are not sure which Faculty owns the work.
+A narrow task may belong to one Faculty. A consequential mission may require several. The integrator keeps the objective stable and merges their contributions.
 
-Call one Faculty directly when the task is narrow. The complete Faculty map is
-in [Capabilities and limits](CAPABILITIES-AND-LIMITS.md#the-sixteen-faculties).
+## Four operating motions
 
-## Write a useful mission
+**Direct** handles ordinary reversible work without unnecessary machinery.
 
-A good request states:
+**Enlist** opens one Faculty whose doctrine will materially improve the work.
 
-1. the outcome;
-2. the evidence or material available;
-3. the consequential constraints;
-4. the authority boundary;
-5. what a useful answer must contain.
+**Assemble** coordinates several necessary Faculties while preserving their distinct responsibilities.
 
-Example:
+**Recover** protects the last-known-good state, identifies the premise that failed, changes the route, and resumes honestly.
 
-```text
-Use $augment-of-mind to recommend whether we should renew this vendor.
-Use the attached incident log and contract summary. Treat unverified claims as
-claims, compare a short renewal with migration, and return one recommendation
-with the condition that would reverse it. Draft no message and contact nobody.
-```
+## Corrections stay local
 
-## MIND's four motions
+A correction should change the affected assumptions, options, or recommendation without resurrecting every discarded branch. MIND treats a correction as a delta unless the user actually changes the mission.
 
-| Motion | What it means |
-|---|---|
-| Direct | Finish ordinary reversible work without unnecessary architecture. |
-| Enlist | Ask one supporting Faculty for a bounded transformation. |
-| Assemble | Coordinate several necessary Faculties with clear ownership. |
-| Recover | Preserve the last-known-good state, change the failed premise or route, and resume honestly. |
+## Recommendations are not permissions
 
-Selection is not activation. A Faculty should be opened only when its doctrine
-must materially change the work.
+MIND can analyze, organize, recommend, draft, and plan. It does not convert those outputs into permission to send, publish, purchase, alter an account, use credentials, destroy data, or take regulated action.
 
-## Corrections
+## Capability memory
 
-Correct the result directly:
+After understanding a task, correction, error, or phase change, MIND can retrieve a semantic neighborhood of potentially relevant capabilities. The agent still decides whether any of them fit.
 
-```text
-Correction: budget is fixed, not flexible. Preserve the settled objective and
-recompute only the options and recommendation affected by that constraint.
-```
+When a durable capability is added or changed, Capability Promotion should surface the need to update that semantic map. See [Capability reminders](CAPABILITY-REMINDERS.md).
 
-A correction is a delta, not an invitation to resurrect every discarded plan.
+## Recovery
 
-## Authority
-
-MIND can recommend, draft, analyze, and organize. It does not turn a
-recommendation into permission. External messages, publication, purchases,
-account changes, destructive operations, regulated action, and other
-consequential state changes remain separately authorized and subject to the
-host's sandbox and approval policy.
-
-## Optional associative reminders
-
-MIND Core ships with an authored sixteen-Faculty generation. Its H0 adapter can
-embed a task, correction, or error locally and compile the field before substantive
-work. Codex still does not guarantee automatic host-level pre-turn injection. See [Optional MIND Core](OPTIONAL-CORE.md).
-
-## Stop and recover
-
-When a tool, credential, data store, or invariant that should work does not,
-pause before building an alternate route. Preserve the error, identify the
-reached boundary, ask why the cause existed, then change one premise-bearing
-thing. Sometimes the final cause is merely “the outside system failed,” but it
-must earn that deeply unsatisfying answer.
+When a tool, credential, store, dependency, or invariant fails, preserve the exact symptom and the state reached. Change a premise-bearing part of the route before retrying. A new directory name is not a new strategy, however emotionally supportive it may feel.

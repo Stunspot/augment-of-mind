@@ -35,7 +35,7 @@ class CapabilityEstate:
     def __init__(
         self, store: CoreStore, receipts: ReceiptLedger, hosts: HostRegistry
     ) -> None:
-        self.store = store
+        self._store = store
         self.receipts = receipts
         self.hosts = hosts
 
@@ -102,6 +102,49 @@ class CapabilityEstate:
             insert_exact(connection, "providers", record, ("provider_id",))
 
     def ingest_capabilities(
+        self, records: Iterable[dict[str, Any]], connection: sqlite3.Connection
+    ) -> None:
+        records = list(records)
+        self._require_capability_admission(records, connection)
+        self._ingest_capability_records(records, connection)
+
+    def _ingest_generation_capabilities(
+        self, records: Iterable[dict[str, Any]], connection: sqlite3.Connection
+    ) -> None:
+        """Internal half of MindCore.activate_estate_generation's transaction."""
+
+        if not connection.in_transaction:
+            raise ValidationError("capability ingestion requires an active transaction")
+        self._ingest_capability_records(list(records), connection)
+
+    @staticmethod
+    def _require_capability_admission(
+        records: list[dict[str, Any]], connection: sqlite3.Connection
+    ) -> None:
+        if not connection.in_transaction:
+            raise ValidationError("capability ingestion requires an active transaction")
+        activation_exists = connection.execute(
+            "SELECT 1 FROM associative_snapshot_activations LIMIT 1"
+        ).fetchone() is not None
+        if not activation_exists:
+            return
+        existing_ids = {
+            row["capability_id"]
+            for row in connection.execute(
+                "SELECT capability_id FROM capabilities"
+            ).fetchall()
+        }
+        incoming_ids = {
+            require_identifier(item.get("capability_id"), "capability_id")
+            for item in records
+        }
+        if not incoming_ids.issubset(existing_ids):
+            raise ValidationError(
+                "capability ingestion cannot expand the estate after associative "
+                "activation; use activate_estate_generation"
+            )
+
+    def _ingest_capability_records(
         self, records: Iterable[dict[str, Any]], connection: sqlite3.Connection
     ) -> None:
         for item in records:
@@ -322,7 +365,7 @@ class CapabilityEstate:
                 host_session_id, agent_instance_id, require_fresh=False
             )
             session_fresh = bool(session["fresh"])
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT * FROM capabilities WHERE capability_id=?", (capability_id,)
         ).fetchone()
         if row is None:
@@ -335,7 +378,7 @@ class CapabilityEstate:
         result = dict(row)
         result["aliases"] = [
             dict(item)
-            for item in self.store.connection.execute(
+            for item in self._store.connection.execute(
                 "SELECT namespace, normalized_alias, display_alias FROM capability_aliases "
                 "WHERE capability_id=? ORDER BY namespace, normalized_alias",
                 (capability_id,),
@@ -343,7 +386,7 @@ class CapabilityEstate:
         ]
         result["entrypoints"] = [
             dict(item)
-            for item in self.store.connection.execute(
+            for item in self._store.connection.execute(
                 "SELECT entrypoint_id,entrypoint_kind,locator,operation FROM capability_entrypoints "
                 "WHERE capability_id=? ORDER BY entrypoint_id",
                 (capability_id,),
@@ -351,7 +394,7 @@ class CapabilityEstate:
         ]
         result["distributions"] = [
             dict(item)
-            for item in self.store.connection.execute(
+            for item in self._store.connection.execute(
                 "SELECT d.*, p.name AS provider_name FROM distributions d "
                 "JOIN providers p ON p.provider_id=d.provider_id "
                 "WHERE d.capability_id=? ORDER BY d.provider_id,d.version,d.distribution_id",
@@ -366,7 +409,7 @@ class CapabilityEstate:
                 "(agent_instance_id=? AND host_session_id=?)"
             )
             params.extend([agent_instance_id, host_session_id])
-        observations = self.store.connection.execute(
+        observations = self._store.connection.execute(
             f"SELECT * FROM lifecycle_observations WHERE capability_id=? AND ({scope_clause}) "
             "ORDER BY axis, observed_at, observation_id",
             tuple(params),
@@ -403,7 +446,7 @@ class CapabilityEstate:
             if _private_agent_instance_id is not None
             else ""
         )
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             """
             SELECT capability_id FROM capabilities
             WHERE handle=?

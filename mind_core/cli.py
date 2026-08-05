@@ -26,6 +26,10 @@ def _parser() -> argparse.ArgumentParser:
     index = subparsers.add_parser("index")
     index.add_argument("--database", required=True, type=Path)
     index.add_argument("--manifest", required=True, type=Path)
+    activate = subparsers.add_parser("activate-estate-generation")
+    activate.add_argument("--database", required=True, type=Path)
+    activate.add_argument("--bootstrap", required=True, type=Path)
+    activate.add_argument("--index", required=True, type=Path)
     issue = subparsers.add_parser("issue-session-capability")
     issue.add_argument("--database", required=True, type=Path)
     issue.add_argument("--agent-instance-id", required=True)
@@ -53,6 +57,47 @@ def _write_json(value: Any) -> None:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        if args.command == "activate-estate-generation":
+            bootstrap = json.loads(args.bootstrap.read_text(encoding="utf-8"))
+            index = json.loads(args.index.read_text(encoding="utf-8"))
+            if not isinstance(bootstrap, dict):
+                raise ValueError("bootstrap manifest must be a JSON object")
+            if not isinstance(index, dict):
+                raise ValueError("associative index manifest must be a JSON object")
+            snapshot = index.get("snapshot")
+            profile = index.get("embedding_profile")
+            activation = index.get("activation")
+            if not all(
+                isinstance(value, dict) for value in (snapshot, profile, activation)
+            ):
+                raise ValueError("associative index manifest is missing activation metadata")
+
+            with MindCore(args.database) as core:
+                core.activate_estate_generation(bootstrap, index)
+            with MindCore(args.database) as reopened:
+                report = reopened.activation_operator_report(
+                    submitted_snapshot_id=snapshot.get("associative_index_snapshot_id"),
+                    submitted_snapshot_digest=snapshot.get("snapshot_digest"),
+                    submitted_embedding_profile_id=profile.get("embedding_profile_id"),
+                    submitted_activation_id=activation.get(
+                        "associative_snapshot_activation_id"
+                    ),
+                    submitted_prior_snapshot_id=activation.get(
+                        "prior_associative_index_snapshot_id"
+                    ),
+                )
+            if (
+                not report["matches_submission"]
+                or not report["active_matches_submission"]
+                or not report["current"]
+                or not report["activation_receipt"]["binding_valid"]
+                or report["sqlite"]["integrity_check"] != "ok"
+                or report["sqlite"]["foreign_key_violation_count"]
+            ):
+                raise MindCoreError("activation did not survive durable verification")
+            _write_json(report)
+            return 0
+
         with MindCore(args.database) as core:
             if args.command == "init":
                 _write_json(core.status())

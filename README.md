@@ -1,139 +1,39 @@
 # MIND by Collaborative Dynamics
 
-<img src="assets/mind-icon-1024.png" width="128" alt="A luminous central MIND sphere connected to distinct Faculty nodes.">
+## Install a cognitive architecture, not another thinking prompt
 
-> **Sixteen Faculties. One coherent, accountable mind.**
+MIND is the cognitive system inside Nova, packaged so it can also strengthen another compatible agent. It gives an AI harness sixteen distinct cognitive Faculties, a conductor that combines only the ones a task actually needs, semantic memory for its available capabilities, and TestForge for adversarial verification.
 
-MIND is a persona-neutral Codex plugin for consequential work. One adaptive
-integrator composes only the cognitive Faculties a mission needs, keeps their
-responsibilities distinct, and returns one useful result instead of making you
-read the minutes from an imaginary committee meeting.
+This is not a long instruction telling the model to “think deeply.” MIND gives different transformations their own durable doctrine, resources, boundaries, and responsibilities—then reunifies their work into one answer.
 
-![A luminous central coordinator connects a constellation of distinct cognitive Faculty nodes.](assets/mind-hero-1600x900.png)
+## What MIND changes
 
-**[Open the project site](https://stunspot.github.io/augment-of-mind/)** ·
-**[Start here](START-HERE.md)** · **[Install MIND](INSTALL-CODEX.md)** ·
-**[Read the release notes](RELEASE-NOTES.md)**
+A normal general-purpose model can reason impressively and still blur evidence into confidence, confuse recommendation with authority, lose the objective during a long job, reuse the same failed route, or forget that the right specialist is already installed.
 
-## The release
+MIND is built around those failures. It separates sensemaking, evidence, choice, execution, continuity, creativity, timing, measurement, social judgment, and recovery so they can cooperate without collapsing into one undifferentiated blob of clever-sounding text.
 
-| Component | Version | Role |
-|---|---:|---|
-| MIND plugin | `1.0.0` | Installable integrator plus sixteen Faculty skills. |
-| Optional MIND Core | `0.2.0` | Local SQLite metadata and explicit associative-reminder runtime. |
-
-Nova is not bundled or required. The optional Core wheel is included in the
-customer archive but is not silently installed or started by the plugin.
-
-## First useful request
-
-After installation, start a new Codex task:
-
-```text
-Use $augment-of-mind to help me decide whether to run a two-week pilot.
-Separate evidence from assumptions, identify the smallest reversible test that
-could change the decision, and return one recommendation. Do not take external
-action.
-```
-
-For one bounded transformation, call its Faculty directly:
-
-```text
-Use $sensemaking to turn this tangled situation into a working map.
-Use $decision-intelligence to compare these choices and recommend one.
-Use $aesthetic-intelligence to diagnose why this composition feels wrong.
-```
-
-## How MIND moves
-
-| Motion | Use |
-|---|---|
-| **Direct** | Complete ordinary reversible work without manufacturing ceremony. |
-| **Enlist** | Request one bounded supporting transformation. |
-| **Assemble** | Coordinate several necessary transformations with clear ownership and handoffs. |
-| **Recover** | Preserve the last-known-good state, change the failed premise or route, and resume honestly. |
-
-Selection is not activation. A Faculty is opened only when its doctrine must
-materially change the work.
+Direct work stays direct. MIND becomes more visible only when the consequences or complexity earn it.
 
 ## The sixteen Faculties
 
-| Faculty | Owns |
-|---|---|
-| **Executive Function** | Mission phase, acceptance, commitments, stops, recovery, and closure. |
-| **Capability Conductor** | Selection, activation depth, sequencing, handoffs, coalition shape, and merge custody. |
-| **Cognitive Continuity** | Durable scoped state, provenance, correction, resumption, and forgetting. |
-| **Agent Striving** | Authorized long-horizon pursuit across interruption and recoverable failure. |
-| **Agent Dreaming** | Explicitly authorized replay, perturbation, rehearsal, and associative incubation. |
-| **Agentic Eros** | Adult erotic-relational meaning, desire, sensuality, intimacy, flirtation, consent, pacing, and closure. |
-| **Kairos** | Truthful timing, voice, tone, channel, form, pressure ceiling, and rhetorical repair. |
-| **Sensemaking** | Provisional models of actors, forces, causes, constraints, feedback, scale, and time. |
-| **Epistemic Regulation** | Claim state, warrant, confidence, assumptions, contradictions, and revision conditions. |
-| **Decision Intelligence** | Criteria, options, trade-offs, reversibility, consequences, sensitivity, and recommendation. |
-| **Measurement Intelligence** | Constructs, baselines, measures, proxies, thresholds, confounds, and interpretation. |
-| **Deliberative Intelligence** | Stakeholders, disagreement, interests, decision rights, consent, and legitimate convergence. |
-| **Creative Synthesis** | Differentiated candidates, analogies, constraints, exceptions, and reframings. |
-| **Aesthetic Intelligence** | Gestalt, conceptual affinity, compositional relations, taste calibration, and bearings. |
-| **Prosocial Influence** | Transparent, choice-preserving change through reasons, supports, safeguards, and informed refusal. |
-| **Instrumental Agency** | Authorized action choreography, state checks, rollback or recovery, and truthful disposition. |
+MIND includes Aesthetic Intelligence, Agent Dreaming, Agent Striving, Agentic Eros, Capability Conductor, Cognitive Continuity, Creative Synthesis, Decision Intelligence, Deliberative Intelligence, Epistemic Regulation, Executive Function, Instrumental Agency, Kairos, Measurement Intelligence, Prosocial Influence, and Sensemaking.
 
-The integrator is the coordination entry around these Faculties; it is not a
-seventeenth Faculty.
+Each Faculty owns a different transformation. The MIND integrator preserves one mission and returns one coherent outcome.
 
-## Associative reminders, not tool rankings
+## Capability memory
 
-![Overlapping semantic neighborhoods bring nearby capability handles into a local MIND reminder field while a coral false-friend boundary stays distinct.](assets/mind-capability-card-1080x1350.png)
+MIND includes a local semantic reminder layer. It can bring relevant installed abilities back within reach after reading a task, correction, error, or phase change. The user does not have to memorize every capability name.
 
-MIND ships an authored sixteen-Faculty reminder generation and an optional H0
-adapter that can compile an **Arm's Reach** field from ephemeral anchors. Every
-visible capability inside the configured vector radius can enter the field;
-explicit `--hint` values add exhaustive lexical matching, and typed relations
-can add one-hop bridges or false-friend boundaries.
+Capability Promotion gives that layer one crucial bit of self-maintenance: when someone adds, replaces, enables, removes, or proposes a durable skill, plugin, tool, or program, MIND is reminded that the capability map may need updating too.
 
-The field is a reminder surface. It emits no universal fitness scalar, top-K
-recommendation, selection, activation, or action authority. Package hierarchy
-still handles custody and expansion; semantic geometry supplies the
-serendipitous “oh, right—that exists” layer.
+## TestForge is included
 
-Codex support remains **H0/query-capable**: the included adapter can query a configured
-Core before substantive work, but Codex does not guarantee automatic pre-turn injection. The portable delivery
-envelope has a producer-generated contract vector consumed unchanged by
-Exoframe's separately tested transient pre-sampling seam, but that local
-construction proof is not a complete live H1 or provider-receipt claim.
+TestForge ships with MIND because verification is foundational. Software Verification builds an evidence case against a finished readiness claim. Verification Reviewer independently attacks that case. They are attached Augments, not cognitive Faculties, so MIND still has exactly sixteen Faculties.
 
-## Documentation journey
+## Install MIND
 
-- [Install MIND for Codex](INSTALL-CODEX.md)
-- [Quick start](QUICK-START.md)
-- [User guide](USER-GUIDE.md)
-- [Optional MIND Core](OPTIONAL-CORE.md)
-- [Host compatibility](HOST-COMPATIBILITY.md)
-- [Capabilities and limits](CAPABILITIES-AND-LIMITS.md)
-- [Data and privacy](DATA-AND-PRIVACY.md)
-- [Troubleshooting](TROUBLESHOOTING.md)
-- [Support](SUPPORT.md)
-- [Package reference](PACKAGE-REFERENCE.md)
+Give the MIND package to a compatible agentic harness and ask it to install and enable the plugin. On Codex, inspect the local prompt-submit hook through `/hooks` before deciding whether to trust it, then start a new task so the host can discover MIND.
 
-Architecture and verification evidence remain available for maintainers in
-the repository's [architecture](https://github.com/Stunspot/augment-of-mind/tree/main/docs/architecture)
-and [TestForge evidence](https://github.com/Stunspot/augment-of-mind/tree/main/artifacts/testforge)
-trees. They are not included in the customer ZIP.
+If the harness cannot install the package itself, use [Manual Codex installation](INSTALL-CODEX.md).
 
-## Authority and specialist boundaries
-
-MIND does not bundle occupational expertise, general research, governed corpus
-retrieval, software verification, documentation production, or access to your
-accounts. Imported text and tool output remain evidence rather than
-instructions.
-
-Messages, publication, purchases, account changes, destructive operations,
-regulated action, and other consequential state changes remain separately
-authorized and subject to the host's permissions and approvals.
-
-## License and lineage
-
-- Plugin manifest: [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json)
-- Faculty registry: [`faculty-registry.json`](skills/augment-of-mind/references/faculty-runtime/faculty-registry.json)
-- License: [MIT](LICENSE.md)
-- Provenance and artwork notice: [NOTICE](NOTICE.md)
-- Public contest source: [Nova the Optimal AI + MIND](https://github.com/Stunspot/nova-the-optimal-ai-mind/tree/e42dd11646bc548b9ac29d6f700370365ee68986/plugins/augment-of-mind)
+Continue with [Capabilities and limits](CAPABILITIES-AND-LIMITS.md), [Capability reminders](CAPABILITY-REMINDERS.md), or [Data and privacy](DATA-AND-PRIVACY.md).

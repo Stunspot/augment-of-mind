@@ -2,19 +2,24 @@
 
 ## Supported release
 
-Security reports currently cover the latest published MIND `1.0.x` release
-and the bundled MIND Core `0.2.x` component.
+Security reports currently cover the MIND `2.1.x` source line and the
+bundled MIND Core `0.2.x` component.
 
 ## Security boundary
 
-The plugin is skills-only. It contains no bundled MCP server or lifecycle hook
-and asks for no credential. It cannot enlarge the sandbox, approvals, account
-access, or tool permissions supplied by the active host.
+The plugin bundles local instruction files, a local Core library, and a
+prompt-submit hook. It asks for no credential. Those surfaces can read the
+configured local Core database and call the configured local Ollama endpoint;
+they cannot enlarge the sandbox, approvals, account access, or tool permissions
+supplied by the active host.
 
-The optional Core is local and query-only over its stdio service. It validates
-strict JSON, frame size, schema versions, scope bindings, immutable revisions,
-and SQLite migration checksums. Private reminder queries use expiring opaque
-session capabilities whose hashes—not raw values—are stored.
+The optional Core is local and query-only through its direct Python API and CLI.
+It validates strict JSON, frame size, schema versions, scope bindings, immutable
+revisions, and SQLite migration checksums. Private reminder queries use expiring
+opaque session capabilities whose hashes—not raw values—are stored.
+
+Skills are filesystem entrypoints discovered by the host. Core's direct Python
+API, CLI, and framed query path do not grant host permissions.
 
 These controls do not make arbitrary host input trustworthy. Do not place
 secrets in manifests, capability cards, lexical hints, test fixtures, or public

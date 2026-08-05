@@ -19,7 +19,7 @@ MANIFEST_FORMAT = "cd-mind-release-manifest/v1"
 PRODUCT = "augment-of-mind"
 MARKETPLACE_NAME = "collaborative-dynamics-mind"
 MARKETPLACE_DISPLAY_NAME = "Collaborative Dynamics: MIND"
-PLUGIN_VERSION = "1.0.0"
+PLUGIN_VERSION = "2.1.1"
 CORE_NAME = "cd-mind-core"
 CORE_VERSION = "0.2.0"
 ARCHIVE_ROOT = f"{PRODUCT}-v{PLUGIN_VERSION}"
@@ -32,6 +32,7 @@ ROOT_DOCUMENTS = (
     "OPTIONAL-CORE.md",
     "HOST-COMPATIBILITY.md",
     "CAPABILITIES-AND-LIMITS.md",
+    "CAPABILITY-REMINDERS.md",
     "DATA-AND-PRIVACY.md",
     "SECURITY.md",
     "TROUBLESHOOTING.md",
@@ -51,12 +52,13 @@ RUNTIME_SCRIPT_NAMES = (
     "build_associative_assets.py",
     "query_associative_field.py",
 )
-SKILL_ALLOWED_ROOT_FILES = {"SKILL.md", "manifest.json"}
+SKILL_ALLOWED_ROOT_FILES = {"SKILL.md", "manifest.json", "activation-examples.md", "output-contract.md", "adversarial-checks.md", "review-rubric.md"}
 SKILL_ALLOWED_DIRECTORIES = {
     "adapters",
     "agents",
     "assets",
     "examples",
+    "fallback",
     "fallbacks",
     "personas",
     "references",
@@ -68,8 +70,11 @@ EXPECTED_WHEEL_NAME = "cd_mind_core-0.2.0-py3-none-any.whl"
 TEXT_SUFFIXES = {
     ".css", ".html", ".json", ".md", ".py", ".toml", ".txt", ".yaml", ".yml"
 }
-FORBIDDEN_TOP_LEVEL = {
-    ".git", ".github", "artifacts", "mind_core", "release-v0.2.0", "tests"
+FORBIDDEN_TOP_LEVEL = {".git", ".github", "artifacts", "release-v0.2.0", "tests"}
+FORBIDDEN_MCP_PATHS = {
+    ".mcp.json",
+    "scripts/mind_mcp_server.py",
+    "mind_core/mcp_server.py",
 }
 PRIVATE_PATH = re.compile(
     rb"(?:[A-Za-z]:\\Users\\[^\\\s\[\](){}|]+\\|"
@@ -111,6 +116,8 @@ def safe_relative(value: str) -> PurePosixPath:
 def validate_payload_path(value: str) -> None:
     path = safe_relative(value)
     parts = path.parts
+    if value in FORBIDDEN_MCP_PATHS:
+        raise ReleaseError(f"MCP payload is forbidden: {value}")
     if value in ROOT_DOCUMENTS or value in {
         ".codex-plugin/plugin.json",
         ".agents/plugins/marketplace.json",
@@ -121,6 +128,10 @@ def validate_payload_path(value: str) -> None:
     if len(parts) == 2 and parts[0] == "assets" and parts[1] in ASSET_NAMES:
         return
     if len(parts) == 2 and parts[0] == "scripts" and parts[1] in RUNTIME_SCRIPT_NAMES:
+        return
+    if len(parts) == 2 and parts[0] == "hooks" and parts[1] in {"hooks.json", "mind_prompt_submit.py"}:
+        return
+    if len(parts) >= 2 and parts[0] == "mind_core" and PurePosixPath(value).suffix.lower() in {".py", ".sql"}:
         return
     if parts == ("optional-core", EXPECTED_WHEEL_NAME):
         return
@@ -333,6 +344,10 @@ def verify(root: Path) -> dict[str, object]:
     if manifest.get("file_count") != len(actual_records) or manifest.get("tree_sha256") != observed_tree:
         raise ReleaseError("manifest count or tree digest does not match release bytes")
 
+    for forbidden in FORBIDDEN_MCP_PATHS:
+        if forbidden in actual_by_path:
+            raise ReleaseError(f"MCP payload is forbidden: {forbidden}")
+
     for relative in sorted(actual_by_path):
         path = root / Path(relative)
         if SECRET_NAME.search(path.name):
@@ -345,9 +360,11 @@ def verify(root: Path) -> dict[str, object]:
     plugin = load_json(root / ".codex-plugin" / "plugin.json")
     if plugin.get("name") != PRODUCT or plugin.get("version") != PLUGIN_VERSION:
         raise ReleaseError("plugin manifest identity does not match the release")
+    if "mcpServers" in plugin:
+        raise ReleaseError("plugin manifest must not register MCP servers")
     skills = sorted((root / "skills").glob("*/SKILL.md"))
-    if len(skills) != 17:
-        raise ReleaseError(f"expected 17 skill entrypoints, found {len(skills)}")
+    if len(skills) != 20:
+        raise ReleaseError(f"expected 20 skill entrypoints, found {len(skills)}")
     interface = plugin.get("interface")
     if not isinstance(interface, dict):
         raise ReleaseError("plugin interface metadata is missing")
@@ -362,6 +379,9 @@ def verify(root: Path) -> dict[str, object]:
         relative = str(value).removeprefix("./")
         if relative not in actual_by_path:
             raise ReleaseError(f"plugin screenshot is missing: {relative}")
+
+    if not (root / "hooks" / "hooks.json").is_file() or not (root / "hooks" / "mind_prompt_submit.py").is_file():
+        raise ReleaseError("MIND prompt-submit hook payload is missing")
 
     marketplace = load_json(root / ".agents" / "plugins" / "marketplace.json")
     verify_marketplace(marketplace)

@@ -148,14 +148,14 @@ class AssociativeReminders:
         hosts: HostRegistry,
         estate: CapabilityEstate,
     ) -> None:
-        self.store = store
+        self._store = store
         self.receipts = receipts
         self.hosts = hosts
         self.estate = estate
         self._ensure_signing_key()
 
     def _ensure_signing_key(self) -> None:
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             row = connection.execute(
                 "SELECT value FROM core_meta WHERE key='reminder_visibility_hmac_key'"
             ).fetchone()
@@ -170,7 +170,7 @@ class AssociativeReminders:
                 )
 
     def _signing_key(self) -> bytes:
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT value FROM core_meta WHERE key='reminder_visibility_hmac_key'"
         ).fetchone()
         if row is None:
@@ -223,7 +223,7 @@ class AssociativeReminders:
             "expires_at": expiry,
             "issuance_receipt_id": new_id("receipt"),
         }
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             self.receipts.append(
                 {
                     "receipt_id": record["issuance_receipt_id"],
@@ -268,7 +268,7 @@ class AssociativeReminders:
         self, session_capability: str
     ) -> dict[str, Any]:
         binding = self._bound_scope(session_capability, allow_revoked=True)
-        existing = self.store.connection.execute(
+        existing = self._store.connection.execute(
             "SELECT * FROM session_capability_revocations WHERE token_hash=?",
             (binding["token_hash"],),
         ).fetchone()
@@ -281,7 +281,7 @@ class AssociativeReminders:
             "revoked_at": revoked_at,
             "revocation_receipt_id": new_id("receipt"),
         }
-        with self.store.transaction() as connection:
+        with self._store.transaction() as connection:
             self.receipts.append(
                 {
                     "receipt_id": record["revocation_receipt_id"],
@@ -318,14 +318,14 @@ class AssociativeReminders:
         if not isinstance(session_capability, str) or len(session_capability) > 1024:
             raise NotFoundError("reminder session capability is unavailable")
         token_hash = sha256_text(session_capability)
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT * FROM session_query_capabilities WHERE token_hash=?",
             (token_hash,),
         ).fetchone()
         if row is None:
             raise NotFoundError("reminder session capability is unavailable")
         binding = dict(row)
-        revoked = self.store.connection.execute(
+        revoked = self._store.connection.execute(
             "SELECT 1 FROM session_capability_revocations WHERE token_hash=?",
             (token_hash,),
         ).fetchone()
@@ -392,6 +392,40 @@ class AssociativeReminders:
     def ingest_index(self, manifest: dict[str, Any]) -> dict[str, Any]:
         """Transactionally ingest one complete immutable associative generation."""
 
+        validated = self._validate_index_manifest(manifest)
+        with self._store.transaction() as connection:
+            return self._ingest_validated_index(
+                connection=connection,
+                server_observed_at=timestamp(),
+                **validated,
+            )
+
+    def active_snapshot_binding(self) -> dict[str, Any]:
+        """Return the latest activated snapshot's public embedding binding."""
+
+        row = self._store.connection.execute(
+            "SELECT snapshot.associative_index_snapshot_id,snapshot.snapshot_digest,"
+            "snapshot.embedding_profile_id,profile.model_id "
+            "FROM associative_snapshot_activations AS activation "
+            "JOIN associative_index_snapshots AS snapshot "
+            "ON snapshot.associative_index_snapshot_id="
+            "activation.associative_index_snapshot_id "
+            "JOIN embedding_profiles AS profile "
+            "ON profile.embedding_profile_id=snapshot.embedding_profile_id "
+            "ORDER BY activation.activated_at DESC,"
+            "activation.associative_snapshot_activation_id DESC LIMIT 1"
+        ).fetchone()
+        if row is None:
+            raise NotFoundError("no active associative snapshot")
+        result = dict(row)
+        result["current"] = self._snapshot_status(
+            result["associative_index_snapshot_id"]
+        )["current"]
+        return result
+
+    def _validate_index_manifest(self, manifest: dict[str, Any]) -> dict[str, Any]:
+        """Normalize a manifest before its estate-bound writer transaction."""
+
         manifest = _exact_fields(
             manifest,
             required=frozenset(
@@ -424,21 +458,17 @@ class AssociativeReminders:
         vectors = self._validate_vectors(
             manifest["vectors"], dimensions=embedding_profile["dimensions"]
         )
-
-        with self.store.transaction() as connection:
-            return self._ingest_validated_index(
-                connection=connection,
-                server_observed_at=timestamp(),
-                lexical_profile=lexical_profile,
-                embedding_profile=embedding_profile,
-                clusters=clusters,
-                cards=cards,
-                views=views,
-                relations=relations,
-                snapshot=snapshot,
-                vectors=vectors,
-                activation=activation,
-            )
+        return {
+            "lexical_profile": lexical_profile,
+            "embedding_profile": embedding_profile,
+            "clusters": clusters,
+            "cards": cards,
+            "views": views,
+            "relations": relations,
+            "snapshot": snapshot,
+            "vectors": vectors,
+            "activation": activation,
+        }
 
     def _ingest_validated_index(
         self,
@@ -1194,6 +1224,18 @@ class AssociativeReminders:
             raise ValidationError(
                 "a snapshot must contain exactly one card revision per capability"
             )
+        estate_capability_ids = {
+            row["capability_id"]
+            for row in self._store.connection.execute(
+                "SELECT capability_id FROM capabilities"
+            ).fetchall()
+        }
+        if capability_ids - estate_capability_ids:
+            raise ValidationError("card capability is absent from the estate")
+        if capability_ids != estate_capability_ids:
+            raise ValidationError(
+                "a snapshot must cover the complete capability estate"
+            )
         if any(card["cluster_id"] not in cluster_ids for card in cards):
             raise ValidationError("card references a cluster outside the manifest")
         if any(
@@ -1263,7 +1305,7 @@ class AssociativeReminders:
         elif vector_view_ids:
             raise ValidationError("unavailable vector snapshots must contain no vectors")
 
-        connection = self.store.connection
+        connection = self._store.connection
         for source_record in [*clusters, *cards, *relations]:
             source = connection.execute(
                 "SELECT digest FROM sources WHERE source_id=?",
@@ -1304,9 +1346,7 @@ class AssociativeReminders:
 
         estate_digest = sha256_text(
             canonical_json(
-                self._capability_surface_manifest(
-                    card["capability_id"] for card in cards
-                )
+                self._capability_surface_manifest(estate_capability_ids)
             )
         )
         source_digest = sha256_text(
@@ -1386,7 +1426,7 @@ class AssociativeReminders:
                 activation["activated_at"], "activated_at"
             ) <= parse_timestamp(latest["activated_at"], "prior activated_at"):
                 raise ConflictError("snapshot activation time must advance the profile chain")
-            global_latest = self.store.connection.execute(
+            global_latest = self._store.connection.execute(
                 "SELECT associative_index_snapshot_id,activated_at "
                 "FROM associative_snapshot_activations "
                 "ORDER BY activated_at DESC,associative_snapshot_activation_id DESC "
@@ -1406,7 +1446,7 @@ class AssociativeReminders:
             if coverage_snapshot_id is not None:
                 prior_capabilities = {
                     row["capability_id"]
-                    for row in self.store.connection.execute(
+                    for row in self._store.connection.execute(
                         "SELECT card.capability_id "
                         "FROM associative_snapshot_cards AS membership "
                         "JOIN capability_cards AS card "
@@ -1421,7 +1461,7 @@ class AssociativeReminders:
                         "snapshot activation must be a complete successor generation"
                     )
             for card in cards:
-                activated_revision = self.store.connection.execute(
+                activated_revision = self._store.connection.execute(
                     "SELECT MAX(candidate.revision) "
                     "FROM capability_cards AS candidate "
                     "JOIN associative_snapshot_cards AS membership "
@@ -1446,7 +1486,7 @@ class AssociativeReminders:
         if not identifiers:
             return []
         placeholders = ",".join("?" for _ in identifiers)
-        capabilities = self.store.connection.execute(
+        capabilities = self._store.connection.execute(
             "SELECT capability_id,handle,exposure_policy,owner_agent_instance_id "
             "FROM capabilities WHERE capability_id IN ("
             + placeholders
@@ -1456,7 +1496,7 @@ class AssociativeReminders:
         if len(capabilities) != len(identifiers):
             raise ValidationError("card capability is absent from the estate")
         aliases: dict[str, list[dict[str, str]]] = defaultdict(list)
-        for row in self.store.connection.execute(
+        for row in self._store.connection.execute(
             "SELECT capability_id,namespace,normalized_alias,display_alias "
             "FROM capability_aliases WHERE capability_id IN ("
             + placeholders
@@ -1496,7 +1536,7 @@ class AssociativeReminders:
         key_fields: tuple[str, ...],
     ) -> None:
         where = " AND ".join(f"{field}=?" for field in key_fields)
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             f"SELECT * FROM {table} WHERE {where}",
             tuple(record[field] for field in key_fields),
         ).fetchone()
@@ -1574,7 +1614,7 @@ class AssociativeReminders:
             "associative_view_vectors": len(vectors),
         }
         for table, expected_count in count_expectations.items():
-            actual_count = self.store.connection.execute(
+            actual_count = self._store.connection.execute(
                 f"SELECT COUNT(*) FROM {table} "
                 "WHERE associative_index_snapshot_id=?",
                 (snapshot_id,),
@@ -1583,7 +1623,7 @@ class AssociativeReminders:
                 raise ConflictError(f"associative replay has extra rows in {table}")
         card_ids = [card["capability_card_id"] for card in cards]
         placeholders = ",".join("?" for _ in card_ids)
-        stored_view_count = self.store.connection.execute(
+        stored_view_count = self._store.connection.execute(
             "SELECT COUNT(*) FROM capability_card_views WHERE capability_card_id IN ("
             + placeholders
             + ")",
@@ -1592,7 +1632,7 @@ class AssociativeReminders:
         if stored_view_count != len(views):
             raise ConflictError("associative replay has extra card views")
 
-        activation_rows = self.store.connection.execute(
+        activation_rows = self._store.connection.execute(
             "SELECT associative_snapshot_activation_id,"
             "prior_associative_index_snapshot_id,activated_at "
             "FROM associative_snapshot_activations "
@@ -1606,7 +1646,7 @@ class AssociativeReminders:
 
         capability_handles = {
             row["capability_id"]: row["handle"]
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT capability_id,handle FROM capabilities WHERE capability_id IN ("
                 + ",".join("?" for _ in cards)
                 + ")",
@@ -1639,7 +1679,7 @@ class AssociativeReminders:
                 row["handle"],
                 row["content"],
             )
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT capability_card_view_id,capability_id,handle,content "
                 "FROM capability_card_fts WHERE associative_index_snapshot_id=?",
                 (snapshot_id,),
@@ -1651,7 +1691,7 @@ class AssociativeReminders:
     def _latest_activation_for_profiles(
         self, embedding_profile_id: str, lexical_profile_id: str
     ) -> dict[str, Any] | None:
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT activation.* FROM associative_snapshot_activations AS activation "
             "JOIN associative_index_snapshots AS snapshot "
             "ON snapshot.associative_index_snapshot_id="
@@ -1687,7 +1727,7 @@ class AssociativeReminders:
             placeholders = ",".join("?" for _ in visible_card_ids)
             card_filter = " AND membership.capability_card_id IN (" + placeholders + ")"
             parameters.extend(sorted(visible_card_ids))
-        card_rows = self.store.connection.execute(
+        card_rows = self._store.connection.execute(
             "SELECT membership.source_digest AS membership_digest,"
             "card.source_digest AS object_digest,source.digest AS current_digest "
             "FROM associative_snapshot_cards AS membership "
@@ -1711,7 +1751,7 @@ class AssociativeReminders:
             ordered_ids = sorted(visible_card_ids)
             parameters.extend(ordered_ids)
             parameters.extend(ordered_ids)
-        relation_rows = self.store.connection.execute(
+        relation_rows = self._store.connection.execute(
             "SELECT relation.source_digest AS membership_digest,"
             "relation.source_digest AS object_digest,source.digest AS current_digest "
             "FROM associative_snapshot_relations AS membership "
@@ -1727,7 +1767,7 @@ class AssociativeReminders:
             placeholders = ",".join("?" for _ in visible_card_ids)
             parameters.extend(sorted(visible_card_ids))
             card_filter = " AND membership.capability_card_id IN (" + placeholders + ")"
-        cluster_rows = self.store.connection.execute(
+        cluster_rows = self._store.connection.execute(
             "SELECT cluster.source_digest AS membership_digest,"
             "cluster.source_digest AS object_digest,source.digest AS current_digest "
             "FROM associative_snapshot_cards AS membership "
@@ -1761,7 +1801,7 @@ class AssociativeReminders:
                 + ")"
             )
             parameters.extend(sorted(visible_card_ids))
-        newer = self.store.connection.execute(
+        newer = self._store.connection.execute(
             "SELECT 1 "
             "FROM associative_snapshot_cards AS current_membership "
             "JOIN capability_cards AS current_card "
@@ -1782,7 +1822,7 @@ class AssociativeReminders:
         return newer is None
 
     def _snapshot_status(self, snapshot_id: str) -> dict[str, Any]:
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT snapshot.*, profile.qualification_state "
             "FROM associative_index_snapshots AS snapshot "
             "JOIN embedding_profiles AS profile "
@@ -1808,17 +1848,17 @@ class AssociativeReminders:
             "source_current": source_current,
             "card_revisions_current": card_revisions_current,
             "counts": {
-                "cards": self.store.connection.execute(
+                "cards": self._store.connection.execute(
                     "SELECT COUNT(*) FROM associative_snapshot_cards "
                     "WHERE associative_index_snapshot_id=?",
                     (snapshot_id,),
                 ).fetchone()[0],
-                "relations": self.store.connection.execute(
+                "relations": self._store.connection.execute(
                     "SELECT COUNT(*) FROM associative_snapshot_relations "
                     "WHERE associative_index_snapshot_id=?",
                     (snapshot_id,),
                 ).fetchone()[0],
-                "vectors": self.store.connection.execute(
+                "vectors": self._store.connection.execute(
                     "SELECT COUNT(*) FROM associative_view_vectors "
                     "WHERE associative_index_snapshot_id=?",
                     (snapshot_id,),
@@ -1840,7 +1880,7 @@ class AssociativeReminders:
         placeholders = ",".join("?" for _ in card_ids)
         clusters = [
             (row["cluster_id"], row["cluster_digest"])
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT DISTINCT cluster.cluster_id,cluster.cluster_digest "
                 "FROM associative_snapshot_cards AS membership "
                 "JOIN capability_cards AS card "
@@ -1856,7 +1896,7 @@ class AssociativeReminders:
         relation_parameters = (snapshot_id, *card_ids, *card_ids)
         relations = [
             (row["capability_relation_id"], row["relation_digest"])
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT relation.capability_relation_id,relation.relation_digest "
                 "FROM associative_snapshot_relations AS membership "
                 "JOIN capability_relations AS relation "
@@ -1872,7 +1912,7 @@ class AssociativeReminders:
         ]
         vectors = [
             (row["capability_card_view_id"], row["vector_digest"])
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT vector.capability_card_view_id,vector.vector_digest "
                 "FROM associative_view_vectors AS vector "
                 "JOIN capability_card_views AS view "
@@ -1907,7 +1947,7 @@ class AssociativeReminders:
         lexical_profile_id: str,
         binding: dict[str, Any],
     ) -> tuple[str, list[dict[str, Any]]] | None:
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT activation.associative_index_snapshot_id "
             "FROM associative_snapshot_activations AS activation "
             "JOIN associative_index_snapshots AS snapshot "
@@ -1931,7 +1971,7 @@ class AssociativeReminders:
         binding: dict[str, Any],
         visible_cards: list[dict[str, Any]],
     ) -> dict[str, Any]:
-        row = self.store.connection.execute(
+        row = self._store.connection.execute(
             "SELECT snapshot.*, profile.qualification_state "
             "FROM associative_index_snapshots AS snapshot "
             "JOIN embedding_profiles AS profile "
@@ -1981,11 +2021,11 @@ class AssociativeReminders:
         )
         if not status["current"]:
             raise ConflictError("associative snapshot is not current")
-        profile = self.store.connection.execute(
+        profile = self._store.connection.execute(
             "SELECT * FROM embedding_profiles WHERE embedding_profile_id=?",
             (status["embedding_profile_id"],),
         ).fetchone()
-        lexical = self.store.connection.execute(
+        lexical = self._store.connection.execute(
             "SELECT * FROM lexical_profiles WHERE lexical_profile_id=?",
             (status["lexical_profile_id"],),
         ).fetchone()
@@ -2000,7 +2040,7 @@ class AssociativeReminders:
         self, snapshot_id: str, binding: dict[str, Any]
     ) -> list[dict[str, Any]]:
         allow_private = binding["exposure_scope"] == "public_and_agent_private"
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT card.*, capability.handle, cluster.handle AS cluster_handle, "
             "cluster.name AS cluster_name "
             "FROM associative_snapshot_cards AS membership "
@@ -2315,7 +2355,7 @@ class AssociativeReminders:
         if not cards:
             return result
         placeholders = ",".join("?" for _ in cards)
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT * FROM capability_card_views WHERE capability_card_id IN ("
             + placeholders
             + ") ORDER BY capability_card_id,view_kind,capability_card_view_id",
@@ -2333,7 +2373,7 @@ class AssociativeReminders:
         if not capability_ids:
             return result
         placeholders = ",".join("?" for _ in capability_ids)
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT capability_id,normalized_alias,display_alias FROM capability_aliases "
             "WHERE capability_id IN ("
             + placeholders
@@ -2352,7 +2392,7 @@ class AssociativeReminders:
         if not cards:
             return []
         placeholders = ",".join("?" for _ in cards)
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT view.capability_card_id,view.view_kind,vector.vector_float32_le "
             "FROM associative_view_vectors AS vector "
             "JOIN capability_card_views AS view "
@@ -2400,7 +2440,7 @@ class AssociativeReminders:
         if not direct_ids:
             return
         placeholders = ",".join("?" for _ in direct_ids)
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT relation.* FROM associative_snapshot_relations AS membership "
             "JOIN capability_relations AS relation "
             "ON relation.capability_relation_id=membership.capability_relation_id "
@@ -2429,7 +2469,7 @@ class AssociativeReminders:
     def _lifecycle_for_capability(
         self, capability_id: str, binding: dict[str, Any]
     ) -> list[dict[str, Any]]:
-        rows = self.store.connection.execute(
+        rows = self._store.connection.execute(
             "SELECT axis,state,distribution_id,agent_instance_id,host_session_id,"
             "observed_at,expires_at,source_reference "
             "FROM lifecycle_observations WHERE capability_id=? AND ("
@@ -2584,7 +2624,7 @@ class AssociativeReminders:
             raise NotFoundError("reminder card is unavailable")
         views = [
             dict(row)
-            for row in self.store.connection.execute(
+            for row in self._store.connection.execute(
                 "SELECT capability_card_view_id,view_kind,content,content_digest,created_at "
                 "FROM capability_card_views WHERE capability_card_id=? "
                 "ORDER BY view_kind,capability_card_view_id",

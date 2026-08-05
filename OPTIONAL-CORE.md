@@ -1,9 +1,10 @@
 # Optional MIND Core
 
 MIND Core `0.2.0` is a persona-neutral local Python runtime for capability
-metadata, lifecycle evidence, associative capability cards, and explicit H0
-queries. It is included in the release archive as a wheel. The Codex plugin
-does not install, start, or depend on it.
+metadata, lifecycle evidence, associative capability cards, explicit H0 queries,
+and contextual association through its direct Python library and CLI. It is
+included in the release archive as a wheel. The Codex plugin does not install
+Core, create its database, or download its embedding model.
 
 ## What Core can do
 
@@ -15,11 +16,18 @@ does not install, start, or depend on it.
 - compile exact-radius reminder fields, with exhaustive lexical matching for
   caller-supplied hints and typed one-hop relations;
 - return canonical and compact representations with identical membership;
-- serve a framed, query-only stdio protocol.
+- serve a framed, query-only stdio protocol for direct local integrations.
 
-Core does not crawl your computer, infer a capability estate from filenames,
-retain raw task text, generate embeddings, select a tool, activate a Faculty,
-or intercept Codex turns.
+Core does not silently crawl your computer, infer capability meaning from
+filenames, retain raw task text, select a tool, activate a Faculty, or download
+an embedding model. Public MIND includes safe scanners and deterministic
+compilers for explicitly supplied sources, but population still requires
+content review and an administrator-controlled generation build.
+
+The public package contains the reminder mechanisms and sixteen-Faculty
+baseline. It does not include Collaborative Dynamics' private local capability collection. See
+[Capability reminders](CAPABILITY-REMINDERS.md) for the complete population and
+contextual-association model.
 
 ## Install from the release archive
 
@@ -44,17 +52,31 @@ a package index.
 
 ## Initialize and inspect a database
 
-Choose a path you own. Core creates the database if it is absent. On Windows:
+Choose a path you own. The prompt-submit hook and bundled local query tools look
+for `~/.codex/data/stores/mind_core.sqlite` unless their environment sets
+`MIND_CORE_DATABASE`. The following commands initialize that shared default so
+the plugin hook and command-line tools use the same database.
+
+On Windows PowerShell:
 
 ```powershell
-.\.venv\Scripts\python.exe -m mind_core init --database .\mind-data\mind-core.sqlite3
+$MindData = Join-Path $env:USERPROFILE ".codex\data\stores"
+New-Item -ItemType Directory -Force $MindData | Out-Null
+$MindDatabase = Join-Path $MindData "mind_core.sqlite"
+.\.venv\Scripts\python.exe -m mind_core init --database $MindDatabase
 ```
 
 On macOS or Linux:
 
 ```sh
-.venv/bin/python -m mind_core init --database ./mind-data/mind-core.sqlite3
+MIND_DATABASE="$HOME/.codex/data/stores/mind_core.sqlite"
+mkdir -p "$(dirname "$MIND_DATABASE")"
+.venv/bin/python -m mind_core init --database "$MIND_DATABASE"
 ```
+
+If you deliberately use another path, configure `MIND_CORE_DATABASE` for the
+hook and any local query process before launching Codex. A database created only
+at `./mind-data/` is valid for direct CLI use but is not the plugin default.
 
 Expected result: one JSON object containing, among other fields,
 `"runtime_version":"0.2.0"`, `"schema_version":2`,
@@ -64,13 +86,13 @@ Expected result: one JSON object containing, among other fields,
 Read the same state later. On Windows:
 
 ```powershell
-.\.venv\Scripts\python.exe -m mind_core status --database .\mind-data\mind-core.sqlite3
+.\.venv\Scripts\python.exe -m mind_core status --database $MindDatabase
 ```
 
 On macOS or Linux:
 
 ```sh
-.venv/bin/python -m mind_core status --database ./mind-data/mind-core.sqlite3
+.venv/bin/python -m mind_core status --database "$MIND_DATABASE"
 ```
 
 Completion proof: `status` exits successfully and reports the same Core
@@ -90,14 +112,14 @@ ollama pull qwen3-embedding:0.6b
 Bootstrap and activate the complete generation:
 
 ```powershell
-.\.venv\Scripts\python.exe -m mind_core bootstrap --database .\mind-data\mind-core.sqlite3 --manifest .\skills\augment-of-mind\assets\associative-bootstrap.json
-.\.venv\Scripts\python.exe -m mind_core index --database .\mind-data\mind-core.sqlite3 --manifest .\skills\augment-of-mind\assets\associative-index-qwen3-embedding-0.6b.json
+.\.venv\Scripts\python.exe -m mind_core bootstrap --database $MindDatabase --manifest .\skills\augment-of-mind\assets\associative-bootstrap.json
+.\.venv\Scripts\python.exe -m mind_core index --database $MindDatabase --manifest .\skills\augment-of-mind\assets\associative-index-qwen3-embedding-0.6b.json
 ```
 
 Compile one explicit H0 Arm's Reach field:
 
 ```powershell
-.\.venv\Scripts\python.exe .\scripts\query_associative_field.py "The release crashed midway; recover the prior decisions and unfinished checks." --database .\mind-data\mind-core.sqlite3 --field-only
+.\.venv\Scripts\python.exe .\scripts\query_associative_field.py "The release crashed midway; recover the prior decisions and unfinished checks." --database $MindDatabase --field-only
 ```
 
 Expected result: the field names nearby handles without scores or rank. The
@@ -122,14 +144,16 @@ console script is equivalent when it is on your shell's path.
 | `status` | Report versions, mode, instance identity, and table counts. |
 | `bootstrap` | Ingest explicit Phase 1 metadata from a JSON manifest. |
 | `index` | Ingest one complete associative-index generation. |
+| `activate-estate-generation` | Atomically admit a complete estate and activate its complete associative successor. |
 | `issue-session-capability` | Issue one scoped opaque query capability. |
 | `revoke-session-capability` | Revoke an issued query capability. |
 | `query` | Execute one JSON request file through the H0 service. |
 | `serve` | Run the length-prefixed query-only stdio service. |
 
-The manifest and request schemas are strict. The included generation covers the
-sixteen MIND Faculties only. It does not inventory or author cards for third-party
-capabilities, and it does not bundle embedding-model weights.
+The manifest and request schemas are strict. The included baseline generation
+covers the sixteen MIND Faculties. The public layer can build a different
+operator-reviewed estate, but no Collaborative Dynamics local capability
+records or embedding-model weights are bundled.
 
 ## Safe stopping and removal
 

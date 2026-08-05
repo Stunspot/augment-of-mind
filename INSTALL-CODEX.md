@@ -1,100 +1,23 @@
-# Install MIND for Codex
+# Manual Codex installation for MIND
 
-Goal: make MIND `1.0.0` discoverable as an installed Codex plugin.
+The normal path is to give the package to Codex and ask it to install and enable MIND. Use this page when the harness cannot install an attached package or when you want to perform the steps yourself.
 
-Audience: a Codex or ChatGPT desktop user who can configure a plugin
-marketplace.
+## Requirements
 
-## Before you begin
+You need Codex with plugin support, PowerShell, Python 3.11 or newer, and the extracted MIND plugin folder.
 
-- Use Codex in the ChatGPT desktop app or Codex CLI. Plugins are not currently
-  available in the Codex IDE extension.
-- You need Git for the online route, or the release ZIP and its `.sha256`
-  sidecar for the offline route.
-- Python 3.11 or newer is required only for the extracted-tree verifier and
-  optional MIND Core. It is not required to run the skills-only plugin.
-- Installation changes only your local Codex plugin configuration and cache.
-  It does not install MIND Core.
+## Install
 
-## Install from GitHub
-
-After release `v1.0.0` is published, add its pinned marketplace source:
+From the MIND plugin folder:
 
 ```powershell
-codex plugin marketplace add Stunspot/augment-of-mind --ref v1.0.0
+.\install.ps1
 ```
 
-Expected result: Codex records the `collaborative-dynamics-mind` marketplace without
-an error.
+The installer adds the local MIND marketplace, enables the plugin, creates a new local Core database, activates the included reminder map, and reads the result back. It refuses to replace another MIND selector or overwrite an existing database.
 
-Then:
+After installation, open `/hooks`, inspect the exact MIND prompt-submit hook, and decide whether to trust it. Then start a new task so Codex can discover the plugin.
 
-1. Open Codex CLI and enter `/plugins`, or open **Plugins** in the ChatGPT
-   desktop app while using Codex.
-2. Select the **Collaborative Dynamics: MIND** marketplace.
-3. Open **MIND by Collaborative Dynamics** and install it.
-4. Confirm that it appears in the installed list and is enabled.
-5. Start a new task. Installed skills are loaded at the new-task boundary.
+For a non-default empty database location, pass `-DatabasePath` and set `MIND_CORE_DATABASE` to the same path for the hook and direct local query runtime.
 
-Completion proof: the new task exposes `$augment-of-mind` and the Faculty
-skills, and the [quick-start request](QUICK-START.md) produces a response.
-
-## Install from the release ZIP
-
-1. Download `augment-of-mind-v1.0.0.zip` and its `.sha256` sidecar from the
-   same GitHub release.
-2. Verify the ZIP's SHA-256 value against the sidecar. On Windows:
-
-   ```powershell
-   Get-FileHash .\augment-of-mind-v1.0.0.zip -Algorithm SHA256
-   ```
-
-   On macOS use `shasum -a 256 augment-of-mind-v1.0.0.zip`; on Linux use
-   `sha256sum augment-of-mind-v1.0.0.zip`. The reported value must exactly
-   match the value in the sidecar.
-3. Extract it. The result must contain one directory named
-   `augment-of-mind-v1.0.0`.
-4. If Python 3.11 or newer is available, run the stronger extracted-tree
-   verifier from that directory:
-
-   ```powershell
-   python .\verify-release.py .
-   ```
-
-   This check validates every packaged path and component hash. A skills-only
-   user without Python can still install the ZIP whose archive hash passed the
-   previous step.
-5. Add the extracted directory as a local marketplace:
-
-   ```powershell
-   codex plugin marketplace add C:\path\to\augment-of-mind-v1.0.0
-   ```
-
-6. Install MIND from the **Collaborative Dynamics: MIND** marketplace using the same
-   plugin-browser steps, then start a new task.
-
-## Update or remove
-
-To refresh configured Git-backed marketplaces:
-
-```powershell
-codex plugin marketplace upgrade collaborative-dynamics-mind
-```
-
-Use the plugin browser to uninstall or disable MIND. To stop tracking its
-marketplace as well:
-
-```powershell
-codex plugin marketplace remove collaborative-dynamics-mind
-```
-
-Removing the plugin does not delete an optional MIND Core database or Python
-environment. Those are separately owned local files.
-
-## If the result differs
-
-Do not hand-edit `config.toml` as the first move. Preserve the exact command
-output, run `codex plugin marketplace list`, and follow
-[Troubleshooting](TROUBLESHOOTING.md#the-marketplace-does-not-appear).
-
-Official host reference: [OpenAI plugin packaging and local marketplaces](https://developers.openai.com/plugins/build/plugins).
+If installation stops, preserve the complete error and continue with [Troubleshooting](TROUBLESHOOTING.md).
