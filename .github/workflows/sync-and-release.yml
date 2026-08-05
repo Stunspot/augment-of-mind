@@ -38,6 +38,10 @@ jobs:
           find . -mindepth 1 -maxdepth 1 \
             ! -name .git \
             ! -name .github \
+            ! -name .editorconfig \
+            ! -name .gitattributes \
+            ! -name .gitignore \
+            ! -name docs \
             ! -name _flagship \
             -exec rm -rf {} +
           cp -a "$source"/. .
@@ -47,6 +51,10 @@ jobs:
 
           source = Path('_flagship/plugins/augment-of-mind')
           target = Path('.')
+          preserved = {
+              '.git', '.github', '.editorconfig', '.gitattributes', '.gitignore',
+              'docs', '_flagship',
+          }
 
           def inventory(root: Path, excluded_first: set[str] = set()) -> dict[str, str]:
               result = {}
@@ -62,7 +70,7 @@ jobs:
               return result
 
           expected = inventory(source)
-          observed = inventory(target, {'.git', '.github', '_flagship'})
+          observed = inventory(target, preserved)
           if observed != expected:
               missing = sorted(set(expected) - set(observed))
               extra = sorted(set(observed) - set(expected))
