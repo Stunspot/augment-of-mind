@@ -1,0 +1,1 @@
+Temporary final synchronization trigger. The verified workflow preserves Pages and repository policy files, replaces the installable package source from the flagship repository, removes this marker, builds, verifies, and only then pushes the synchronized commit.
