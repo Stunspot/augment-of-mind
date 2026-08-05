@@ -1,22 +1,14 @@
 # MIND project site
 
-This directory is the static GitHub Pages source for **MIND by Collaborative
-Dynamics**.
+This directory is the static GitHub Pages source for **MIND by Collaborative Dynamics 2.1.1**.
 
-- `index.html` contains the complete install → first value → normal use →
-  recovery → download journey.
-- `style.css` contains responsive, keyboard-visible, reduced-motion, and
-  forced-colors-aware presentation rules.
-- `assets/mind-icon-1024.png` is the square product icon (1:1).
-- `assets/mind-hero.png` is the landing hero (1600×900, 16:9).
-- `assets/mind-capability-card-1080x1350.png` is the associative-reminder card
-  (1080×1350, 4:5).
+- `index.html` contains the install, capability, reminder, Faculty, verification, recovery, privacy, and download journey.
+- `style.css` contains responsive, keyboard-visible, reduced-motion, and forced-colors-aware presentation rules.
+- `assets/mind-icon-1024.png` is the square product icon.
+- `assets/mind-hero.png` is the landing hero.
+- `assets/mind-capability-card-1080x1350.png` is the capability-reminder card.
 - `.nojekyll` tells GitHub Pages to serve the files directly.
 
-The site uses no JavaScript, framework, webfont download, analytics, tracking,
-or coded SVG illustration. Claims distinguish plugin `1.0.0`, optional Core
-`0.2.0`, package evidence, host behavior, and the H0/H1 boundary.
+The site uses no JavaScript, framework, webfont download, analytics, or tracking. Its claims distinguish MIND plugin `2.1.1`, Core `0.2.0`, the twenty-capability standalone reminder estate, deterministic package verification, host discovery, hook trust, reminder delivery, and model behavior.
 
-Every customer-facing link and all three original visual assets must be
-rechecked after the Pages deployment. Static source inspection does not prove a
-live site.
+Every customer-facing link and all visual assets must be rechecked after Pages deployment. Static source inspection does not prove a live deployment.
