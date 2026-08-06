@@ -1,0 +1,1 @@
+Temporary owner-equivalent verification trigger for the synchronized MIND 2.1.2 branch. Remove before merge.
