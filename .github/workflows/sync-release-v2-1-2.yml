@@ -3,6 +3,10 @@ name: Synchronize and release standalone MIND 2.1.2
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-release-v2-1-2.yml'
   workflow_dispatch:
 
 permissions:
@@ -174,7 +178,7 @@ jobs:
             /tmp/mind-build.json
 
   publish-v2-1-2:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
