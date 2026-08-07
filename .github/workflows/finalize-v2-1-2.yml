@@ -1,0 +1,209 @@
+name: Finalize standalone MIND 2.1.2 release
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  finalize:
+    if: github.head_ref == 'agent/cleanup-mind-v2-1-2'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Check out cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify public release and evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo='Stunspot/augment-of-mind'
+          tag='v2.1.2'
+          work='/tmp/mind-v2.1.2-finalize'
+          assets="$work/assets"
+          extracted="$work/extracted"
+          rm -rf "$work"
+          mkdir -p "$assets" "$extracted"
+
+          gh api "repos/$repo/releases/tags/$tag" > "$work/release.json"
+          gh api "repos/$repo/releases/latest" > "$work/latest.json"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          work = Path('/tmp/mind-v2.1.2-finalize')
+          release = json.loads((work / 'release.json').read_text(encoding='utf-8'))
+          latest = json.loads((work / 'latest.json').read_text(encoding='utf-8'))
+          required = {
+              'augment-of-mind-v2.1.2.zip',
+              'augment-of-mind-v2.1.2.zip.sha256',
+              'augment-of-mind-v2.1.2.build-receipt.json',
+          }
+          observed = {asset['name'] for asset in release.get('assets', [])}
+          if release.get('tag_name') != 'v2.1.2':
+              raise SystemExit(f"wrong release tag: {release.get('tag_name')!r}")
+          if release.get('draft') or release.get('prerelease'):
+              raise SystemExit('v2.1.2 is not a normal public release')
+          if latest.get('tag_name') != 'v2.1.2':
+              raise SystemExit(f"latest public release is {latest.get('tag_name')!r}")
+          missing = sorted(required - observed)
+          if missing:
+              raise SystemExit(f'missing release assets: {missing}')
+          PY
+
+          gh release download "$tag" --repo "$repo" --dir "$assets"
+          cd "$assets"
+          sha256sum -c augment-of-mind-v2.1.2.zip.sha256
+          cd "$GITHUB_WORKSPACE"
+
+          python -m zipfile -e \
+            "$assets/augment-of-mind-v2.1.2.zip" \
+            "$extracted"
+          python -X utf8 scripts/verify_release.py \
+            "$extracted/augment-of-mind-v2.1.2" \
+            > "$work/archive-verification.json"
+
+          gh run list \
+            --repo "$repo" \
+            --workflow sync-release-v2-1-2.yml \
+            --branch main \
+            --event push \
+            --limit 20 \
+            --json databaseId,conclusion,headSha,status,createdAt,updatedAt,url \
+            > "$work/runs.json"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          work = Path('/tmp/mind-v2.1.2-finalize')
+          runs = json.loads((work / 'runs.json').read_text(encoding='utf-8'))
+          successful = [
+              run for run in runs
+              if run.get('conclusion') == 'success' and run.get('status') == 'completed'
+          ]
+          if not successful:
+              raise SystemExit('no successful main-branch publisher run found')
+          (work / 'run.json').write_text(
+              json.dumps(successful[0], indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+          run_id="$(python -c 'import json; print(json.load(open("/tmp/mind-v2.1.2-finalize/run.json"))["databaseId"])')"
+          gh api "repos/$repo/actions/runs/$run_id/jobs" > "$work/jobs.json"
+          gh api "repos/$repo/actions/runs/$run_id/artifacts" > "$work/artifacts.json"
+
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          work = Path('/tmp/mind-v2.1.2-finalize')
+          assets = work / 'assets'
+          release = json.loads((work / 'release.json').read_text(encoding='utf-8'))
+          receipt = json.loads(
+              (assets / 'augment-of-mind-v2.1.2.build-receipt.json').read_text(encoding='utf-8')
+          )
+          verification = json.loads((work / 'archive-verification.json').read_text(encoding='utf-8'))
+          run = json.loads((work / 'run.json').read_text(encoding='utf-8'))
+          jobs = json.loads((work / 'jobs.json').read_text(encoding='utf-8')).get('jobs', [])
+          artifacts = json.loads((work / 'artifacts.json').read_text(encoding='utf-8')).get('artifacts', [])
+
+          archive = assets / 'augment-of-mind-v2.1.2.zip'
+          archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+          declared_sha = receipt['archive']['sha256']
+          if archive_sha != declared_sha:
+              raise SystemExit('downloaded archive disagrees with build receipt')
+          if not verification.get('ok'):
+              raise SystemExit('downloaded archive verifier did not pass')
+
+          publish_jobs = [job for job in jobs if job.get('name') == 'publish-v2-1-2']
+          if not publish_jobs or publish_jobs[0].get('conclusion') != 'success':
+              raise SystemExit('publisher job did not finish successfully')
+          evidence = [
+              artifact for artifact in artifacts
+              if artifact.get('name') == 'published-augment-of-mind-v2.1.2'
+          ]
+          if not evidence or evidence[0].get('expired'):
+              raise SystemExit('publisher evidence artifact is missing or expired')
+
+          release_assets = {asset['name']: asset for asset in release.get('assets', [])}
+          lines = [
+              '# MIND 2.1.2 public release verification',
+              '',
+              'The public `v2.1.2` release was rebuilt and verified from synchronized standalone `main` after exact installable-source parity was established with the MIND component in Nova + MIND Free `v2.0.4`.',
+              '',
+              '## Published assets',
+              '',
+          ]
+          for name in (
+              'augment-of-mind-v2.1.2.zip',
+              'augment-of-mind-v2.1.2.zip.sha256',
+              'augment-of-mind-v2.1.2.build-receipt.json',
+          ):
+              asset = release_assets[name]
+              lines.append(f"- `{name}` — {asset.get('size', 0):,} bytes")
+          lines += [
+              '',
+              '## Verified archive',
+              '',
+              f"- Plugin version: `{receipt['plugin_version']}`",
+              f"- Core version: `{receipt['core_version']}`",
+              f"- Source revision: `{receipt['source_revision']}`",
+              f"- Source-material SHA-256: `{receipt['source_material']['sha256']}`",
+              f"- Archive bytes: `{receipt['archive']['bytes']}`",
+              f"- Archive SHA-256: `{archive_sha}`",
+              f"- Release-tree SHA-256: `{receipt['manifest']['tree_sha256']}`",
+              f"- Customer files: `{receipt['manifest']['file_count']}`",
+              f"- Skills: `{verification['skill_count']}`",
+              f"- Reproducible archive rebuild: `{str(receipt['archive']['reproducible_rebuild']).lower()}`",
+              f"- Reproducible Core wheel rebuild: `{str(receipt['wheel']['reproducible_rebuild']).lower()}`",
+              '',
+              '## Publication evidence',
+              '',
+              f"- Release ID: `{release['id']}`",
+              f"- Published at: `{release['published_at']}`",
+              f"- Publisher workflow run: `{run['databaseId']}`",
+              f"- Publisher source revision: `{run['headSha']}`",
+              f"- Publisher job: `{publish_jobs[0]['id']}`",
+              f"- Evidence artifact ID: `{evidence[0]['id']}`",
+              f"- Evidence artifact digest: `{evidence[0].get('digest', 'not reported')}`",
+              '',
+              'The publisher verified exact flagship parity, rebuilt the package, verified the extracted release tree, published all three assets, and uploaded the matching evidence packet before this record was committed.',
+              '',
+              '## Post-publication cleanup',
+              '',
+              'The version-specific publisher and finalizer workflows were removed after the public release and evidence record were verified.',
+              '',
+          ]
+          destination = Path('verification/public-release-v2.1.2.md')
+          destination.parent.mkdir(parents=True, exist_ok=True)
+          destination.write_text('\n'.join(lines), encoding='utf-8', newline='\n')
+          PY
+
+      - name: Remove one-use workflows and commit evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/sync-release-v2-1-2.yml
+          rm -f .github/workflows/finalize-v2-1-2.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m 'Record MIND 2.1.2 public release evidence'
+          git push origin HEAD:${{ github.head_ref }}
