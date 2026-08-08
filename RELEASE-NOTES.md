@@ -1,5 +1,23 @@
 # MIND release notes
 
+## 2.1.5
+
+Installation now proves Python, Codex state, target-path staging, estate activation, status readback, Ollama reachability, and the required embedding model against a disposable database before it changes plugin state or commits the customer database.
+
+Plugin and marketplace steps remain idempotent. The verified database is moved into place only after those steps succeed, and the temporary estate is removed on failure. A partial Codex mutation can therefore be resumed safely; a failed semantic preflight leaves no plugin installation or target database behind.
+
+## 2.1.4
+
+The model-facing capability-memory preface no longer asks the model to explore candidate capacities or enumerates tools, skills, and MCPs from harness configuration. It now directs contextual assessment and integration with capabilities already present in assembled context, while preserving vector-near recall and memory beyond the current harness.
+
+This removes the prompt pressure that caused one Codex-compatible local model to list the `codex_apps` plugin catalog and attempt unrelated MCP resource reads. MCP-backed and other host capabilities remain usable through the host context that already exposes them; MIND no longer inventories those transports in every turn.
+
+## 2.1.3
+
+Arm's Reach now presents successful semantic recall through one model-facing context preface identifying the returned entries as vector-near, semantically related capabilities surfaced from RAG memory. The preface accommodates tools, skills, and MCPs exposed by the host harness while allowing remembered capabilities with no harness-installed counterpart.
+
+The hook strips the legacy reminder header and no longer injects H0, field, snapshot, mode, or representation telemetry into the model prompt; those observations remain in delivery receipts. Lexical identity cues supplement successful vector retrieval, while unavailable embeddings produce the bounded degraded notice rather than a lexical-only field described as vector-near. The direct `query_associative_field.py --field-only` surface now uses the same context renderer as the Codex hook.
+
 ## 2.1.2
 
 Arm's Reach association now belongs completely to the trusted pre-prompt hook. On every non-empty submitted prompt, the hook semantically associates the prompt and a bounded recent conversation window against the active estate, adds lexical identity cues when present, and injects a non-authoritative advisory field before the model turn.

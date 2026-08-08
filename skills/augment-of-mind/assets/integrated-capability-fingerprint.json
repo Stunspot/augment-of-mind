@@ -1,13 +1,13 @@
 {
   "schema": "augment-of-mind-integrated-capability-fingerprint/v2",
-  "product_version": "2.1.2",
+  "product_version": "2.1.5",
   "capability_count": 20,
   "faculty_count": 16,
   "attached_augment_count": 3,
   "tree_algorithm": "sha256 over skill-relative UTF-8 POSIX path in ordinal exact-case order, one NUL byte, and raw 32-byte file sha256; cache files excluded",
   "tree_self_exclusion": "augment-of-mind excludes assets/integrated-capability-fingerprint.json",
   "aggregate_algorithm": "sha256 over compact UTF-8 JSON serialization of ordered capabilities",
-  "aggregate_sha256": "c0746e46694e30254a7b914216dbd7bca3a99d4b33f1f429ccb48ad10f5020f7",
+  "aggregate_sha256": "3511ece7857129ebc1af86a2c40555ae183e0b848c443e8d393082e03bc10f1d",
   "capabilities": [
     {
       "name": "aesthetic-intelligence",
@@ -39,10 +39,10 @@
     },
     {
       "name": "augment-of-mind",
-      "version": "2.1.2",
+      "version": "2.1.5",
       "integration_mode": "product-integration",
       "tree_file_count": 14,
-      "tree_sha256": "8eb7b7ef2f232a747fb25a0dbe8bf9f7df6642e4d47db488d0dcaee7591d49b5"
+      "tree_sha256": "69b63891ca3a0337b02ec1e57bfacc1fb6e56150165d89654add705960a3c4d1"
     },
     {
       "name": "capability-conductor",
