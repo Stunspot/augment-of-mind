@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 import json
 from pathlib import Path
@@ -12,6 +13,7 @@ from typing import Any
 
 FORMAT = "testforge-metered-verification/v1"
 PROCEED_OUTCOMES = {"PROCEED", "PROCEED_PAID_AUTHORIZED"}
+MAX_SNAPSHOT_AGE = timedelta(minutes=60)
 
 
 class PlanError(ValueError):
@@ -41,18 +43,49 @@ def json_number(value: Decimal) -> int | float:
     return int(value) if value == value.to_integral_value() else float(value)
 
 
-def assess(plan: dict[str, Any]) -> dict[str, Any]:
+def timestamp_field(value: Any, field: str) -> datetime:
+    if not isinstance(value, str) or not value.strip():
+        raise PlanError(f"{field} must be a non-empty ISO 8601 timestamp")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise PlanError(f"{field} must be a valid ISO 8601 timestamp") from error
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise PlanError(f"{field} must include a UTC offset")
+    return parsed.astimezone(timezone.utc)
+
+
+def nonempty_string(value: Any, field: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise PlanError(f"{field} must be a non-empty string")
+    return value.strip()
+
+
+def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, Any]:
     if plan.get("format") != FORMAT:
         raise PlanError(f"format must be {FORMAT}")
-    provider = plan.get("provider")
-    observed_at = plan.get("observed_at")
-    evidence_source = plan.get("evidence_source")
-    if not isinstance(provider, str) or not provider.strip():
-        raise PlanError("provider must be a non-empty string")
-    if not isinstance(observed_at, str) or not observed_at.strip():
-        raise PlanError("observed_at must be a non-empty string")
-    if not isinstance(evidence_source, str) or not evidence_source.strip():
-        raise PlanError("evidence_source must be a non-empty string")
+    provider = nonempty_string(plan.get("provider"), "provider")
+    evidence_source = nonempty_string(plan.get("evidence_source"), "evidence_source")
+    capacity_scope = nonempty_string(plan.get("capacity_billing_scope"), "capacity_billing_scope")
+    execution_scope = nonempty_string(plan.get("execution_billing_scope"), "execution_billing_scope")
+    if capacity_scope != execution_scope:
+        raise PlanError("capacity_billing_scope must exactly match execution_billing_scope")
+
+    observed_at = timestamp_field(plan.get("observed_at"), "observed_at")
+    valid_until = timestamp_field(plan.get("valid_until"), "valid_until")
+    refresh_at = timestamp_field(plan.get("refresh_at"), "refresh_at")
+    evaluated_at = now or datetime.now(timezone.utc)
+    if evaluated_at.tzinfo is None or evaluated_at.utcoffset() is None:
+        raise PlanError("evaluation time must include a UTC offset")
+    evaluated_at = evaluated_at.astimezone(timezone.utc)
+    if valid_until < observed_at or valid_until - observed_at > MAX_SNAPSHOT_AGE:
+        raise PlanError("valid_until must be within 60 minutes after observed_at")
+    if refresh_at < observed_at:
+        raise PlanError("refresh_at cannot precede observed_at")
+    if observed_at > evaluated_at:
+        raise PlanError("capacity snapshot cannot be future-dated")
+    if evaluated_at > valid_until:
+        raise PlanError("capacity snapshot has expired")
 
     capacity_status = plan.get("capacity_status")
     if capacity_status not in {"observed", "unavailable", "unknown"}:
@@ -65,12 +98,10 @@ def assess(plan: dict[str, Any]) -> dict[str, Any]:
     remaining = None if remaining_value is None else decimal_field(remaining_value, "remaining_minutes")
 
     paid_available = plan.get("paid_overage_available")
-    paid_authorized = plan.get("paid_overage_authorized", False)
+    paid_authorization = plan.get("paid_overage_authorization")
     if paid_available is not True and paid_available is not False and paid_available is not None:
         raise PlanError("paid_overage_available must be true, false, or null")
-    if not isinstance(paid_authorized, bool):
-        raise PlanError("paid_overage_authorized must be a boolean")
-    if paid_authorized and paid_available is not True:
+    if paid_authorization is not None and paid_available is not True:
         raise PlanError("paid overage cannot be authorized unless it is available")
 
     planned_runs = plan.get("planned_runs")
@@ -102,6 +133,39 @@ def assess(plan: dict[str, Any]) -> dict[str, Any]:
         run_estimates.append({"name": name, "estimated_minutes": json_number(run_total)})
 
     required_with_reserve = total + reserve
+    paid_minutes_required = Decimal(0)
+    if remaining is not None:
+        included_available_after_reserve = max(remaining - reserve, Decimal(0))
+        paid_minutes_required = max(total - included_available_after_reserve, Decimal(0))
+
+    paid_authorized = False
+    if paid_authorization is not None:
+        if not isinstance(paid_authorization, dict):
+            raise PlanError("paid_overage_authorization must be an object or null")
+        nonempty_string(paid_authorization.get("authorization_id"), "paid_overage_authorization.authorization_id")
+        nonempty_string(paid_authorization.get("authorized_by"), "paid_overage_authorization.authorized_by")
+        authorization_scope = nonempty_string(
+            paid_authorization.get("billing_scope"),
+            "paid_overage_authorization.billing_scope",
+        )
+        if authorization_scope != execution_scope:
+            raise PlanError("paid authorization billing_scope must match execution_billing_scope")
+        authorized_at = timestamp_field(
+            paid_authorization.get("authorized_at"),
+            "paid_overage_authorization.authorized_at",
+        )
+        authorization_valid_until = timestamp_field(
+            paid_authorization.get("valid_until"),
+            "paid_overage_authorization.valid_until",
+        )
+        if authorized_at > evaluated_at or evaluated_at > authorization_valid_until:
+            raise PlanError("paid overage authorization is not currently valid")
+        max_paid_minutes = decimal_field(
+            paid_authorization.get("max_paid_minutes"),
+            "paid_overage_authorization.max_paid_minutes",
+            positive=True,
+        )
+        paid_authorized = max_paid_minutes >= paid_minutes_required
     if capacity_status == "unavailable":
         outcome = "HOLD_PROVIDER_UNAVAILABLE"
     elif capacity_status == "unknown" or remaining is None:
@@ -120,14 +184,18 @@ def assess(plan: dict[str, Any]) -> dict[str, Any]:
     return {
         "format": FORMAT,
         "provider": provider,
-        "observed_at": observed_at,
+        "observed_at": observed_at.isoformat(),
+        "valid_until": valid_until.isoformat(),
         "evidence_source": evidence_source,
-        "refresh_at": plan.get("refresh_at"),
+        "refresh_at": refresh_at.isoformat(),
+        "capacity_billing_scope": capacity_scope,
+        "execution_billing_scope": execution_scope,
         "capacity_status": capacity_status,
         "remaining_minutes": None if remaining is None else json_number(remaining),
         "reserve_minutes": json_number(reserve),
         "estimated_minutes": json_number(total),
         "required_with_reserve_minutes": json_number(required_with_reserve),
+        "paid_minutes_required": json_number(paid_minutes_required),
         "run_estimates": run_estimates,
         "paid_overage_available": paid_available,
         "paid_overage_authorized": paid_authorized,

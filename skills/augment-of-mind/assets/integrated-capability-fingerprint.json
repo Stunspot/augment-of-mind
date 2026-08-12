@@ -7,7 +7,7 @@
   "tree_algorithm": "sha256 over skill-relative UTF-8 POSIX path in ordinal exact-case order, one NUL byte, and raw 32-byte file sha256; cache files excluded",
   "tree_self_exclusion": "augment-of-mind excludes assets/integrated-capability-fingerprint.json",
   "aggregate_algorithm": "sha256 over compact UTF-8 JSON serialization of ordered capabilities",
-  "aggregate_sha256": "d2b34a89e1bf37a66c66a7129361e33bc6a547a6c008b6949468d4f16a243d6f",
+  "aggregate_sha256": "8617f4da08ec1be22804ec0d7590a876a3c2b86de23c1ae08193fef3ac72b7c5",
   "capabilities": [
     {
       "name": "aesthetic-intelligence",
@@ -140,7 +140,7 @@
       "version": "1.1.4",
       "integration_mode": "faculty-suite-exact-copy",
       "tree_file_count": 93,
-      "tree_sha256": "4633d5937bde37a7887e070f11c14ac9ec1e9910f2a68eacca141e74567630e8"
+      "tree_sha256": "0373d1e63d5060a80c8aff9a4df233ef601985036af34ad3a0596a604b9da808"
     },
     {
       "name": "verification-reviewer",
