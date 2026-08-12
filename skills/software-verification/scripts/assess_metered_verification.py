@@ -102,24 +102,21 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
     remaining = None if remaining_value is None else decimal_field(remaining_value, "remaining_minutes")
 
     paid_available = plan.get("paid_overage_available")
-    paid_authorization = plan.get("paid_overage_authorization")
     if paid_available is not True and paid_available is not False and paid_available is not None:
         raise PlanError("paid_overage_available must be true, false, or null")
-    if paid_authorization is not None and paid_available is not True:
-        raise PlanError("paid overage cannot be authorized unless it is available")
+    forbidden_authority_fields = {
+        "paid_overage_authorization",
+        "consumed_authorization_ids",
+    } & plan.keys()
+    if forbidden_authority_fields:
+        raise PlanError(
+            "the assessor cannot accept or grant spend authority; remove: "
+            + ", ".join(sorted(forbidden_authority_fields))
+        )
 
     planned_runs = plan.get("planned_runs")
     if not isinstance(planned_runs, list) or not planned_runs:
         raise PlanError("planned_runs must be a non-empty list")
-    consumed_authorization_ids = plan.get("consumed_authorization_ids")
-    if not isinstance(consumed_authorization_ids, list) or any(
-        not isinstance(value, str) or not value.strip()
-        for value in consumed_authorization_ids
-    ):
-        raise PlanError("consumed_authorization_ids must be a list of non-empty strings")
-    if len(consumed_authorization_ids) != len(set(consumed_authorization_ids)):
-        raise PlanError("consumed_authorization_ids must not contain duplicates")
-
     plan_binding = {
         "format": FORMAT,
         "provider": provider,
@@ -167,61 +164,12 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
         included_available_after_reserve = max(remaining - reserve, Decimal(0))
         paid_minutes_required = max(total - included_available_after_reserve, Decimal(0))
 
-    paid_authorized = False
-    paid_authorization_consumed = False
-    if paid_authorization is not None:
-        if not isinstance(paid_authorization, dict):
-            raise PlanError("paid_overage_authorization must be an object or null")
-        authorization_id = nonempty_string(
-            paid_authorization.get("authorization_id"),
-            "paid_overage_authorization.authorization_id",
-        )
-        nonempty_string(paid_authorization.get("authorized_by"), "paid_overage_authorization.authorized_by")
-        authorization_execution_id = nonempty_string(
-            paid_authorization.get("execution_id"),
-            "paid_overage_authorization.execution_id",
-        )
-        if authorization_execution_id != execution_id:
-            raise PlanError("paid authorization execution_id must match this execution")
-        authorization_plan_sha256 = nonempty_string(
-            paid_authorization.get("plan_sha256"),
-            "paid_overage_authorization.plan_sha256",
-        )
-        if authorization_plan_sha256 != plan_sha256:
-            raise PlanError("paid authorization plan_sha256 must match this exact plan")
-        authorization_scope = nonempty_string(
-            paid_authorization.get("billing_scope"),
-            "paid_overage_authorization.billing_scope",
-        )
-        if authorization_scope != execution_scope:
-            raise PlanError("paid authorization billing_scope must match execution_billing_scope")
-        authorized_at = timestamp_field(
-            paid_authorization.get("authorized_at"),
-            "paid_overage_authorization.authorized_at",
-        )
-        authorization_valid_until = timestamp_field(
-            paid_authorization.get("valid_until"),
-            "paid_overage_authorization.valid_until",
-        )
-        if authorized_at > evaluated_at or evaluated_at > authorization_valid_until:
-            raise PlanError("paid overage authorization is not currently valid")
-        max_paid_minutes = decimal_field(
-            paid_authorization.get("max_paid_minutes"),
-            "paid_overage_authorization.max_paid_minutes",
-            positive=True,
-        )
-        paid_authorized = max_paid_minutes >= paid_minutes_required
-        paid_authorization_consumed = authorization_id in consumed_authorization_ids
     if capacity_status == "unavailable":
         outcome = "HOLD_PROVIDER_UNAVAILABLE"
     elif capacity_status == "unknown" or remaining is None:
         outcome = "HOLD_UNKNOWN"
     elif remaining >= required_with_reserve:
         outcome = "PROCEED"
-    elif paid_available is True and paid_authorized and paid_authorization_consumed:
-        outcome = "AUTHORITY_CONSUMED"
-    elif paid_available is True and paid_authorized:
-        outcome = "PAID_DISPATCH_AUTHORIZED"
     elif paid_available is True:
         outcome = "AUTHORITY_REQUIRED_PAID"
     elif remaining >= total:
@@ -248,11 +196,10 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
         "paid_minutes_required": json_number(paid_minutes_required),
         "run_estimates": run_estimates,
         "paid_overage_available": paid_available,
-        "paid_overage_authorized": paid_authorized,
-        "paid_authorization_consumed": paid_authorization_consumed,
+        "paid_overage_authorized": False,
         "outcome": outcome,
         "automatic_invocation_permitted": outcome in PROCEED_OUTCOMES,
-        "paid_dispatch_permitted": outcome == "PAID_DISPATCH_AUTHORIZED",
+        "paid_dispatch_permitted": False,
     }
 
 

@@ -2,9 +2,9 @@
 
 ## 2.1.6
 
-MIND now carries the canonical TestForge 1.1.6 operator and reviewer. Quota-limited verification requires a fresh, billing-scope-matched capacity record and a complete expanded-run estimate before hosted execution is proposed or invoked. The deterministic assessor counts duplicate triggers, matrices, retries, runner ceilings, and current provider billing multipliers while preserving a human-set reserve.
+MIND now carries the canonical TestForge 1.1.6 operator and reviewer from published TestForge commit `93120abaa39c26a6f0ec494bdff0c7e6f92344cf`. Quota-limited verification requires a fresh, billing-scope-matched capacity record and a complete expanded-run estimate before hosted execution is proposed or invoked. The deterministic assessor counts duplicate triggers, matrices, retries, runner ceilings, and current provider billing multipliers while preserving a human-set reserve.
 
-Unknown, stale, post-refresh, insufficient, reserve-consuming, provider-refused, and unauthorized paid execution is held without launching a probe job. Any paid exception is one-shot and bound to the exact execution, plan digest, billing scope, expiry, and maximum paid amount. TestForge's canonical and MIND-integrated skill trees are synchronized byte-for-byte for this release.
+Unknown, stale, post-refresh, insufficient, reserve-consuming, provider-refused, and unauthorized paid execution is held without launching a probe job. The assessor never accepts, authenticates, or grants spending authority: it stops at a bounded request naming the exact run, billing scope, expiry, and maximum paid minutes and money when price data exists. Any later authority must be resolved and consumed by a trusted dispatcher outside TestForge. TestForge's canonical and MIND-integrated skill trees are synchronized byte-for-byte for this release, with regression-locked tree digests.
 
 ## 2.1.5
 

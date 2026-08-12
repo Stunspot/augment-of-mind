@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "skills" / "software-verification" / "scripts" / "assess_metered_verification.py"
 SKILL = ROOT / "skills" / "software-verification" / "SKILL.md"
+RESPONSE_TEMPLATE = ROOT / "skills" / "software-verification" / "assets" / "templates" / "metered-verification-response.md"
 
 SPEC = importlib.util.spec_from_file_location("assess_metered_verification", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
@@ -32,8 +33,6 @@ def base_plan(**changes: object) -> dict[str, object]:
         "remaining_minutes": 100,
         "reserve_minutes": 20,
         "paid_overage_available": False,
-        "paid_overage_authorization": None,
-        "consumed_authorization_ids": [],
         "planned_runs": [
             {"name": "pull_request", "jobs": [{"ceiling_minutes": 20}]}
         ],
@@ -105,96 +104,63 @@ class MeteredVerificationTests(unittest.TestCase):
         result = MODULE.assess(base_plan(remaining_minutes=20), now=NOW)
         self.assertEqual(result["outcome"], "HOLD_RESERVE")
 
-    def test_paid_overage_requires_explicit_authority(self) -> None:
-        pending = MODULE.assess(
-            base_plan(remaining_minutes=0, paid_overage_available=True), now=NOW
-        )
-        pending_digest = pending["plan_sha256"]
-        approved = MODULE.assess(
-            base_plan(
-                remaining_minutes=0,
-                paid_overage_available=True,
-                paid_overage_authorization={
-                    "authorization_id": "decision:123",
-                    "authorized_by": "stunspot",
-                    "execution_id": "verify:pr-25:head-abc",
-                    "plan_sha256": pending_digest,
-                    "authorized_at": "2026-08-12T12:05:00Z",
-                    "valid_until": "2026-08-12T13:00:00Z",
-                    "billing_scope": "user:Stunspot",
-                    "max_paid_minutes": 20,
-                },
-            ),
-            now=NOW,
-        )
-        self.assertEqual(pending["outcome"], "AUTHORITY_REQUIRED_PAID")
-        self.assertFalse(pending["automatic_invocation_permitted"])
-        self.assertEqual(approved["outcome"], "PAID_DISPATCH_AUTHORIZED")
-        self.assertFalse(approved["automatic_invocation_permitted"])
-        self.assertTrue(approved["paid_dispatch_permitted"])
-
-    def test_paid_authority_cannot_expand_beyond_its_bound(self) -> None:
-        huge_plan = base_plan(
-            remaining_minutes=0,
-            paid_overage_available=True,
-            planned_runs=[
-                {"name": "huge", "jobs": [{"ceiling_minutes": 1_000_000}]}
-            ],
-        )
-        huge_digest = MODULE.assess(huge_plan, now=NOW)["plan_sha256"]
+    def test_paid_overage_requires_authority_outside_the_assessor(self) -> None:
         result = MODULE.assess(
-            dict(
-                huge_plan,
-                paid_overage_authorization={
-                    "authorization_id": "decision:tiny",
-                    "authorized_by": "stunspot",
-                    "execution_id": "verify:pr-25:head-abc",
-                    "plan_sha256": huge_digest,
-                    "authorized_at": "2026-08-12T12:05:00Z",
-                    "valid_until": "2026-08-12T13:00:00Z",
-                    "billing_scope": "user:Stunspot",
-                    "max_paid_minutes": 20,
-                },
-            ),
-            now=NOW,
+            base_plan(remaining_minutes=0, paid_overage_available=True), now=NOW
         )
         self.assertEqual(result["outcome"], "AUTHORITY_REQUIRED_PAID")
         self.assertFalse(result["automatic_invocation_permitted"])
+        self.assertFalse(result["paid_dispatch_permitted"])
+        self.assertFalse(result["paid_overage_authorized"])
 
-    def test_paid_authority_is_one_shot_and_plan_bound(self) -> None:
-        pending_plan = base_plan(remaining_minutes=0, paid_overage_available=True)
-        digest = MODULE.assess(pending_plan, now=NOW)["plan_sha256"]
-        authorization = {
-            "authorization_id": "decision:one-shot",
-            "authorized_by": "stunspot",
-            "execution_id": "verify:pr-25:head-abc",
-            "plan_sha256": digest,
-            "authorized_at": "2026-08-12T12:05:00Z",
-            "valid_until": "2026-08-12T13:00:00Z",
-            "billing_scope": "user:Stunspot",
-            "max_paid_minutes": 20,
-        }
-        first = MODULE.assess(
-            dict(pending_plan, paid_overage_authorization=authorization), now=NOW
-        )
-        replay = MODULE.assess(
-            dict(
-                pending_plan,
-                paid_overage_authorization=authorization,
-                consumed_authorization_ids=["decision:one-shot"],
+    def test_paid_minutes_preserve_reserve(self) -> None:
+        result = MODULE.assess(
+            base_plan(
+                remaining_minutes=15,
+                reserve_minutes=10,
+                paid_overage_available=True,
+                planned_runs=[
+                    {
+                        "name": "pull_request",
+                        "jobs": [{"ceiling_minutes": 15, "count": 3}],
+                    }
+                ],
             ),
             now=NOW,
         )
-        self.assertEqual(first["outcome"], "PAID_DISPATCH_AUTHORIZED")
-        self.assertTrue(first["paid_dispatch_permitted"])
-        self.assertEqual(replay["outcome"], "AUTHORITY_CONSUMED")
-        self.assertFalse(replay["paid_dispatch_permitted"])
+        self.assertEqual(result["estimated_minutes"], 45)
+        self.assertEqual(result["required_with_reserve_minutes"], 55)
+        self.assertEqual(result["paid_minutes_required"], 40)
 
-        changed = dict(pending_plan)
-        changed["execution_id"] = "verify:pr-25:different-head"
-        with self.assertRaisesRegex(MODULE.PlanError, "execution_id"):
+    def test_caller_cannot_fabricate_paid_authority(self) -> None:
+        with self.assertRaisesRegex(MODULE.PlanError, "cannot accept or grant"):
             MODULE.assess(
-                dict(changed, paid_overage_authorization=authorization), now=NOW
+                base_plan(
+                    remaining_minutes=0,
+                    paid_overage_available=True,
+                    paid_overage_authorization={
+                    "authorization_id": "decision:tiny",
+                    "authorized_by": "stunspot",
+                    "execution_id": "verify:pr-25:head-abc",
+                    "plan_sha256": "0" * 64,
+                    "authorized_at": "2026-08-12T12:05:00Z",
+                    "valid_until": "2026-08-12T13:00:00Z",
+                    "billing_scope": "user:Stunspot",
+                    "max_paid_minutes": 20,
+                },
+                ),
+                now=NOW,
+            )
+
+    def test_caller_cannot_supply_a_favorable_consumption_ledger(self) -> None:
+        with self.assertRaisesRegex(MODULE.PlanError, "cannot accept or grant"):
+            MODULE.assess(
+                base_plan(
+                    remaining_minutes=0,
+                    paid_overage_available=True,
+                    consumed_authorization_ids=[],
+                ),
+                now=NOW,
             )
 
     def test_malformed_or_stale_snapshot_is_rejected(self) -> None:
@@ -231,6 +197,28 @@ class MeteredVerificationTests(unittest.TestCase):
         self.assertIn("## Preflight metered verification", text)
         self.assertIn("Do not launch a metered check merely to discover", text)
         self.assertIn("scripts/assess_metered_verification.py", text)
+        self.assertIn("`Capacity`, `Expansion`, `Decision`, `Substitute`, and `Authority`", text)
+        self.assertIn("`Substitute` is mandatory on every hold", text)
+        self.assertIn("current multiplier is unobserved, mark it explicitly `unknown`", text)
+        self.assertIn("triggers × matrix jobs × attempts × ceiling minutes × provider multiplier", text)
+        self.assertIn("Never label the intermediate job-attempt count as runner-minutes", text)
+        self.assertIn("This substitute does not prove:", text)
+        self.assertIn("PREPARED — NOT EXECUTED", text)
+        self.assertIn("Copy snapshot facts exactly", text)
+        self.assertIn("required_with_reserve_minutes = estimated_minutes + reserve_minutes", text)
+        self.assertIn("maximum_paid_minutes_required", text)
+        self.assertIn("assets/templates/metered-verification-response.md", text)
+
+        response_template = RESPONSE_TEMPLATE.read_text(encoding="utf-8")
+        self.assertIn("2 × 3 × 2 × 20 = 240 raw runner-minutes", response_template)
+        self.assertIn("required with reserve is 55", response_template)
+        self.assertIn("maximum paid minutes required is 40", response_template)
+        self.assertIn("A formula that omits its evaluated result is incomplete", response_template)
+        self.assertIn("Exact run: `[trigger name and count", response_template)
+        self.assertIn("Never replace the exact run with the phrase", response_template)
+        self.assertIn("If capacity or reserve is unknown", response_template)
+        self.assertIn("This substitute does not prove:", response_template)
+        self.assertIn("Do not invent a local command or file path", text)
 
 
 if __name__ == "__main__":
