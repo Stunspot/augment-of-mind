@@ -8,6 +8,8 @@ Plugin and marketplace steps remain idempotent. The verified database is moved i
 
 Installer Python calls suppress bytecode generation so installation does not add __pycache__ or .pyc artifacts to the unpacked package.
 
+TestForge Software Verification is now version 1.1.4. Before it proposes or invokes quota-limited verification, it requires a fresh capacity observation for the exact billing scope and calculates the complete run fan-out, retries, billing multipliers, and retained reserve. Unknown, stale, post-refresh, or insufficient capacity holds automatic execution. Paid verification remains non-automatic and requires a bounded, exact-plan, one-shot human authorization recorded in durable custody.
+
 ## 2.1.4
 
 The model-facing capability-memory preface no longer asks the model to explore candidate capacities or enumerates tools, skills, and MCPs from harness configuration. It now directs contextual assessment and integration with capabilities already present in assembled context, while preserving vector-near recall and memory beyond the current harness.
