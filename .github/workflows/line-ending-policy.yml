@@ -2,6 +2,8 @@ name: Line ending policy
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 permissions:
