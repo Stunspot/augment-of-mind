@@ -43,6 +43,7 @@ Record the target, included and excluded surfaces, constraints, assumptions, kno
 Load doctrine at the judgment moment:
 
 - `references/core/risk-based-testing.md` and `test-layer-selection.md` for prioritization and the smallest credible evidence set.
+- `references/core/metered-verification.md` before proposing or invoking hosted CI, device/browser farms, paid cloud tests, or any other quota-limited verification.
 - `references/core/oracle-design.md`, `boundary-and-equivalence.md`, and `state-transition-testing.md` for discriminating assertions and scenario design.
 - `references/core/test-smells.md` for mock boundaries and deceptive tests.
 - `references/core/release-assessment.md` for release status.
@@ -60,6 +61,14 @@ Choose the lowest layer that can expose the behavior while preserving the real b
 For each scenario, state preconditions, action, expected observations, forbidden side effects, evidence source, and risk linkage. Prefer invariants and state changes over truthiness, status-only checks, snapshots, or mock interaction theater. Existing green tests are evidence about exercised paths, not proof that the risk model is complete.
 
 Create or repair repository-compatible tests, fixtures, builders, commands, and records. Production-code changes, dependency installation, weakened or deleted tests, material snapshot updates, CI/deployment edits, destructive operations, production targets, active security checks, and external publication require explicit human authority at the point of action.
+
+## Preflight metered verification
+
+Before recommending or invoking a quota-limited verification service, obtain a current capacity snapshot from an authoritative provider API, provider UI, or identified operator observation. Record the provider, observation time, capacity state, remaining allowance when observable, refresh or billing-cycle boundary, paid-overage state, principal-set reserve, and the evidence source. Missing access to the allowance is `unknown`, never zero and never permission to probe by launching a job.
+
+Estimate the complete planned consumption before execution. Include every trigger, matrix expansion, job, retry or rerun allowance, runner ceiling, and applicable provider billing multiplier. Do not launch a metered check merely to discover whether capacity exists. Run `scripts/assess_metered_verification.py` against the recorded snapshot and plan; a hold result blocks automatic invocation.
+
+Use provider-hosted execution only when the provider boundary is itself under test or an already-authorized acceptance contract requires it. Otherwise prefer the smallest credible local, clean-host, self-hosted, or batched substitute and state the exact guarantee the substitution does not establish. Avoid duplicate push-and-pull-request execution unless each trigger supplies decision-relevant evidence. Paid overage never becomes authorized merely because it is technically available.
 
 For authorization denials, observe protected post-state, downstream effects, secret-bearing output, and audit behavior where the contract supplies it; status alone is not the oracle. If active security scope is unauthorized, stop the active action but preserve a safe plan and name the complete re-entry packet: accountable owner permission, target and environment, time window, rate and concurrency bounds, prohibited actions, data-handling rules, and stop contact.
 
