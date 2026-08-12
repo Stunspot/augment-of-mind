@@ -22,7 +22,7 @@ The permanent GitHub verification workflow runs the repository tests and determi
 - Included TestForge roles: **1.1.6**
 - Public release tag: **v2.1.6**
 - Archive: `augment-of-mind-v2.1.6.zip`
-- Archive SHA-256: `19fc5215629ce16030bb5f16fbd5a7c0ff3c4b9ab4ef9a3635c49678b5b614f4`
+- Archive SHA-256: recorded in `augment-of-mind-v2.1.6.zip.sha256`, the build receipt, and the GitHub release asset metadata
 - Source file count: `306`
 - Source-material SHA-256: `88c4e7ab6ca0ee7597d07c75915e1fd45eb03989fc3b3fef3d2fd7617a827771`
 - Staged/extracted tree SHA-256: `336169c9802a52d5753d8b5add4530c11de620237f40b1a5748da1e3ca671a4f`
