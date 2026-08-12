@@ -1,5 +1,11 @@
 # MIND release notes
 
+## 2.1.6
+
+MIND now carries the canonical TestForge 1.1.6 operator and reviewer. Quota-limited verification requires a fresh, billing-scope-matched capacity record and a complete expanded-run estimate before hosted execution is proposed or invoked. The deterministic assessor counts duplicate triggers, matrices, retries, runner ceilings, and current provider billing multipliers while preserving a human-set reserve.
+
+Unknown, stale, post-refresh, insufficient, reserve-consuming, provider-refused, and unauthorized paid execution is held without launching a probe job. Any paid exception is one-shot and bound to the exact execution, plan digest, billing scope, expiry, and maximum paid amount. TestForge's canonical and MIND-integrated skill trees are synchronized byte-for-byte for this release.
+
 ## 2.1.5
 
 Installation now proves Python, Codex state, target-path staging, estate activation, status readback, Ollama reachability, and the required embedding model against a disposable database before it changes plugin state or commits the customer database.
