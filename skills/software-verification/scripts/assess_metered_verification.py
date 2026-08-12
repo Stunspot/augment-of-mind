@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -12,7 +13,7 @@ from typing import Any
 
 
 FORMAT = "testforge-metered-verification/v1"
-PROCEED_OUTCOMES = {"PROCEED", "PROCEED_PAID_AUTHORIZED"}
+PROCEED_OUTCOMES = {"PROCEED"}
 MAX_SNAPSHOT_AGE = timedelta(minutes=60)
 
 
@@ -65,6 +66,7 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
     if plan.get("format") != FORMAT:
         raise PlanError(f"format must be {FORMAT}")
     provider = nonempty_string(plan.get("provider"), "provider")
+    execution_id = nonempty_string(plan.get("execution_id"), "execution_id")
     evidence_source = nonempty_string(plan.get("evidence_source"), "evidence_source")
     capacity_scope = nonempty_string(plan.get("capacity_billing_scope"), "capacity_billing_scope")
     execution_scope = nonempty_string(plan.get("execution_billing_scope"), "execution_billing_scope")
@@ -80,12 +82,14 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
     evaluated_at = evaluated_at.astimezone(timezone.utc)
     if valid_until < observed_at or valid_until - observed_at > MAX_SNAPSHOT_AGE:
         raise PlanError("valid_until must be within 60 minutes after observed_at")
-    if refresh_at < observed_at:
-        raise PlanError("refresh_at cannot precede observed_at")
+    if refresh_at <= observed_at:
+        raise PlanError("refresh_at must follow observed_at")
     if observed_at > evaluated_at:
         raise PlanError("capacity snapshot cannot be future-dated")
     if evaluated_at > valid_until:
         raise PlanError("capacity snapshot has expired")
+    if evaluated_at >= refresh_at:
+        raise PlanError("capacity snapshot crossed its refresh boundary")
 
     capacity_status = plan.get("capacity_status")
     if capacity_status not in {"observed", "unavailable", "unknown"}:
@@ -107,6 +111,31 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
     planned_runs = plan.get("planned_runs")
     if not isinstance(planned_runs, list) or not planned_runs:
         raise PlanError("planned_runs must be a non-empty list")
+    consumed_authorization_ids = plan.get("consumed_authorization_ids")
+    if not isinstance(consumed_authorization_ids, list) or any(
+        not isinstance(value, str) or not value.strip()
+        for value in consumed_authorization_ids
+    ):
+        raise PlanError("consumed_authorization_ids must be a list of non-empty strings")
+    if len(consumed_authorization_ids) != len(set(consumed_authorization_ids)):
+        raise PlanError("consumed_authorization_ids must not contain duplicates")
+
+    plan_binding = {
+        "format": FORMAT,
+        "provider": provider,
+        "execution_id": execution_id,
+        "execution_billing_scope": execution_scope,
+        "reserve_minutes": plan.get("reserve_minutes", 0),
+        "planned_runs": planned_runs,
+    }
+    plan_sha256 = hashlib.sha256(
+        json.dumps(
+            plan_binding,
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode("utf-8")
+    ).hexdigest()
 
     total = Decimal(0)
     run_estimates: list[dict[str, Any]] = []
@@ -139,11 +168,27 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
         paid_minutes_required = max(total - included_available_after_reserve, Decimal(0))
 
     paid_authorized = False
+    paid_authorization_consumed = False
     if paid_authorization is not None:
         if not isinstance(paid_authorization, dict):
             raise PlanError("paid_overage_authorization must be an object or null")
-        nonempty_string(paid_authorization.get("authorization_id"), "paid_overage_authorization.authorization_id")
+        authorization_id = nonempty_string(
+            paid_authorization.get("authorization_id"),
+            "paid_overage_authorization.authorization_id",
+        )
         nonempty_string(paid_authorization.get("authorized_by"), "paid_overage_authorization.authorized_by")
+        authorization_execution_id = nonempty_string(
+            paid_authorization.get("execution_id"),
+            "paid_overage_authorization.execution_id",
+        )
+        if authorization_execution_id != execution_id:
+            raise PlanError("paid authorization execution_id must match this execution")
+        authorization_plan_sha256 = nonempty_string(
+            paid_authorization.get("plan_sha256"),
+            "paid_overage_authorization.plan_sha256",
+        )
+        if authorization_plan_sha256 != plan_sha256:
+            raise PlanError("paid authorization plan_sha256 must match this exact plan")
         authorization_scope = nonempty_string(
             paid_authorization.get("billing_scope"),
             "paid_overage_authorization.billing_scope",
@@ -166,14 +211,17 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
             positive=True,
         )
         paid_authorized = max_paid_minutes >= paid_minutes_required
+        paid_authorization_consumed = authorization_id in consumed_authorization_ids
     if capacity_status == "unavailable":
         outcome = "HOLD_PROVIDER_UNAVAILABLE"
     elif capacity_status == "unknown" or remaining is None:
         outcome = "HOLD_UNKNOWN"
     elif remaining >= required_with_reserve:
         outcome = "PROCEED"
+    elif paid_available is True and paid_authorized and paid_authorization_consumed:
+        outcome = "AUTHORITY_CONSUMED"
     elif paid_available is True and paid_authorized:
-        outcome = "PROCEED_PAID_AUTHORIZED"
+        outcome = "PAID_DISPATCH_AUTHORIZED"
     elif paid_available is True:
         outcome = "AUTHORITY_REQUIRED_PAID"
     elif remaining >= total:
@@ -184,6 +232,8 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
     return {
         "format": FORMAT,
         "provider": provider,
+        "execution_id": execution_id,
+        "plan_sha256": plan_sha256,
         "observed_at": observed_at.isoformat(),
         "valid_until": valid_until.isoformat(),
         "evidence_source": evidence_source,
@@ -199,8 +249,10 @@ def assess(plan: dict[str, Any], *, now: datetime | None = None) -> dict[str, An
         "run_estimates": run_estimates,
         "paid_overage_available": paid_available,
         "paid_overage_authorized": paid_authorized,
+        "paid_authorization_consumed": paid_authorization_consumed,
         "outcome": outcome,
         "automatic_invocation_permitted": outcome in PROCEED_OUTCOMES,
+        "paid_dispatch_permitted": outcome == "PAID_DISPATCH_AUTHORIZED",
     }
 
 

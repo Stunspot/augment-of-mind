@@ -21,6 +21,7 @@ def base_plan(**changes: object) -> dict[str, object]:
     plan: dict[str, object] = {
         "format": "testforge-metered-verification/v1",
         "provider": "github-actions",
+        "execution_id": "verify:pr-25:head-abc",
         "capacity_billing_scope": "user:Stunspot",
         "execution_billing_scope": "user:Stunspot",
         "observed_at": "2026-08-12T12:00:00Z",
@@ -32,6 +33,7 @@ def base_plan(**changes: object) -> dict[str, object]:
         "reserve_minutes": 20,
         "paid_overage_available": False,
         "paid_overage_authorization": None,
+        "consumed_authorization_ids": [],
         "planned_runs": [
             {"name": "pull_request", "jobs": [{"ceiling_minutes": 20}]}
         ],
@@ -107,6 +109,7 @@ class MeteredVerificationTests(unittest.TestCase):
         pending = MODULE.assess(
             base_plan(remaining_minutes=0, paid_overage_available=True), now=NOW
         )
+        pending_digest = pending["plan_sha256"]
         approved = MODULE.assess(
             base_plan(
                 remaining_minutes=0,
@@ -114,6 +117,8 @@ class MeteredVerificationTests(unittest.TestCase):
                 paid_overage_authorization={
                     "authorization_id": "decision:123",
                     "authorized_by": "stunspot",
+                    "execution_id": "verify:pr-25:head-abc",
+                    "plan_sha256": pending_digest,
                     "authorized_at": "2026-08-12T12:05:00Z",
                     "valid_until": "2026-08-12T13:00:00Z",
                     "billing_scope": "user:Stunspot",
@@ -124,20 +129,27 @@ class MeteredVerificationTests(unittest.TestCase):
         )
         self.assertEqual(pending["outcome"], "AUTHORITY_REQUIRED_PAID")
         self.assertFalse(pending["automatic_invocation_permitted"])
-        self.assertEqual(approved["outcome"], "PROCEED_PAID_AUTHORIZED")
-        self.assertTrue(approved["automatic_invocation_permitted"])
+        self.assertEqual(approved["outcome"], "PAID_DISPATCH_AUTHORIZED")
+        self.assertFalse(approved["automatic_invocation_permitted"])
+        self.assertTrue(approved["paid_dispatch_permitted"])
 
     def test_paid_authority_cannot_expand_beyond_its_bound(self) -> None:
+        huge_plan = base_plan(
+            remaining_minutes=0,
+            paid_overage_available=True,
+            planned_runs=[
+                {"name": "huge", "jobs": [{"ceiling_minutes": 1_000_000}]}
+            ],
+        )
+        huge_digest = MODULE.assess(huge_plan, now=NOW)["plan_sha256"]
         result = MODULE.assess(
-            base_plan(
-                remaining_minutes=0,
-                paid_overage_available=True,
-                planned_runs=[
-                    {"name": "huge", "jobs": [{"ceiling_minutes": 1_000_000}]}
-                ],
+            dict(
+                huge_plan,
                 paid_overage_authorization={
                     "authorization_id": "decision:tiny",
                     "authorized_by": "stunspot",
+                    "execution_id": "verify:pr-25:head-abc",
+                    "plan_sha256": huge_digest,
                     "authorized_at": "2026-08-12T12:05:00Z",
                     "valid_until": "2026-08-12T13:00:00Z",
                     "billing_scope": "user:Stunspot",
@@ -148,6 +160,42 @@ class MeteredVerificationTests(unittest.TestCase):
         )
         self.assertEqual(result["outcome"], "AUTHORITY_REQUIRED_PAID")
         self.assertFalse(result["automatic_invocation_permitted"])
+
+    def test_paid_authority_is_one_shot_and_plan_bound(self) -> None:
+        pending_plan = base_plan(remaining_minutes=0, paid_overage_available=True)
+        digest = MODULE.assess(pending_plan, now=NOW)["plan_sha256"]
+        authorization = {
+            "authorization_id": "decision:one-shot",
+            "authorized_by": "stunspot",
+            "execution_id": "verify:pr-25:head-abc",
+            "plan_sha256": digest,
+            "authorized_at": "2026-08-12T12:05:00Z",
+            "valid_until": "2026-08-12T13:00:00Z",
+            "billing_scope": "user:Stunspot",
+            "max_paid_minutes": 20,
+        }
+        first = MODULE.assess(
+            dict(pending_plan, paid_overage_authorization=authorization), now=NOW
+        )
+        replay = MODULE.assess(
+            dict(
+                pending_plan,
+                paid_overage_authorization=authorization,
+                consumed_authorization_ids=["decision:one-shot"],
+            ),
+            now=NOW,
+        )
+        self.assertEqual(first["outcome"], "PAID_DISPATCH_AUTHORIZED")
+        self.assertTrue(first["paid_dispatch_permitted"])
+        self.assertEqual(replay["outcome"], "AUTHORITY_CONSUMED")
+        self.assertFalse(replay["paid_dispatch_permitted"])
+
+        changed = dict(pending_plan)
+        changed["execution_id"] = "verify:pr-25:different-head"
+        with self.assertRaisesRegex(MODULE.PlanError, "execution_id"):
+            MODULE.assess(
+                dict(changed, paid_overage_authorization=authorization), now=NOW
+            )
 
     def test_malformed_or_stale_snapshot_is_rejected(self) -> None:
         with self.assertRaisesRegex(MODULE.PlanError, "valid ISO 8601"):
@@ -165,6 +213,17 @@ class MeteredVerificationTests(unittest.TestCase):
         with self.assertRaisesRegex(MODULE.PlanError, "exactly match"):
             MODULE.assess(
                 base_plan(execution_billing_scope="org:SomeoneElse"), now=NOW
+            )
+
+    def test_snapshot_is_invalid_after_billing_cycle_refresh(self) -> None:
+        with self.assertRaisesRegex(MODULE.PlanError, "refresh boundary"):
+            MODULE.assess(
+                base_plan(
+                    observed_at="2026-08-12T11:50:00Z",
+                    valid_until="2026-08-12T12:20:00Z",
+                    refresh_at="2026-08-12T12:00:00Z",
+                ),
+                now=NOW,
             )
 
     def test_skill_makes_capacity_preflight_mandatory(self) -> None:

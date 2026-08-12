@@ -15,7 +15,7 @@ Capture a fresh, attributable snapshot before proposing execution:
 - whether paid overage exists and whether the principal explicitly authorized it;
 - a principal-set reserve that this run must not consume.
 
-An inaccessible allowance is `unknown`, not zero. A malformed, future-dated, expired, or over-age snapshot cannot authorize execution. A provider refusal before any test step establishes `unavailable` for that attempted route; it is provider non-execution, not a product failure. Never run a job merely to discover whether the meter permits it.
+An inaccessible allowance is `unknown`, not zero. A malformed, future-dated, expired, over-age, or pre-refresh snapshot observed before a billing-cycle rollover cannot authorize execution after that rollover. A provider refusal before any test step establishes `unavailable` for that attempted route; it is provider non-execution, not a product failure. Never run a job merely to discover whether the meter permits it.
 
 ## Complete run estimate
 
@@ -30,14 +30,15 @@ Represent each expanded job in the input to `scripts/assess_metered_verification
 ## Decision
 
 - `PROCEED`: observed included capacity covers the estimate and reserve.
-- `PROCEED_PAID_AUTHORIZED`: included capacity is insufficient, paid overage is available, and an unexpired principal authorization for this exact billing scope covers the calculated paid minutes.
+- `PAID_DISPATCH_AUTHORIZED`: included capacity is insufficient, and an unexpired, unused principal authorization is bound to this exact execution ID, plan digest, billing scope, and maximum paid minutes. A separate dispatcher may proceed only after atomically consuming that authorization in durable custody.
 - `HOLD_RESERVE`: the run fits only by consuming the retained reserve.
 - `HOLD_INSUFFICIENT`: observed capacity cannot cover the run.
 - `HOLD_UNKNOWN`: capacity cannot be established.
 - `HOLD_PROVIDER_UNAVAILABLE`: the provider has refused or disabled execution.
 - `AUTHORITY_REQUIRED_PAID`: paid execution could cover the run but lacks explicit authority.
+- `AUTHORITY_CONSUMED`: the one-shot paid authorization has already been used.
 
-Only the two `PROCEED` outcomes permit automatic invocation. A paid authorization records an identifier, human authority, authorization time, expiry, exact billing scope, and maximum paid minutes; it never reduces to a Boolean. When price data is available, also show the bounded monetary estimate to the principal before authorization. Minimize or batch the plan and reassess when held. If a local, clean-host, or self-hosted substitute exercises the real product boundary, use it and record the precise hosted-provider guarantee still absent.
+Only `PROCEED` permits automatic invocation. Paid execution is never automatic. A paid authorization records an identifier, human authority, authorization time, expiry, exact execution ID, plan digest, billing scope, and maximum paid minutes; it never reduces to a Boolean. The dispatcher must atomically append the authorization ID to its durable consumption ledger before launch, then retain the provider receipt. Reassessment receives the consumed-ID ledger and refuses replay. When price data is available, also show the bounded monetary estimate to the principal before authorization. Minimize or batch the plan and reassess when held. If a local, clean-host, or self-hosted substitute exercises the real product boundary, use it and record the precise hosted-provider guarantee still absent.
 
 ## GitHub Actions
 
