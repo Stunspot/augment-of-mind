@@ -1,0 +1,33 @@
+name: MIND verification
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - name: Install deterministic build requirements
+        run: python -m pip install "setuptools>=69.2" wheel
+      - name: Run repository tests
+        run: python -B -m unittest discover -s tests -v
+      - name: Build and verify the deterministic release
+        run: python -B scripts/build_release.py --replace

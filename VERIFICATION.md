@@ -1,6 +1,6 @@
 # Verification
 
-MIND `2.1.1` is built from committed tracked source by `scripts/build_release.py` and checked by `scripts/verify_release.py`.
+MIND `2.1.6` is built from committed tracked source by `scripts/build_release.py` and checked by `scripts/verify_release.py`.
 
 The release builder:
 
@@ -11,35 +11,27 @@ The release builder:
 - writes an exact release manifest, component checksums, archive checksum, and build receipt;
 - safely extracts the resulting ZIP;
 - compares the staged and extracted trees byte-for-byte;
-- runs the offline customer release verifier against the extracted archive.
+- runs the offline customer release verifier against both trees.
 
-The standalone repository synchronization computed SHA-256 inventories and required exact byte parity with `plugins/augment-of-mind` from the verified flagship repository, excluding only repository-owned GitHub workflows, Pages content, verification record, and line-ending/editor policy files.
+The permanent GitHub verification workflow runs the repository tests and deterministic release builder on Linux, Windows, and macOS for each pull request and each push to `main`. The separate line-ending workflow runs only once per pull request and once after merge; ordinary branch pushes do not duplicate it.
 
 ## Current public release
 
-- Product: **MIND by Collaborative Dynamics 2.1.1**
+- Product: **MIND by Collaborative Dynamics 2.1.6**
 - Core: **0.2.0**
-- Public release tag: **v2.1.1**
-- Archive: `augment-of-mind-v2.1.1.zip`
-- Archive SHA-256: `d836c69d3e72866682e263aea03650ba0accdafaf96e4df995d334719d8d9867`
-- Source file count: `298`
-- Source SHA-256: `65da25f2539c4a7e90ae79ffb854084a6de9345ac0adb65009166bb65901dae5`
-- Staged/extracted tree SHA-256: `f00ab317f46336abe3543c9f8561fdcbf6f0c45de2b7bc56412233fa2d686e96`
-- Core wheel SHA-256: `a10e88d4c6a85acf6d4c31a46e0ec9454dac5acfe6c95ac5d265d1f8822ecb60`
+- Included TestForge roles: **1.1.6**
+- Public release tag: **v2.1.6**
+- Archive: `augment-of-mind-v2.1.6.zip`
+- Archive SHA-256: recorded in `augment-of-mind-v2.1.6.zip.sha256`, the build receipt, and the GitHub release asset metadata
+- Source file count: `306`
+- Source-material SHA-256: `88c4e7ab6ca0ee7597d07c75915e1fd45eb03989fc3b3fef3d2fd7617a827771`
+- Staged/extracted tree SHA-256: `336169c9802a52d5753d8b5add4530c11de620237f40b1a5748da1e3ca671a4f`
+- Core wheel SHA-256: `0f9d1d2787a161bfd58113e735cacbbdcdb11844e2072c9f206c36cbda9fb779`
 
-## Evidence
+## Evidence boundary
 
-The final synchronization run passed source parity, deterministic build, extracted-tree comparison, offline release verification, branch publication, and artifact upload.
+The repository suite contains 20 deterministic tests. It locks the embedded TestForge operator and reviewer tree digests to the copies taken from published TestForge `v1.1.6` commit `93120abaa39c26a6f0ec494bdff0c7e6f92344cf`, including the metered-capacity authority boundary. The build independently proves repeatable wheel and archive bytes, positive-allowlist packaging, staged/extracted parity, offline verification, and package cleanliness.
 
-- Synchronization workflow run: `30967446614`
-- Synchronization job: `92183133601`
-- Publication workflow run: `30967675155`
-- Publication job: `92185068716`
+The GitHub release carries the ZIP, checksum, and build receipt. Release assets are compared with the local deterministic build after publication.
 
-The publication job rebuilt and verified the archive from synchronized `main`, published the ZIP, checksum, and build receipt to GitHub Release `v2.1.1`, and uploaded the same evidence as an Actions artifact.
-
-This establishes source parity and deterministic package integrity. Host discovery, hook trust, reminder delivery, and model use remain separate runtime claims.
-
-## Post-publication cleanup
-
-After synchronization, verification, and publication completed, the version-specific sync-and-release workflow was removed from `main`. The run and job identifiers above preserve the authoritative evidence without leaving a served one-release trigger active in the public repository.
+This establishes source custody and deterministic package integrity. Installation, Codex discovery, hook trust, Ollama reachability, reminder delivery, semantic retrieval quality, and model use remain separate runtime claims.
