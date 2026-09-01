@@ -37,9 +37,9 @@ class ReleaseVersionTests(unittest.TestCase):
                 / "faculty-registry.json"
             ).read_text(encoding="utf-8")
         )
-        self.assertEqual("2.1.6", plugin["version"])
-        self.assertEqual("2.1.6", registry["runtime_version"])
-        self.assertEqual("2.1.6", MODULE.VERSIONS["augment-of-mind"])
+        self.assertEqual("2.1.7", plugin["version"])
+        self.assertEqual("2.1.7", registry["runtime_version"])
+        self.assertEqual("2.1.7", MODULE.VERSIONS["augment-of-mind"])
         self.assertEqual("1.1.6", MODULE.VERSIONS["software-verification"])
         self.assertEqual("1.1.6", MODULE.VERSIONS["verification-reviewer"])
 
