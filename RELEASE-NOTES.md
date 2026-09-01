@@ -1,5 +1,11 @@
 # MIND release notes
 
+## 2.1.7
+
+Agent Striving 0.3.3 now keeps authorized durable pursuits behaviorally alive without hardening ordinary conversation into campaigns or manufacturing acceptance criteria, evidence programs, or terminal ceremony. Named project state remains with Project Management; Striving supplies forward pressure, adaptive recovery, economical continuity, and natural rest.
+
+The model-facing guidance, recovery example, conation doctrine, pursuit loop, evaluation metadata, associative recall description, integrated fingerprint, installer wording, and release verifier are synchronized to the same versioned package.
+
 ## 2.1.6
 
 MIND now carries the canonical TestForge 1.1.6 operator and reviewer from published TestForge commit `93120abaa39c26a6f0ec494bdff0c7e6f92344cf`. Quota-limited verification requires a fresh, billing-scope-matched capacity record and a complete expanded-run estimate before hosted execution is proposed or invoked. The deterministic assessor counts duplicate triggers, matrices, retries, runner ceilings, and current provider billing multipliers while preserving a human-set reserve.

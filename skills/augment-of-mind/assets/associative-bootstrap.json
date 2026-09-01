@@ -4,7 +4,7 @@
     {
       "source_id": "source:mind-associative-cards:2.1.0",
       "locator": "skills/augment-of-mind/assets/associative-capability-cards.json",
-      "digest": "aef2fb143c024a645553cc994a87272753ae114ffd4f26bdcad7402bf56eeb69",
+      "digest": "189eaecbad9feacd19b86a83268356ecd3351e553ddc2cfed5ade3d4e8eaa87b",
       "custody_state": "canonical-constructed",
       "authority_ref": "MIND 2.1.0 reviewed associative card source",
       "observed_at": "2026-08-04T00:00:00.000000Z"
@@ -92,8 +92,8 @@
       "name": "Agent Striving",
       "product_id": "product:mind",
       "canonical_source_id": "source:mind-associative-cards:2.1.0",
-      "promise": "Keep an authorized long-horizon objective effective across interruption and failure.",
-      "negative_space": "Persistence never enlarges authority or substitutes activity for progress.",
+      "promise": "Keep an authorized durable pursuit alive across interruption, uncertainty, and changing methods.",
+      "negative_space": "Striving preserves forward pull without manufacturing desire, proof, or ceremony.",
       "created_at": "2026-08-04T00:00:00.000000Z",
       "superseded_by": null,
       "exposure_policy": "public_safe",
