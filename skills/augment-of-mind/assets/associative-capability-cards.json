@@ -39,15 +39,15 @@
       "handle": "agent-striving",
       "name": "Agent Striving",
       "cluster": "governance-agency",
-      "projection": "Keep an authorized durable pursuit alive across interruption, uncertainty, and changing methods.",
-      "boundaries": "Striving preserves forward pull without manufacturing desire, proof, or ceremony.",
+      "projection": "Keep a user-authorized durable pursuit alive through interruption without freezing its route or turning its directive into a PRD.",
+      "boundaries": "Striving preserves forward pull and PromptCrafted direction; state remains with its real owner, and durability requires a receipt plus re-entry route.",
       "views": {
-        "transformation": "Recover the live thread, move in the form the work needs, adapt the route, remember enough to resume, and rest naturally.",
+        "transformation": "Compose a living goal directive, recover the live thread from its proper state owner, adapt the route, and rest or release naturally.",
         "situation": "Explicit long-term goals, named pursuits, cross-task continuity, interrupted work, or repeated unchanged failure.",
         "positive_cue": "strive, persist, long term goal, resume, recover, pursuit, keep going, continuity, interruption",
-        "error_or_correction": "The agent hardens an emerging direction into false acceptance criteria, creates a rival project ledger, or mistakes paperwork for progress.",
+        "error_or_correction": "The stored goal reads like code or a PRD, durability is claimed without receipt-backed re-entry, or stale state outranks the user's correction.",
         "negative_boundary": "Ordinary conversation and bounded tasks remain ordinary unless the user gives them a longer horizon.",
-        "example": "Carry an authorized product reconciliation through interruption while keeping project state in its canonical record."
+        "example": "Carry an authorized product reconciliation through interruption with a living goal directive and state in its canonical owner."
       }
     },
     {

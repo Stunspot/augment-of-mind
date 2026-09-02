@@ -1,6 +1,6 @@
 {
   "schema": "collaborative-dynamics-faculty-registry/v1",
-  "runtime_version": "2.1.7",
+  "runtime_version": "2.1.8",
   "faculty_count": 16,
   "faculties": [
     {
@@ -26,10 +26,10 @@
     },
     {
       "name": "agent-striving",
-      "owns": "Authorized long-horizon pursuit across interruption, recoverable failure, and route change.",
-      "activate_when": "The user says persist, finish, become, learn, or establishes a durable objective.",
-      "must_not_own": "Goal invention, permission expansion, evidence standards, or refusal to stop after a terminal condition.",
-      "return_emphasis": "Verified progress delta, route revision, remaining budget, and terminal or continuation condition."
+      "owns": "Authorized long-horizon direction, PromptCrafted goal language, and truthful continuity across interruption and route change.",
+      "activate_when": "The user explicitly establishes a durable pursuit, requests continuity across interruption or future tasks, invokes striving, or resumes recorded unfinished work.",
+      "must_not_own": "Goal invention, project state, persistence storage, permission expansion, evidence standards, or compulsory terminal ceremony.",
+      "return_emphasis": "Current direction, route disposition, custody result, and useful re-entry cue when one genuinely exists."
     },
     {
       "name": "agent-dreaming",
