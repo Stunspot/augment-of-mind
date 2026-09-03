@@ -16,6 +16,8 @@ Open **Settings → Hooks** and check the exact installed MIND hook. Hook trust 
 
 If the hook emits an Arm's Reach delivery note, preserve its failure code and receipt. The hook—not the model—owns any retry after the underlying dependency changes. The missing guarantee is the advisory reminder field; the notice makes no claim about capability availability or fit.
 
+A semantic_deadline_exceeded receipt means the local embedding call exceeded its 12-second wall. A hook_deadline_exceeded receipt means preparation exceeded the 18-second wall. Preserve current_stage and stage_timings_ms; they distinguish context, snapshot, embedding, Core query, and rendering delays without recording prompt text. Fix the named dependency before another prompt instead of retrying the same turn.
+
 ## The reminder result is empty, broad, or odd
 
 Record the request, nearby results, active snapshot, and the nearest false match. Do not “fix” a broad result by hiding it with a small ranked list and calling it complete. The current public map is structurally checked but still undergoing broader behavioral qualification.

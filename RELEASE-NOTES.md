@@ -2,6 +2,8 @@
 
 ## Unreleased same-version maintenance on 2.1.7
 
+Arm's Reach now bounds semantic embedding at 12 seconds inside a disposable worker and bounds the complete hook at 18 seconds, leaving Codex's existing 25-second host timeout as an outer safety margin. It records the run before preparation, preserves stage timings on success or failure, forces worker streams to UTF-8 on Windows, releases the MIND writer lease while Ollama works, revalidates the active snapshot afterward, and excludes current-turn host scaffold from transcript context by turn provenance.
+
 Agent Striving now composes host-goal objectives as PromptCrafted performance seeds: compact natural-language direction that preserves the user's vocabulary, authority, and route plasticity without collapsing into field labels, pseudo-code, or a compressed PRD.
 
 The obsolete pursuit-state v1 campaign ledger has become a sparse v2 custody handoff. Persistence, reactivation, and lost guarantees are represented separately; durability requires both an owner-issued receipt and a real re-entry route. Corrections supersede stale wording, released pursuits cannot retain a continuation, and the validator now rejects malformed or ambiguous JSON without traceback.
