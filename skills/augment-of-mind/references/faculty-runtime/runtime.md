@@ -1,10 +1,10 @@
 # Hierarchical Adaptive Faculty Runtime
 
-Hold one user-authorized desired state while understanding, evidence, tactics, and participants change. Compose only the transformations needed for the next reasoning horizon. Let the user experience one capable mind, not an internal committee.
+Hold one user-authorized direction at the resolution it actually has while understanding, evidence, tactics, and participants change. Compose only the transformations needed for the next reasoning horizon. Let the user experience one capable mind, not an internal committee.
 
 ## Keep control where it belongs
 
-Executive Function owns mission phase, acceptance, commitments, stop conditions, recovery, and closure. Capability Conductor owns selection, activation depth, sequencing, handoffs, and reunification. A selected Faculty owns only the transformation named in the registry. The user or accountable human retains priority, reserved decisions, value conflicts, and authority.
+Executive Function owns mission phase, applicable acceptance, commitments, stop conditions, recovery, and closure. Capability Conductor owns selection, activation depth, sequencing, handoffs, and reunification. A selected Faculty owns only the transformation named in the registry. The user or accountable human retains priority, reserved decisions, value conflicts, and authority.
 
 Routing relevance is not truth confidence. Capability Conductor weighs whether a contribution is likely to matter. Epistemic Regulation calibrates claim warrant and confidence. Measurement Intelligence judges whether an observation or proxy means what the mission needs it to mean. Executive Function binds only authorized commitments.
 
@@ -44,11 +44,13 @@ Aesthetic Intelligence owns the felt character of an artifact or composition, co
 
 ## Share a capsule, not a transcript
 
-Use `../../assets/faculty-runtime/mission-capsule.template.json` only when the mission spans Faculties, turns, interruptions, consequential action, or inspectable recovery. Validate durable capsules against `../../assets/faculty-runtime/mission-capsule.schema.json`.
+Use `../../assets/faculty-runtime/mission-capsule.template.json` only when the direction spans Faculties, turns, interruptions, consequential action, or inspectable recovery. The required-fields-only v2 template keeps `current_direction` as purposeful natural language; add optional state only when another owner actually needs it. Omit `acceptance` for an emerging or intentionally open pursuit. When a bounded task has criteria supplied by the user or an authorized source, later ratified, or inherent to the requested outcome, preserve them with their basis; include `evidence_required` only when an evidence condition genuinely governs. Preserve every indispensable bounded-task completion condition as acceptance; omission is not waiver. An open pursuit whose purpose resolves may complete without manufactured acceptance, while a capsule containing acceptance requires every recorded criterion to be `met` before completion. Terminal closure is coherent: `complete` and `cancelled` use `phase: closed`, and `phase: closed` names only those terminal dispositions. Validate durable v2 capsules against `../../assets/faculty-runtime/mission-capsule.schema.json`.
+
+Existing v1 capsules remain readable against `../../assets/faculty-runtime/mission-capsule-v1.schema.json`. Do not reinterpret or discard them merely because v2 changed the shape. Migrate only when a v2 consumer needs the state, using `python scripts/migrate_mission_capsule.py INPUT [--output OUTPUT]` from the skill root. Migration renames `desired_state` without rewriting it, preserves historical criteria and evidence, drops only an empty legacy reopening placeholder, normalizes an otherwise coherent terminal phase, and labels inherited criteria `legacy_v1`. That basis is a provenance warning, not ratification; reassess the old acceptance rubric at the next consequential use. The migrator stops where an old contradiction would require inventing meaning.
 
 Broadcast only state another owner needs to change its work:
 
-- mission and acceptance;
+- current direction, plus acceptance only where it genuinely governs;
 - authority, commitments, stops, and budgets;
 - decisive evidence or contradiction;
 - model or recommendation reversal;
@@ -63,7 +65,7 @@ Give each Faculty a mission slice, owned transformation, relevant evidence, auth
 
 Use `../../assets/faculty-runtime/faculty-return.template.json` when a structured return improves merge, resumption, or review. Validate durable returns against `../../assets/faculty-runtime/faculty-return.schema.json`.
 
-A useful return changes state. It identifies the transformation delta, evidence or uncertainty changed, action-state change, conflicts, acceptance effect, requested routing decision, and broadcast-worthy update. It does not restate the mission or compete for the final voice.
+A useful return changes state. It identifies the transformation delta and only the evidence, uncertainty, action, conflict, applicable acceptance, routing, or broadcast-worthy changes that occurred. It does not restate the mission, populate empty control fields for ceremony, or compete for the final voice.
 
 ## Probe the world when thought alone cannot decide
 
@@ -80,8 +82,8 @@ Compress the chain when fewer transformations are present; preserve every conseq
 
 ## Reunify without laundering conflict
 
-Capability Conductor merges compatible deltas, returns factual conflict to evidence, assumption conflict to a discriminating test, value conflict to the accountable human, and authority conflict to explicit permission. Preserve unresolved dissent when evidence cannot settle it. Executive Function compares the merged state with acceptance and decides whether to continue, recover, await authority, or close.
+Capability Conductor merges compatible deltas, returns factual conflict to evidence, assumption conflict to a discriminating test, value conflict to the accountable human, and authority conflict to explicit permission. Preserve unresolved dissent when evidence cannot settle it. Executive Function reconciles the merged state with the current direction and any applicable acceptance, then decides whether to continue, rest, recover, await authority, or close.
 
-Stop routing immediately when control custody duplicates, a route repeats without a new premise or material delta, a dependency is missing, context exceeds budget without compression, a Faculty expands authority or routes laterally, or closure is attempted with indispensable acceptance unmet. Restore explicit custody, preserve the last-known-good capsule, change the route, and name the exact reopening condition.
+Stop routing immediately when control custody duplicates, a route repeats without a new premise or material delta, a dependency is missing, context exceeds budget without compression, a Faculty expands authority or routes laterally, or a bounded task is being closed with indispensable applicable acceptance unmet. Restore explicit custody, preserve the last-known-good capsule, change the route, and name a reopening condition only when one is real.
 
-Close only when acceptance is supported by the evidence level actually exercised, the user cancels, or a real authority, capability, or evidence boundary leaves a precise re-entry condition. Return one coherent outcome; expose the internal coalition only when it materially helps the user understand responsibility, evidence, or next action.
+Let an intentionally ongoing pursuit rest when its present movement reaches a natural stopping point; let it complete if its purpose genuinely resolves. Neither disposition requires a fabricated finish line or evidence program. Close a bounded task when the user's purpose has been met at the resolution sought and any governing acceptance is supported by the evidence level actually exercised. Cancellation and real authority, capability, or evidence boundaries govern immediately. Return one coherent response; expose the internal coalition only when it materially helps the user understand responsibility, evidence, or next action.

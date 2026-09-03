@@ -7,7 +7,7 @@
   "tree_algorithm": "sha256 over skill-relative UTF-8 POSIX path in ordinal exact-case order, one NUL byte, and raw 32-byte file sha256; cache files excluded",
   "tree_self_exclusion": "augment-of-mind excludes assets/integrated-capability-fingerprint.json",
   "aggregate_algorithm": "sha256 over compact UTF-8 JSON serialization of ordered capabilities",
-  "aggregate_sha256": "ca43302e8e968c52751826c81edcf1b5d1a39c3da2021ae4b6d69c39308da9c3",
+  "aggregate_sha256": "e04660fa666f72ea60c24653ea8df7db2026c4e43d9abde36c92f34c19b426d6",
   "capabilities": [
     {
       "name": "aesthetic-intelligence",
@@ -28,7 +28,7 @@
       "version": "0.4.0",
       "integration_mode": "faculty-suite-exact-copy",
       "tree_file_count": 14,
-      "tree_sha256": "150705defd2cc8bd02099b497b4ac2e700ee100cc1088bedafbfabe7cf8bb1bb"
+      "tree_sha256": "72bfa2e90521b2defead2fc032e84197e5584b8ee152975ce05f7ef01d98e522"
     },
     {
       "name": "agentic-eros",
@@ -41,8 +41,8 @@
       "name": "augment-of-mind",
       "version": "2.1.8",
       "integration_mode": "product-integration",
-      "tree_file_count": 14,
-      "tree_sha256": "60c463607446157dbc41a707dab08921b50d2b55f761ecf3b4db28afe4531d20"
+      "tree_file_count": 16,
+      "tree_sha256": "42f6ca048e2f6f899160824ca982f9fe2ca0039dc47831970e2d430ab46dad06"
     },
     {
       "name": "capability-conductor",
