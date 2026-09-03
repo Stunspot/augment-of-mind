@@ -5,9 +5,11 @@ from __future__ import annotations
 import hashlib
 import os
 import uuid
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Callable, Mapping
+from time import perf_counter
+from typing import Any, Callable, Iterator, Mapping
 
 from . import MindCore
 from .constants import PROTOCOL_VERSION
@@ -34,6 +36,7 @@ AGENT_INSTANCE_ID = "agent:mind-codex-prompt-hook"
 
 Embedder = Callable[[list[str], str, str, float], list[list[float]]]
 CoreFactory = Callable[[Path], MindCore]
+StageSink = Callable[[str, str, float], None]
 
 
 class HookUnavailable(RuntimeError):
@@ -75,12 +78,51 @@ def _observation_hash(prefix: str, value: object) -> str:
     return sha256_text(f"{prefix}:{value!s}")
 
 
+def _emit_stage(
+    stage_sink: StageSink | None,
+    stage: str,
+    state: str,
+    duration_ms: float,
+) -> None:
+    if stage_sink is None:
+        return
+    try:
+        stage_sink(stage, state, round(duration_ms, 3))
+    except Exception:
+        # Diagnostics must never become the reason Arm's Reach fails.
+        return
+
+
+@contextmanager
+def _stage(stage_sink: StageSink | None, name: str) -> Iterator[None]:
+    started = perf_counter()
+    _emit_stage(stage_sink, name, "started", 0.0)
+    try:
+        yield
+    except BaseException:
+        _emit_stage(stage_sink, name, "failed", (perf_counter() - started) * 1000.0)
+        raise
+    else:
+        _emit_stage(stage_sink, name, "completed", (perf_counter() - started) * 1000.0)
+
+
+def _same_snapshot_binding(left: Mapping[str, Any], right: Mapping[str, Any]) -> bool:
+    fields = (
+        "associative_index_snapshot_id",
+        "snapshot_digest",
+        "embedding_profile_id",
+        "model_id",
+    )
+    return all(left.get(field) == right.get(field) for field in fields)
+
+
 def compile_associative_field(
     event: Mapping[str, Any],
     *,
     environment: Mapping[str, str] | None = None,
     embedder: Embedder = embed_membranes,
     core_factory: CoreFactory = MindCore,
+    stage_sink: StageSink | None = None,
 ) -> tuple[dict[str, Any], str | None, str]:
     """Compile semantic association for every non-empty submitted prompt."""
 
@@ -97,89 +139,109 @@ def compile_associative_field(
     if not database.is_file():
         raise HookUnavailable("database_missing")
 
-    context = association_context(event)
-    hints = lexical_hints(prompt)
+    with _stage(stage_sink, "context"):
+        context = association_context(event)
+        hints = lexical_hints(prompt)
     vector_state: str | None = None
 
     try:
-        with core_factory(database) as core:
-            snapshot = core.reminders.active_snapshot_binding()
-            if not snapshot["current"]:
-                raise HookUnavailable("snapshot_stale")
+        with _stage(stage_sink, "snapshot_read"):
+            with core_factory(database) as core:
+                snapshot = core.reminders.active_snapshot_binding()
+                if not snapshot["current"]:
+                    raise HookUnavailable("snapshot_stale")
+    except HookUnavailable:
+        raise
+    except (ValidationError, OSError, TimeoutError, ValueError) as error:
+        raise HookUnavailable("core_query_failed") from error
+    except Exception as error:
+        raise HookUnavailable("core_query_failed") from error
 
-            timeout_seconds = _bounded_float(
-                environment,
-                "MIND_ASSOCIATE_EMBED_TIMEOUT_SECONDS",
-                DEFAULT_EMBED_TIMEOUT_SECONDS,
-                minimum=0.1,
-                maximum=60.0,
+    timeout_seconds = _bounded_float(
+        environment,
+        "MIND_ASSOCIATE_EMBED_TIMEOUT_SECONDS",
+        DEFAULT_EMBED_TIMEOUT_SECONDS,
+        minimum=0.1,
+        maximum=60.0,
+    )
+    ollama_url = environment.get("MIND_OLLAMA_URL", DEFAULT_OLLAMA_URL)
+    vector: list[float] | None = None
+    try:
+        with _stage(stage_sink, "semantic_embedding"):
+            embedded = embedder(
+                [context],
+                snapshot["model_id"],
+                ollama_url,
+                timeout_seconds,
             )
-            ollama_url = environment.get("MIND_OLLAMA_URL", DEFAULT_OLLAMA_URL)
-            vector: list[float] | None = None
-            try:
-                embedded = embedder(
-                    [context],
-                    snapshot["model_id"],
-                    ollama_url,
-                    timeout_seconds,
+            if len(embedded) != 1 or not isinstance(embedded[0], list):
+                raise RecallUnavailable(
+                    "embedding response does not contain one context vector"
                 )
-                if len(embedded) != 1 or not isinstance(embedded[0], list):
-                    raise RecallUnavailable(
-                        "embedding response does not contain one context vector"
-                    )
-                vector = embedded[0]
-            except (OSError, TimeoutError, ValueError, RecallUnavailable):
-                vector_state = "semantic_embedding_unavailable"
+            vector = embedded[0]
+    except HookUnavailable:
+        raise
+    except (OSError, TimeoutError, ValueError, RecallUnavailable):
+        vector_state = "semantic_embedding_unavailable"
 
-            if vector is None:
-                raise HookUnavailable("semantic_embedding_unavailable")
+    if vector is None:
+        raise HookUnavailable("semantic_embedding_unavailable")
 
-            now = datetime.now(timezone.utc)
-            host_session_id = "session:mind-codex-hook:" + uuid.uuid4().hex
-            core.hosts.handshake(
-                {
-                    "agent_instance_id": AGENT_INSTANCE_ID,
-                    "host_session_id": host_session_id,
-                    "host_id": "host:codex-user-prompt-submit",
-                    "external_session_id": host_session_id,
-                    "session_epoch": 1,
-                    "persona_id": None,
-                    "profile_id": "profile:mind-associative-codex-hook",
-                    "adapter_id": "adapter:mind-codex-user-prompt-submit",
-                    "adapter_version": "1.2.0",
-                    "protocol_version": PROTOCOL_VERSION,
-                    "declared_conformance_level": "H0",
-                    "catalog_snapshot_hash": snapshot["snapshot_digest"],
-                    "catalog_snapshot_expires_at": timestamp(
-                        now + timedelta(minutes=5)
-                    ),
-                    "permission_observation_hash": _observation_hash(
-                        "permission-mode", event.get("permission_mode", "unobserved")
-                    ),
-                    "authentication_observation_hash": _observation_hash(
-                        "authentication", "local-process"
-                    ),
-                    "observed_at": timestamp(now),
-                    "expires_at": timestamp(now + timedelta(minutes=5)),
+    try:
+        with _stage(stage_sink, "core_query"):
+            with core_factory(database) as core:
+                current_snapshot = core.reminders.active_snapshot_binding()
+                if not current_snapshot["current"]:
+                    raise HookUnavailable("snapshot_stale")
+                if not _same_snapshot_binding(snapshot, current_snapshot):
+                    raise HookUnavailable("snapshot_changed_during_embedding")
+
+                now = datetime.now(timezone.utc)
+                host_session_id = "session:mind-codex-hook:" + uuid.uuid4().hex
+                core.hosts.handshake(
+                    {
+                        "agent_instance_id": AGENT_INSTANCE_ID,
+                        "host_session_id": host_session_id,
+                        "host_id": "host:codex-user-prompt-submit",
+                        "external_session_id": host_session_id,
+                        "session_epoch": 1,
+                        "persona_id": None,
+                        "profile_id": "profile:mind-associative-codex-hook",
+                        "adapter_id": "adapter:mind-codex-user-prompt-submit",
+                        "adapter_version": "1.2.0",
+                        "protocol_version": PROTOCOL_VERSION,
+                        "declared_conformance_level": "H0",
+                        "catalog_snapshot_hash": current_snapshot["snapshot_digest"],
+                        "catalog_snapshot_expires_at": timestamp(
+                            now + timedelta(minutes=5)
+                        ),
+                        "permission_observation_hash": _observation_hash(
+                            "permission-mode", event.get("permission_mode", "unobserved")
+                        ),
+                        "authentication_observation_hash": _observation_hash(
+                            "authentication", "local-process"
+                        ),
+                        "observed_at": timestamp(now),
+                        "expires_at": timestamp(now + timedelta(minutes=5)),
+                    }
+                )
+                token = core.reminders.issue_session_capability(
+                    AGENT_INSTANCE_ID,
+                    host_session_id,
+                    exposure_scope="public_and_agent_private",
+                )["session_capability"]
+                anchor: dict[str, Any] = {
+                    "anchor_id": "anchor:codex-context:" + sha256_text(context)[:24],
+                    "anchor_kind": "turn_context",
+                    "vector": vector,
                 }
-            )
-            token = core.reminders.issue_session_capability(
-                AGENT_INSTANCE_ID,
-                host_session_id,
-                exposure_scope="public_and_agent_private",
-            )["session_capability"]
-            anchor: dict[str, Any] = {
-                "anchor_id": "anchor:codex-context:" + sha256_text(context)[:24],
-                "anchor_kind": "turn_context",
-                "vector": vector,
-            }
-            if hints:
-                anchor["lexical_hints"] = hints
-            result = core.reminders.neighborhood(
-                token,
-                snapshot["associative_index_snapshot_id"],
-                [anchor],
-            )
+                if hints:
+                    anchor["lexical_hints"] = hints
+                result = core.reminders.neighborhood(
+                    token,
+                    current_snapshot["associative_index_snapshot_id"],
+                    [anchor],
+                )
     except HookUnavailable:
         raise
     except (ValidationError, OSError, TimeoutError, ValueError) as error:
@@ -245,33 +307,46 @@ def write_receipt(
         return False
 
 
+def new_receipt_seed(
+    event: Mapping[str, Any],
+    *,
+    run_id: str | None = None,
+    started_at: str | None = None,
+) -> dict[str, Any]:
+    """Create stable metadata shared by started, prepared, and returned receipts."""
+
+    prompt = event.get("prompt") if isinstance(event.get("prompt"), str) else ""
+    turn_id = event.get("turn_id") if isinstance(event.get("turn_id"), str) else ""
+    if run_id is None:
+        run_id = sha256_text(
+            "\0".join((event.get("hook_event_name", ""), turn_id, prompt, uuid.uuid4().hex))
+        )[:32]
+    return {
+        "format": "mind-codex-hook-receipt/v1",
+        "run_id": run_id,
+        "event": HOOK_EVENT,
+        "started_at": started_at or timestamp(),
+        "turn_id_hash": sha256_text(turn_id),
+        "prompt_hash": sha256_text(prompt),
+    }
+
+
 def prepare_event(
     event: Mapping[str, Any],
     *,
     environment: Mapping[str, str] | None = None,
     compiler: Callable[..., tuple[dict[str, Any], str | None, str]] = compile_associative_field,
+    receipt_seed: Mapping[str, Any] | None = None,
+    stage_sink: StageSink | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if environment is None:
         environment = os.environ
-    prompt = event.get("prompt") if isinstance(event.get("prompt"), str) else ""
-    turn_id = event.get("turn_id") if isinstance(event.get("turn_id"), str) else ""
-    run_id = sha256_text(
-        "\0".join((event.get("hook_event_name", ""), turn_id, prompt, uuid.uuid4().hex))
-    )[:32]
-    started_at = timestamp()
-    receipt_base = {
-        "format": "mind-codex-hook-receipt/v1",
-        "run_id": run_id,
-        "event": HOOK_EVENT,
-        "started_at": started_at,
-        "completed_at": timestamp(),
-        "turn_id_hash": sha256_text(turn_id),
-        "prompt_hash": sha256_text(prompt),
-    }
+    receipt_base = dict(receipt_seed) if receipt_seed is not None else new_receipt_seed(event)
 
     try:
         result, vector_state, context_hash = compiler(event, environment=environment)
-        additional_context = render_additional_context(result, vector_state)
+        with _stage(stage_sink, "render"):
+            additional_context = render_additional_context(result, vector_state)
         receipt = {
             **receipt_base,
             "evidence_state": "prepared",
@@ -288,7 +363,8 @@ def prepare_event(
             "additional_context_hash": sha256_text(additional_context),
         }
     except HookUnavailable as error:
-        additional_context = degraded_context(error.code, run_id)
+        with _stage(stage_sink, "render"):
+            additional_context = degraded_context(error.code, str(receipt_base["run_id"]))
         receipt = {
             **receipt_base,
             "evidence_state": "prepared_degraded",
@@ -299,7 +375,10 @@ def prepare_event(
             "additional_context_hash": sha256_text(additional_context),
         }
     except Exception:
-        additional_context = degraded_context("hook_internal_error", run_id)
+        with _stage(stage_sink, "render"):
+            additional_context = degraded_context(
+                "hook_internal_error", str(receipt_base["run_id"])
+            )
         receipt = {
             **receipt_base,
             "evidence_state": "prepared_degraded",
@@ -310,6 +389,7 @@ def prepare_event(
             "additional_context_hash": sha256_text(additional_context),
         }
 
+    receipt["completed_at"] = timestamp()
     output = {
         "continue": True,
         "hookSpecificOutput": {

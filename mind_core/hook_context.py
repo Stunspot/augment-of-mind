@@ -77,28 +77,41 @@ def _content_text(value: object) -> str:
     return "\n".join(fragment.strip() for fragment in fragments if fragment.strip())
 
 
-def _message_records(value: object) -> list[tuple[str, str]]:
-    """Find user/assistant message text inside a rollout record without fixing its wrapper schema."""
+def _message_turn_id(value: Mapping[str, Any]) -> str | None:
+    metadata = value.get("internal_chat_message_metadata_passthrough")
+    if not isinstance(metadata, dict):
+        return None
+    turn_id = metadata.get("turn_id")
+    if not isinstance(turn_id, str) or not turn_id.strip():
+        return None
+    return turn_id
 
-    if isinstance(value, list):
-        result: list[tuple[str, str]] = []
-        for item in value:
-            result.extend(_message_records(item))
-        return result
+
+def _message_records(value: object) -> list[tuple[str, str, str | None]]:
+    """Read only explicit Codex transcript message records."""
+
     if not isinstance(value, dict):
         return []
+    payload = value.get("payload")
+    if not isinstance(payload, dict):
+        return []
 
-    role = value.get("role")
-    if role in {"user", "assistant"}:
-        text = _content_text(value.get("content"))
-        if text:
-            return [(role, text)]
+    if value.get("type") == "response_item" and payload.get("type") == "message":
+        role = payload.get("role")
+        if role not in {"user", "assistant"}:
+            return []
+        text = _content_text(payload.get("content"))
+        return [(role, text, _message_turn_id(payload))] if text else []
 
-    result: list[tuple[str, str]] = []
-    for child in value.values():
-        if isinstance(child, (dict, list)):
-            result.extend(_message_records(child))
-    return result
+    if value.get("type") == "event_msg":
+        event_type = payload.get("type")
+        role = {"user_message": "user", "agent_message": "assistant"}.get(event_type)
+        if role is None:
+            return []
+        text = _content_text(payload.get("message"))
+        return [(role, text, _message_turn_id(payload))] if text else []
+
+    return []
 
 
 def _read_tail(path: Path, maximum_bytes: int) -> str:
@@ -129,12 +142,20 @@ def recent_transcript_messages(event: Mapping[str, Any]) -> list[tuple[str, str]
         return []
 
     messages: list[tuple[str, str]] = []
+    event_turn_id = event.get("turn_id")
+    current_turn_id = (
+        event_turn_id
+        if isinstance(event_turn_id, str) and event_turn_id.strip()
+        else None
+    )
     for line in text.splitlines():
         try:
             record = json.loads(line)
         except json.JSONDecodeError:
             continue
-        for role, content in _message_records(record):
+        for role, content, message_turn_id in _message_records(record):
+            if current_turn_id is not None and message_turn_id == current_turn_id:
+                continue
             normalized = " ".join(content.split())
             if not normalized:
                 continue
