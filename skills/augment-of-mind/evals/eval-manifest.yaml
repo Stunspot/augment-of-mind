@@ -1,6 +1,6 @@
 {
   "format": "cd-augment-eval/v1",
-  "package_version": "2.1.8",
+  "package_version": "2.1.7",
   "episode_mode": "isolated",
   "files": ["faculty-runtime-cases.yaml"],
   "indispensable_dimensions": [

@@ -1,6 +1,6 @@
 # Verification
 
-MIND `2.1.8` is the current local candidate built from committed tracked source by `scripts/build_release.py` and checked by `scripts/verify_release.py`. The last observed public release remains 2.1.7 below until a separately authorized publication occurs.
+MIND `2.1.7` is the current same-version source candidate. Build evidence is refreshed only after the corrected tracked source is committed; earlier public 2.1.7 package evidence remains historical for its exact bytes.
 
 The release builder:
 
