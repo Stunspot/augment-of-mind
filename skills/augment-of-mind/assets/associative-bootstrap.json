@@ -4,7 +4,7 @@
     {
       "source_id": "source:mind-associative-cards:2.1.0",
       "locator": "skills/augment-of-mind/assets/associative-capability-cards.json",
-      "digest": "189eaecbad9feacd19b86a83268356ecd3351e553ddc2cfed5ade3d4e8eaa87b",
+      "digest": "4289ec22dacbad0cce3de1c5eccb5a0675e0dbb379474d87f1abb9c9357657ce",
       "custody_state": "canonical-constructed",
       "authority_ref": "MIND 2.1.0 reviewed associative card source",
       "observed_at": "2026-08-04T00:00:00.000000Z"
@@ -92,8 +92,8 @@
       "name": "Agent Striving",
       "product_id": "product:mind",
       "canonical_source_id": "source:mind-associative-cards:2.1.0",
-      "promise": "Keep an authorized durable pursuit alive across interruption, uncertainty, and changing methods.",
-      "negative_space": "Striving preserves forward pull without manufacturing desire, proof, or ceremony.",
+      "promise": "Keep a user-authorized durable pursuit alive through interruption without freezing its route or turning its directive into a PRD.",
+      "negative_space": "Striving preserves forward pull and PromptCrafted direction; state remains with its real owner, and durability requires a receipt plus re-entry route.",
       "created_at": "2026-08-04T00:00:00.000000Z",
       "superseded_by": null,
       "exposure_policy": "public_safe",

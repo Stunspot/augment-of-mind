@@ -1,5 +1,13 @@
 # MIND release notes
 
+## Unreleased same-version maintenance on 2.1.7
+
+Agent Striving now composes host-goal objectives as PromptCrafted performance seeds: compact natural-language direction that preserves the user's vocabulary, authority, and route plasticity without collapsing into field labels, pseudo-code, or a compressed PRD.
+
+The obsolete pursuit-state v1 campaign ledger has become a sparse v2 custody handoff. Persistence, reactivation, and lost guarantees are represented separately; durability requires both an owner-issued receipt and a real re-entry route. Corrections supersede stale wording, released pursuits cannot retain a continuation, and the validator now rejects malformed or ambiguous JSON without traceback.
+
+The skill, references, example, behavioral cases, Faculty registry, associative discovery surfaces, and explicit CI coverage now share this contract. This is same-version source maintenance; earlier 2.1.7 packages and evidence remain historical for their exact bytes.
+
 ## 2.1.7
 
 Agent Striving 0.3.3 now keeps authorized durable pursuits behaviorally alive without hardening ordinary conversation into campaigns or manufacturing acceptance criteria, evidence programs, or terminal ceremony. Named project state remains with Project Management; Striving supplies forward pressure, adaptive recovery, economical continuity, and natural rest.

@@ -7,7 +7,7 @@
   "tree_algorithm": "sha256 over skill-relative UTF-8 POSIX path in ordinal exact-case order, one NUL byte, and raw 32-byte file sha256; cache files excluded",
   "tree_self_exclusion": "augment-of-mind excludes assets/integrated-capability-fingerprint.json",
   "aggregate_algorithm": "sha256 over compact UTF-8 JSON serialization of ordered capabilities",
-  "aggregate_sha256": "bf1ecd22738ecb4878d0a50823454b5dc530a13f9ba6545077a84db0ff829c3e",
+  "aggregate_sha256": "f9a2ebff2852d4ba7679d37d1d65d10ab80dd7cae353cfe2ec8a9ac0ac295e43",
   "capabilities": [
     {
       "name": "aesthetic-intelligence",
@@ -25,10 +25,10 @@
     },
     {
       "name": "agent-striving",
-      "version": "0.3.3",
+      "version": "0.4.0",
       "integration_mode": "faculty-suite-exact-copy",
-      "tree_file_count": 12,
-      "tree_sha256": "7047552dbc3a1ba28b5942eb22ab2b4770f51175598ac3a700bbcbafbd64aeb3"
+      "tree_file_count": 14,
+      "tree_sha256": "72bfa2e90521b2defead2fc032e84197e5584b8ee152975ce05f7ef01d98e522"
     },
     {
       "name": "agentic-eros",
@@ -41,8 +41,8 @@
       "name": "augment-of-mind",
       "version": "2.1.7",
       "integration_mode": "product-integration",
-      "tree_file_count": 14,
-      "tree_sha256": "3995db3ce50b6c128f9e6b8985c9fee9052d989d6ed428eaa4ad286e7c1240e6"
+      "tree_file_count": 16,
+      "tree_sha256": "96c0fdf583053212ee83c2706738c6d39dd7ca55de80c6b1cd66a9a5bcb7ee89"
     },
     {
       "name": "capability-conductor",

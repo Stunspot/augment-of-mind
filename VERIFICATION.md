@@ -1,6 +1,6 @@
 # Verification
 
-MIND `2.1.7` is built from committed tracked source by `scripts/build_release.py` and checked by `scripts/verify_release.py`.
+MIND `2.1.7` is the current same-version source candidate. Build evidence is refreshed only after the corrected tracked source is committed; earlier public 2.1.7 package evidence remains historical for its exact bytes.
 
 The release builder:
 
@@ -13,7 +13,7 @@ The release builder:
 - compares the staged and extracted trees byte-for-byte;
 - runs the offline customer release verifier against both trees.
 
-The permanent GitHub verification workflow runs the repository tests and deterministic release builder on Linux, Windows, and macOS for each pull request and each push to `main`. The separate line-ending workflow runs only once per pull request and once after merge; ordinary branch pushes do not duplicate it.
+The permanent GitHub verification workflow runs the repository tests, the nested Agent Striving contract suite, its evaluation-structure check, and the deterministic release builder on Linux, Windows, and macOS for each pull request and each push to `main`. The separate line-ending workflow runs only once per pull request and once after merge; ordinary branch pushes do not duplicate it.
 
 ## Current public release
 
@@ -30,7 +30,7 @@ The permanent GitHub verification workflow runs the repository tests and determi
 
 ## Evidence boundary
 
-The repository suite contains 20 deterministic tests. It locks the embedded TestForge operator and reviewer tree digests to the copies taken from published TestForge `v1.1.6` commit `93120abaa39c26a6f0ec494bdff0c7e6f92344cf`, including the metered-capacity authority boundary. The build independently proves repeatable wheel and archive bytes, positive-allowlist packaging, staged/extracted parity, offline verification, and package cleanliness.
+The root repository suite contains 20 deterministic tests, and the nested Agent Striving suite contains 19 contract tests. It locks the embedded TestForge operator and reviewer tree digests to the copies taken from published TestForge `v1.1.6` commit `93120abaa39c26a6f0ec494bdff0c7e6f92344cf`, including the metered-capacity authority boundary. The build independently proves repeatable wheel and archive bytes, positive-allowlist packaging, staged/extracted parity, offline verification, and package cleanliness.
 
 The GitHub release carries the ZIP, checksum, and build receipt. Release assets are compared with the local deterministic build after publication.
 

@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SKILLS=ROOT/"skills"
 OUTPUT=SKILLS/"augment-of-mind"/"assets"/"integrated-capability-fingerprint.json"
 SELF_RELATIVE="assets/integrated-capability-fingerprint.json"
-VERSIONS={"aesthetic-intelligence":"0.1.0","agent-dreaming":"0.1.2","agent-striving":"0.3.3","agentic-eros":"0.2.0","augment-of-mind":"2.1.7","capability-conductor":"0.1.0","capability-promotion":"0.1.0","cognitive-continuity":"0.1.3","creative-synthesis":"0.1.0","decision-intelligence":"0.1.0","deliberative-intelligence":"0.1.0","epistemic-regulation":"0.1.0","executive-function":"0.1.0","instrumental-agency":"0.1.0","kairos":"0.2.0","measurement-intelligence":"0.1.0","prosocial-influence":"0.1.0","sensemaking":"0.1.0","software-verification":"1.1.6","verification-reviewer":"1.1.6"}
+VERSIONS={"aesthetic-intelligence":"0.1.0","agent-dreaming":"0.1.2","agent-striving":"0.4.0","agentic-eros":"0.2.0","augment-of-mind":"2.1.7","capability-conductor":"0.1.0","capability-promotion":"0.1.0","cognitive-continuity":"0.1.3","creative-synthesis":"0.1.0","decision-intelligence":"0.1.0","deliberative-intelligence":"0.1.0","epistemic-regulation":"0.1.0","executive-function":"0.1.0","instrumental-agency":"0.1.0","kairos":"0.2.0","measurement-intelligence":"0.1.0","prosocial-influence":"0.1.0","sensemaking":"0.1.0","software-verification":"1.1.6","verification-reviewer":"1.1.6"}
 def tree_sha256(name: str) -> tuple[str,int]:
     root=SKILLS/name
     files=[p for p in root.rglob("*") if p.is_file() and not (name=="augment-of-mind" and p.relative_to(root).as_posix()==SELF_RELATIVE) and "__pycache__" not in p.parts and p.suffix.lower() not in {".pyc",".pyo"}]

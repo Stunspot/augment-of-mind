@@ -26,8 +26,12 @@ jobs:
         with:
           python-version: "3.14"
       - name: Install deterministic build requirements
-        run: python -m pip install "setuptools>=69.2" wheel
+        run: python -m pip install "setuptools>=69.2" "jsonschema>=4.23" wheel
       - name: Run repository tests
         run: python -B -m unittest discover -s tests -v
+      - name: Run Agent Striving contract tests
+        run: python -B -m unittest discover -s skills/agent-striving/scripts/tests -v
+      - name: Validate Agent Striving behavioral case structure
+        run: python -B skills/software-verification/scripts/validate_eval_suite.py skills/agent-striving/evals
       - name: Build and verify the deterministic release
         run: python -B scripts/build_release.py --replace
