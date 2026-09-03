@@ -7,7 +7,7 @@
   "tree_algorithm": "sha256 over skill-relative UTF-8 POSIX path in ordinal exact-case order, one NUL byte, and raw 32-byte file sha256; cache files excluded",
   "tree_self_exclusion": "augment-of-mind excludes assets/integrated-capability-fingerprint.json",
   "aggregate_algorithm": "sha256 over compact UTF-8 JSON serialization of ordered capabilities",
-  "aggregate_sha256": "425ef782281ee41e78d39ad9ec417b3b8893c365e1b9424b01b62d16c9075501",
+  "aggregate_sha256": "f9a2ebff2852d4ba7679d37d1d65d10ab80dd7cae353cfe2ec8a9ac0ac295e43",
   "capabilities": [
     {
       "name": "aesthetic-intelligence",
@@ -42,7 +42,7 @@
       "version": "2.1.7",
       "integration_mode": "product-integration",
       "tree_file_count": 16,
-      "tree_sha256": "13e682a1709be50bcb9677b16ce7c73ef16d867010de0098a8fb1de14444d45d"
+      "tree_sha256": "96c0fdf583053212ee83c2706738c6d39dd7ca55de80c6b1cd66a9a5bcb7ee89"
     },
     {
       "name": "capability-conductor",
