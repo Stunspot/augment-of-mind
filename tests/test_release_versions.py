@@ -50,6 +50,11 @@ class ReleaseVersionTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertEqual(plugin["interface"]["displayName"], "MIND Legacy Compatibility")
         self.assertIn("Legacy Compatibility", marketplace["interface"]["displayName"])
+        verifier = (ROOT / "scripts" / "verify_release.py").read_text(encoding="utf-8")
+        self.assertIn(
+            'MARKETPLACE_DISPLAY_NAME = "Collaborative Dynamics: MIND (Legacy Compatibility)"',
+            verifier,
+        )
         self.assertIn("standalone “Augment of MIND” product lane is superseded", decision)
         self.assertIn("No new standalone MIND release", decision)
         self.assertIn("MIND is Nova's edition-invariant cognitive architecture", readme)
