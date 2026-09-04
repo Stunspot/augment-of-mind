@@ -8,6 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 FINGERPRINT_SCRIPT = ROOT / "scripts" / "build_integrated_fingerprint.py"
+VERIFIER_SCRIPT = ROOT / "scripts" / "verify_release.py"
 
 SPEC = importlib.util.spec_from_file_location(
     "build_integrated_fingerprint", FINGERPRINT_SCRIPT
@@ -50,11 +51,12 @@ class ReleaseVersionTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertEqual(plugin["interface"]["displayName"], "MIND Legacy Compatibility")
         self.assertIn("Legacy Compatibility", marketplace["interface"]["displayName"])
-        verifier = (ROOT / "scripts" / "verify_release.py").read_text(encoding="utf-8")
-        self.assertIn(
-            'MARKETPLACE_DISPLAY_NAME = "Collaborative Dynamics: MIND (Legacy Compatibility)"',
-            verifier,
-        )
+        verifier_spec = importlib.util.spec_from_file_location("verify_release", VERIFIER_SCRIPT)
+        assert verifier_spec is not None and verifier_spec.loader is not None
+        verifier = importlib.util.module_from_spec(verifier_spec)
+        verifier_spec.loader.exec_module(verifier)
+        self.assertEqual(verifier.MARKETPLACE_DISPLAY_NAME, marketplace["interface"]["displayName"])
+        verifier.verify_marketplace(marketplace)
         self.assertIn("standalone “Augment of MIND” product lane is superseded", decision)
         self.assertIn("No new standalone MIND release", decision)
         self.assertIn("MIND is Nova's edition-invariant cognitive architecture", readme)
