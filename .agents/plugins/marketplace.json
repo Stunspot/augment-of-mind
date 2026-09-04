@@ -1,7 +1,7 @@
 {
   "name": "collaborative-dynamics-mind",
   "interface": {
-    "displayName": "Collaborative Dynamics: MIND"
+    "displayName": "Collaborative Dynamics: MIND (Legacy Compatibility)"
   },
   "plugins": [
     {

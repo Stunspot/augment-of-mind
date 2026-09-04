@@ -1,23 +1,7 @@
-# Install MIND
+# Legacy MIND 2.1.7 compatibility
 
-MIND is a standalone cognitive architecture for an existing AI harness. It adds sixteen cognitive Faculties, integrated mission control, local semantic capability reminders, Capability Promotion, and the two-part TestForge verification gate.
+MIND is now governed as Nova's edition-invariant cognitive architecture, not a standalone product. For a new installation, install the appropriate current Nova edition; do not add this plugin beside Nova as a second cognitive front door.
 
-## The normal installation
+This repository retains the 2.1.7 package for historical inspection, rollback, and temporary compatibility. On the developer host, its prompt-submit hook still supplies Arm's Reach. Preserve that working installation until a Nova-owned replacement adapter is qualified and observed; uninstalling it early would be a behavioral regression disguised as housekeeping.
 
-1. Give the MIND package to a compatible Codex harness.
-2. Ask the harness to install and enable **MIND by Collaborative Dynamics**.
-3. Review the file operations and configuration changes it proposes.
-4. Open **Settings → Hooks**, inspect the exact local MIND prompt-submit hook, and decide whether to trust it.
-5. Start a new task so Codex can discover the plugin.
-
-Installation is complete when MIND is enabled, its Faculties are discoverable in a new task, the reminder estate reports active, and the trusted hook can reach the configured local `qwen3-embedding:0.6b` endpoint—or names the exact dependency that remains unavailable.
-
-## Manual fallback
-
-If your harness cannot install an attached package, extract it and follow [Manual Codex installation](INSTALL-CODEX.md).
-
-## What you installed
-
-MIND is one integrator, sixteen Faculties, Capability Promotion, and two TestForge skills. It coordinates cognition; it does not impersonate every occupational specialist or grant tools and permissions the host does not have.
-
-Read [Capabilities and limits](CAPABILITIES-AND-LIMITS.md) for the complete shape and [Use MIND](USER-GUIDE.md) for its operating model.
+The older installation, capability, privacy, and verification documents describe the preserved 2.1.7 artifact. They remain historical evidence rather than current product guidance. See [design/DEC-MIND-PRODUCT-SUCCESSION.md](design/DEC-MIND-PRODUCT-SUCCESSION.md) for the governing boundary.

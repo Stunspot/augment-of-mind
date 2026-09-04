@@ -43,6 +43,18 @@ class ReleaseVersionTests(unittest.TestCase):
         self.assertEqual("1.1.6", MODULE.VERSIONS["software-verification"])
         self.assertEqual("1.1.6", MODULE.VERSIONS["verification-reviewer"])
 
+    def test_current_branch_is_legacy_compatibility_not_a_product_lane(self) -> None:
+        plugin = json.loads((ROOT / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        marketplace = json.loads((ROOT / ".agents" / "plugins" / "marketplace.json").read_text(encoding="utf-8"))
+        decision = (ROOT / "design" / "DEC-MIND-PRODUCT-SUCCESSION.md").read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertEqual(plugin["interface"]["displayName"], "MIND Legacy Compatibility")
+        self.assertIn("Legacy Compatibility", marketplace["interface"]["displayName"])
+        self.assertIn("standalone “Augment of MIND” product lane is superseded", decision)
+        self.assertIn("No new standalone MIND release", decision)
+        self.assertIn("MIND is Nova's edition-invariant cognitive architecture", readme)
+        self.assertIn("Do not disable or uninstall", readme)
+
     def test_integrated_fingerprint_matches_current_skill_bytes(self) -> None:
         recorded = json.loads(MODULE.OUTPUT.read_text(encoding="utf-8"))
         self.assertEqual(MODULE.build(), recorded)

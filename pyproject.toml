@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cd-mind-core"
 version = "0.2.0"
-description = "Persona-neutral local metadata runtime for MIND."
+description = "Legacy local metadata runtime retained for Nova Arm's Reach migration."
 requires-python = ">=3.11"
 license = { file = "LICENSE.md" }
 authors = [{ name = "Collaborative Dynamics" }]
