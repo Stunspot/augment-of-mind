@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_DESCRIPTION = "🔥 Attraction and adult roleplay; warmth may be platonic."
 REQUIRED = [
     "SKILL.md",
     "manifest.json",
@@ -57,6 +58,8 @@ def main() -> int:
     description = re.search(r"^description:\s*(.+)$", skill, re.MULTILINE)
     if not description or not 25 <= len(description.group(1).strip()) <= 512:
         errors.append("SKILL.md description must be 25-512 Unicode characters")
+    elif description.group(1).strip() != json.dumps(EXPECTED_DESCRIPTION, ensure_ascii=False):
+        errors.append("SKILL.md description does not match the exact injected tooltip")
 
     markdown_link = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     for target in markdown_link.findall(skill):
@@ -74,7 +77,7 @@ def main() -> int:
                     errors.append(f"forbidden runtime token in {rel}: {token}")
 
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-    if manifest.get("name") != "agentic-eros" or manifest.get("version") != "0.2.0":
+    if manifest.get("name") != "agentic-eros" or manifest.get("version") != "0.3.1":
         errors.append("manifest identity or version mismatch")
     if "canonical_host_mode" in manifest:
         errors.append("manifest must not expose a selectable host mode")
@@ -113,13 +116,15 @@ def main() -> int:
     agent_yaml = (ROOT / "agents/openai.yaml").read_text(encoding="utf-8")
     if 'display_name: "Agentic Eros"' not in agent_yaml:
         errors.append("agents/openai.yaml display name mismatch")
+    if f'short_description: "{EXPECTED_DESCRIPTION}"' not in agent_yaml:
+        errors.append("agents/openai.yaml short description does not match the exact injected tooltip")
     default_prompt = re.search(r'^\s*default_prompt:\s*"([^"]+)"\s*$', agent_yaml, re.MULTILINE)
     if not default_prompt or len(default_prompt.group(1)) > 128:
         errors.append("agents/openai.yaml default prompt must be present and at most 128 characters")
     if "$agentic-eros" not in agent_yaml:
         errors.append("agents/openai.yaml default prompt must invoke $agentic-eros")
     if "$erotic-intelligence" in agent_yaml:
-        errors.append("agents/openai.yaml must not expose the legacy alias")
+        errors.append("agents/openai.yaml must not expose the retired $erotic-intelligence skill alias")
     if "allow_implicit_invocation: true" not in agent_yaml:
         errors.append("agents/openai.yaml must keep Agentic Eros available for implicit relevance routing")
 

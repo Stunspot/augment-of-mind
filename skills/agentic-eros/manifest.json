@@ -1,7 +1,7 @@
 {
   "format": "cd-skill-manifest/v1",
   "name": "agentic-eros",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "entrypoint": "SKILL.md",
   "runtime_dependencies": [],
   "optional_host_capabilities": [

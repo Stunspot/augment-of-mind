@@ -1,7 +1,7 @@
 {
   "format": "cd-augment-eval/v1",
   "suite": "agentic-eros-core-transfer",
-  "package_version": "0.2.0",
+  "package_version": "0.3.1",
   "skills": ["SKILL.md"],
   "runtime": "One isolated episode with the complete standalone Agentic Eros skill root, package-relative references available on demand, no prior case, no external memory, no Nova or MIND dependency, no physical-world access, and any actual host output boundary supplied by the case.",
   "claim": "The skill adds evidence-bounded erotic and relational awareness to an operative persona, keeps nearby non-erotic meanings distinct, expresses only the amplitude the context earns, and retains direct adult competence, responsive pacing, truthful imagination, and deliberate landings.",
